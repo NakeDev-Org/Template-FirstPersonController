@@ -18,7 +18,10 @@ namespace nakatimat.AttackSystem
             _attackController = GetComponent<MeleeHitboxCaster>();
         }
 
-        public void TriggerAttack(ComboNode comboNode, AttackData baseAttackData)
+        public void TriggerAttack(
+            ComboNode comboNode,
+            AttackData baseAttackData
+        )
         {
             if (comboNode == null || baseAttackData == null)
             {
@@ -37,7 +40,11 @@ namespace nakatimat.AttackSystem
                 finalAttackData.damages[i] = instance;
             }
 
-            _attackController.Attack(comboNode.hitBoxCenter, comboNode.hitBoxSize, finalAttackData);
+            _attackController.Attack(
+                comboNode.hitBoxCenter,
+                comboNode.hitBoxSize,
+                finalAttackData
+            );
         }
 
         private void PlayVFX(ComboNode comboNode)
@@ -46,7 +53,9 @@ namespace nakatimat.AttackSystem
                 return;
 
             _slashVFX.transform.localPosition = comboNode.vfxPosition;
-            _slashVFX.transform.localRotation = Quaternion.Euler(comboNode.vfxRotation);
+            _slashVFX.transform.localRotation = Quaternion.Euler(
+                comboNode.vfxRotation
+            );
             _slashVFX.transform.localScale = Vector3.one * comboNode.vfxScale;
 
             var mainModule = _slashVFX.main;

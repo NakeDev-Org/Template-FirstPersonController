@@ -38,7 +38,8 @@ namespace nakatimat.TPS.Player.Modular
         {
             if (_inputActions == null)
             {
-                _inputActions = new global::nakatimat.TPS.GeneratedInput.Controls();
+                _inputActions =
+                    new global::nakatimat.TPS.GeneratedInput.Controls();
                 _inputActions.Main.SetCallbacks(this);
                 _inputActions.Combat.SetCallbacks(this);
             }

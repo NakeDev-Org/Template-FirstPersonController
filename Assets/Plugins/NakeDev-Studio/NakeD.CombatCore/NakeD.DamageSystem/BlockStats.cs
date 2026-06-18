@@ -14,7 +14,9 @@ namespace nakatimat.CombatSystem.MeleeSystem
         [Range(0f, 1f)]
         public float blockMitigationMultiplier = 0.5f;
 
-        [Tooltip("Janela de tempo em segundos para que o bloqueio seja considerado um Parry.")]
+        [Tooltip(
+            "Janela de tempo em segundos para que o bloqueio seja considerado um Parry."
+        )]
         public float parryWindow = 0.25f;
 
         [Tooltip(

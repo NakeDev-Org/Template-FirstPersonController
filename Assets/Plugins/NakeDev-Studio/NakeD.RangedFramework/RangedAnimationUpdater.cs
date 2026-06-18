@@ -17,7 +17,8 @@ namespace nakatimat.RangedFramework
             _animationHandler = GetComponent<CharacterAnimationHandler>();
             if (_animationHandler == null)
             {
-                _animationHandler = GetComponentInChildren<CharacterAnimationHandler>();
+                _animationHandler =
+                    GetComponentInChildren<CharacterAnimationHandler>();
             }
         }
 

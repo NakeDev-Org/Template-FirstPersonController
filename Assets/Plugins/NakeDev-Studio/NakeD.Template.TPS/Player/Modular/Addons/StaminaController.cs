@@ -32,7 +32,9 @@ namespace nakatimat.TPS.Player
                     {
                         _currentStamina = maxStamina;
                         if (showDebugLog)
-                            Debug.Log($"[STAMINA] Cheia: {_currentStamina}/{maxStamina}");
+                            Debug.Log(
+                                $"[STAMINA] Cheia: {_currentStamina}/{maxStamina}"
+                            );
                     }
                 }
             }
@@ -53,7 +55,9 @@ namespace nakatimat.TPS.Player
 
             if (showDebugLog)
             {
-                Debug.Log($"[STAMINA] Gasto: {amount} | Atual: {_currentStamina:F1}/{maxStamina}");
+                Debug.Log(
+                    $"[STAMINA] Gasto: {amount} | Atual: {_currentStamina:F1}/{maxStamina}"
+                );
             }
         }
     }

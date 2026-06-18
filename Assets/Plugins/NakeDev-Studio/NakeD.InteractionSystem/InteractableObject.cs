@@ -14,7 +14,9 @@ namespace nakatimat.InteractionSystem
         [SerializeField]
         private string _interactionPrompt = "Interact";
 
-        [Tooltip("Opcional: Um ícone específico para este item (ex: Mão, Olho, Engrenagem).")]
+        [Tooltip(
+            "Opcional: Um ícone específico para este item (ex: Mão, Olho, Engrenagem)."
+        )]
         [SerializeField]
         private Sprite _interactionIcon;
 
@@ -83,7 +85,9 @@ namespace nakatimat.InteractionSystem
             if (GetComponent<Collider>() == null)
             {
                 gameObject.AddComponent<BoxCollider>().isTrigger = false;
-                Debug.Log($"[Auto-Config] BoxCollider adicionado em {gameObject.name}");
+                Debug.Log(
+                    $"[Auto-Config] BoxCollider adicionado em {gameObject.name}"
+                );
             }
 
             // 2. Tenta forçar a Layer

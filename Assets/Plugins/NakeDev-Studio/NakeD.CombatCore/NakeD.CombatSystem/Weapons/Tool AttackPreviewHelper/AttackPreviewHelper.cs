@@ -27,7 +27,11 @@ namespace nakatimat.AttackPreview
 
             // Salva a matriz antiga e aplica a posição/rotação deste GameObject (o boneco da cena)
             Matrix4x4 oldMatrix = Gizmos.matrix;
-            Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
+            Gizmos.matrix = Matrix4x4.TRS(
+                transform.position,
+                transform.rotation,
+                Vector3.one
+            );
 
             Gizmos.color = new Color(1, 0, 0, 0.8f);
             Gizmos.DrawWireCube(hitBoxCenter, hitBoxSize);
@@ -41,8 +45,11 @@ namespace nakatimat.AttackPreview
         public void ApplyDataToPreview()
         {
             slashPreviewTransform.localPosition = AttackData.vfxPosition;
-            slashPreviewTransform.localRotation = Quaternion.Euler(AttackData.vfxRotation);
-            slashPreviewTransform.localScale = Vector3.one * AttackData.vfxScale;
+            slashPreviewTransform.localRotation = Quaternion.Euler(
+                AttackData.vfxRotation
+            );
+            slashPreviewTransform.localScale =
+                Vector3.one * AttackData.vfxScale;
 
             hitBoxCenter = AttackData.hitBoxCenter;
             hitBoxSize = AttackData.hitBoxSize;
@@ -54,7 +61,11 @@ namespace nakatimat.AttackPreview
                 return;
             }
 
-            AnimatorState state = controller.layers[0].stateMachine.states[0].state;
+            AnimatorState state = controller
+                .layers[0]
+                .stateMachine
+                .states[0]
+                .state;
             state.motion = AttackData.previewClip;
         }
 
@@ -66,7 +77,9 @@ namespace nakatimat.AttackPreview
             }
 
             AttackData.vfxPosition = slashPreviewTransform.localPosition;
-            AttackData.vfxRotation = slashPreviewTransform.localRotation.eulerAngles;
+            AttackData.vfxRotation = slashPreviewTransform
+                .localRotation
+                .eulerAngles;
             AttackData.vfxScale = slashPreviewTransform.localScale.x;
 
             AttackData.hitBoxCenter = hitBoxCenter;

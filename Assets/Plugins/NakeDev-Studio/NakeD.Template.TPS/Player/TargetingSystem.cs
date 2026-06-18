@@ -29,7 +29,9 @@ namespace nakatimat.TPS.Player
         private Transform currentTarget;
 
         [Header("Cinemachine Support")]
-        [Tooltip("Arraste o GameObject da sua Câmera de Lock-On (Cinemachine) aqui.")]
+        [Tooltip(
+            "Arraste o GameObject da sua Câmera de Lock-On (Cinemachine) aqui."
+        )]
         public GameObject lockOnVirtualCamera;
 
         [Header("Adaptive Camera")]
@@ -72,7 +74,10 @@ namespace nakatimat.TPS.Player
                 }
 
                 // Quebra por distância (agora com controle no Inspector)
-                float dist = Vector3.Distance(transform.position, currentTarget.position);
+                float dist = Vector3.Distance(
+                    transform.position,
+                    currentTarget.position
+                );
                 if (dist > targetingRadius * loseTargetRadiusMultiplier)
                 {
                     ClearTarget();
@@ -108,15 +113,23 @@ namespace nakatimat.TPS.Player
                 if (lockOnVirtualCamera != null)
                 {
 #if UNITY_6000_0_OR_NEWER
-                    var cam = lockOnVirtualCamera.GetComponent<CinemachineCamera>();
+                    var cam =
+                        lockOnVirtualCamera.GetComponent<CinemachineCamera>();
 #else
-                    var cam = lockOnVirtualCamera.GetComponent<CinemachineVirtualCamera>();
+                    var cam =
+                        lockOnVirtualCamera.GetComponent<CinemachineVirtualCamera>();
 #endif
                     if (cam != null)
                     {
                         // FOV aumenta conforme a distância aumenta (até o limite de quebra)
-                        float t = dist / (targetingRadius * loseTargetRadiusMultiplier);
-                        float targetFOV = Mathf.Lerp(minCombatFOV, maxCombatFOV, t);
+                        float t =
+                            dist
+                            / (targetingRadius * loseTargetRadiusMultiplier);
+                        float targetFOV = Mathf.Lerp(
+                            minCombatFOV,
+                            maxCombatFOV,
+                            t
+                        );
                         cam.Lens.FieldOfView = Mathf.Lerp(
                             cam.Lens.FieldOfView,
                             targetFOV,
@@ -137,7 +150,10 @@ namespace nakatimat.TPS.Player
             // O mouse ou o analógico direito controlam a troca
             float lookX = 0f; // InputManager.Input.GetLookAxis().x;
 
-            if (Mathf.Abs(lookX) > switchThreshold && Time.time >= _lastSwitchTime + switchCooldown)
+            if (
+                Mathf.Abs(lookX) > switchThreshold
+                && Time.time >= _lastSwitchTime + switchCooldown
+            )
             {
                 _lastSwitchTime = Time.time;
                 SwitchTarget(Mathf.Sign(lookX));
@@ -156,17 +172,26 @@ namespace nakatimat.TPS.Player
             Transform bestTarget = null;
             float smallestAngle = float.MaxValue;
 
-            Transform camTransform = Camera.main != null ? Camera.main.transform : transform;
+            Transform camTransform =
+                Camera.main != null ? Camera.main.transform : transform;
 
             foreach (var hit in hits)
             {
-                if (!hit.gameObject.activeInHierarchy || hit.transform == currentTarget)
+                if (
+                    !hit.gameObject.activeInHierarchy
+                    || hit.transform == currentTarget
+                )
                     continue;
 
-                Vector3 dirToTarget = (hit.transform.position - transform.position).normalized;
+                Vector3 dirToTarget = (
+                    hit.transform.position - transform.position
+                ).normalized;
 
                 // Evita mirar através das paredes
-                float dist = Vector3.Distance(transform.position, hit.transform.position);
+                float dist = Vector3.Distance(
+                    transform.position,
+                    hit.transform.position
+                );
                 if (
                     Physics.Raycast(
                         transform.position + Vector3.up * 1.5f,
@@ -179,12 +204,20 @@ namespace nakatimat.TPS.Player
                     continue;
                 }
 
-                Vector3 localDir = camTransform.InverseTransformDirection(dirToTarget);
+                Vector3 localDir = camTransform.InverseTransformDirection(
+                    dirToTarget
+                );
 
                 // Verifica se o inimigo está do lado que o jogador empurrou o controle
-                if ((direction > 0 && localDir.x > 0.1f) || (direction < 0 && localDir.x < -0.1f))
+                if (
+                    (direction > 0 && localDir.x > 0.1f)
+                    || (direction < 0 && localDir.x < -0.1f)
+                )
                 {
-                    float angle = Vector3.Angle(camTransform.forward, dirToTarget);
+                    float angle = Vector3.Angle(
+                        camTransform.forward,
+                        dirToTarget
+                    );
                     if (angle < smallestAngle)
                     {
                         smallestAngle = angle;
@@ -228,7 +261,9 @@ namespace nakatimat.TPS.Player
         private void FindNearestTarget(bool strictMeleeLock = false)
         {
             // Se for um Auto-Lock de defesa, restringimos a distância e o ângulo para não puxar inimigos longe
-            float currentMaxRadius = strictMeleeLock ? targetingRadius * 0.4f : targetingRadius;
+            float currentMaxRadius = strictMeleeLock
+                ? targetingRadius * 0.4f
+                : targetingRadius;
             float currentMaxAngle = strictMeleeLock ? 45f : 90f;
 
             Collider[] hits = Physics.OverlapSphere(
@@ -240,15 +275,21 @@ namespace nakatimat.TPS.Player
             float bestScore = float.MaxValue;
             Transform bestTarget = null;
 
-            Transform camTransform = Camera.main != null ? Camera.main.transform : transform;
+            Transform camTransform =
+                Camera.main != null ? Camera.main.transform : transform;
 
             foreach (var hit in hits)
             {
                 if (hit.gameObject.activeInHierarchy)
                 {
-                    float dist = Vector3.Distance(transform.position, hit.transform.position);
+                    float dist = Vector3.Distance(
+                        transform.position,
+                        hit.transform.position
+                    );
 
-                    Vector3 dirToTarget = (hit.transform.position - transform.position).normalized;
+                    Vector3 dirToTarget = (
+                        hit.transform.position - transform.position
+                    ).normalized;
 
                     // 1. Line of Sight Check (Não travar através da parede)
                     if (
@@ -268,7 +309,10 @@ namespace nakatimat.TPS.Player
                     Vector3 camDirToTarget = (
                         hit.transform.position - camTransform.position
                     ).normalized;
-                    float angle = Vector3.Angle(camTransform.forward, camDirToTarget);
+                    float angle = Vector3.Angle(
+                        camTransform.forward,
+                        camDirToTarget
+                    );
 
                     // Ignora inimigos que estão totalmente nas suas costas/câmera (ângulo muito grande)
                     if (angle > currentMaxAngle)
@@ -348,7 +392,9 @@ namespace nakatimat.TPS.Player
             else
             {
                 // Fallback: Cria uma esferazinha vermelha temporária
-                _currentIndicator = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                _currentIndicator = GameObject.CreatePrimitive(
+                    PrimitiveType.Sphere
+                );
                 _currentIndicator.transform.localScale = Vector3.one * 0.3f;
                 Destroy(_currentIndicator.GetComponent<Collider>()); // Remove o colisor para não interferir nos ataques
 

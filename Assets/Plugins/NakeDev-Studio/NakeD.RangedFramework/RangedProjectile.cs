@@ -58,7 +58,11 @@ namespace nakatimat.RangedFramework
                 return;
 
             // Se bater em algo que tem IDamageable
-            if (collision.gameObject.TryGetComponent<IDamageable>(out var damageable))
+            if (
+                collision.gameObject.TryGetComponent<IDamageable>(
+                    out var damageable
+                )
+            )
             {
                 damageable.ApplyDamage(_damage);
             }

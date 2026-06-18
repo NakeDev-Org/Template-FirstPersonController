@@ -45,7 +45,11 @@ namespace nakatimat.RangedFramework
 
         private void Update()
         {
-            if (_spineAimConstraint == null || _aimTarget == null || _mainCamera == null)
+            if (
+                _spineAimConstraint == null
+                || _aimTarget == null
+                || _mainCamera == null
+            )
                 return;
 
             // Define se o Constraint deve estar ligado ou desligado

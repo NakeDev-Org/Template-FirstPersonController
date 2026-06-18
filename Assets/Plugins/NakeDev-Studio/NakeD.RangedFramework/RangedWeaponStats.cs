@@ -21,7 +21,9 @@ namespace nakatimat.RangedFramework
         public RangedWeaponType WeaponType = RangedWeaponType.Bow;
 
         [Header("Models & Instantiation")]
-        [Tooltip("O Prefab 3D da Arma/Arco que será instanciado na mão/costas do personagem.")]
+        [Tooltip(
+            "O Prefab 3D da Arma/Arco que será instanciado na mão/costas do personagem."
+        )]
         public GameObject WeaponPrefab;
 
         [Tooltip(

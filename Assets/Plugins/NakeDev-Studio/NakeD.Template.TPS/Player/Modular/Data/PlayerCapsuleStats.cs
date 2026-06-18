@@ -2,7 +2,10 @@ using UnityEngine;
 
 namespace nakatimat.TPS.Player.Modular.Data
 {
-    [CreateAssetMenu(fileName = "PlayerCapsuleStats", menuName = "NakeCore/Player/Capsule Stats")]
+    [CreateAssetMenu(
+        fileName = "PlayerCapsuleStats",
+        menuName = "NakeCore/Player/Capsule Stats"
+    )]
     public class PlayerCapsuleStats : ScriptableObject
     {
         [Header("Standing Dimensions")]

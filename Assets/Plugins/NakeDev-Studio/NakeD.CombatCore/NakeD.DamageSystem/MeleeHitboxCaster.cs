@@ -7,9 +7,14 @@ namespace nakatimat.DamageSystem
         // --- OBSERVER PATTERN (Eventos) ---
         public event System.Action<Vector3> OnEnemyHit;
 
-        public void Attack(Vector3 center, Vector3 boxSize, AttackData AttackData)
+        public void Attack(
+            Vector3 center,
+            Vector3 boxSize,
+            AttackData AttackData
+        )
         {
-            Vector3 boxCenter = transform.position + transform.rotation * center;
+            Vector3 boxCenter =
+                transform.position + transform.rotation * center;
             Vector3 halfExtents = boxSize * 0.5f;
             Collider[] hits = Physics.OverlapBox(
                 boxCenter,
@@ -39,7 +44,8 @@ namespace nakatimat.DamageSystem
                     {
                         foreach (var damage in AttackData.damages)
                         {
-                            float multiplier = AttackData.GetCriticalMultiplier();
+                            float multiplier =
+                                AttackData.GetCriticalMultiplier();
                             float finalDamage = damage.amount * multiplier;
                             damageable.ApplyDamage(
                                 finalDamage,

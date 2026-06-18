@@ -35,7 +35,9 @@ namespace nakatimat.DamageSystem
 
             if (TPSHealthStats.TPSDamageResistances != null)
             {
-                multiplier = TPSHealthStats.TPSDamageResistances.GetMultiplier(damageType);
+                multiplier = TPSHealthStats.TPSDamageResistances.GetMultiplier(
+                    damageType
+                );
             }
 
             if (_defenseProvider != null)

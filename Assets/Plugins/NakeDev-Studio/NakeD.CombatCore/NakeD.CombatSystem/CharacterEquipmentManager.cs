@@ -64,7 +64,10 @@ namespace nakatimat.CombatSystem.MeleeSystem
 
             _currentWeaponData = TPSMeleeWeaponStats;
 
-            _weaponInstance = Instantiate(TPSMeleeWeaponStats.prefab, _weaponBackSlot);
+            _weaponInstance = Instantiate(
+                TPSMeleeWeaponStats.prefab,
+                _weaponBackSlot
+            );
             ResetWeapon();
             _animationHandler.SetWeaponInHand(false);
 

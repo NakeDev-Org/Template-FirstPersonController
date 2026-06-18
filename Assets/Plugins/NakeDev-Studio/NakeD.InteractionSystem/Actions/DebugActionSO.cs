@@ -8,7 +8,10 @@ namespace nakatimat.InteractionSystem.Actions
         [SerializeField]
         private string _customMessage = "O Player interagiu com este objeto!";
 
-        public override void Execute(GameObject interactor, GameObject interactedObject)
+        public override void Execute(
+            GameObject interactor,
+            GameObject interactedObject
+        )
         {
             Debug.Log(
                 $"<color=green>[Interaction System]</color> {interactor.name} acionou {_customMessage} no objeto {interactedObject.name}"

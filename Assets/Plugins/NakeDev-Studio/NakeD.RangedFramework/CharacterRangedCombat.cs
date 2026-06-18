@@ -18,11 +18,15 @@ namespace nakatimat.RangedFramework
         private RangedWeaponStats _currentWeapon;
 
         [Header("Equipment Slots")]
-        [Tooltip("Oso da Mão (Ex: WeaponSpawnHandSlot) onde o arco fica quando sacado.")]
+        [Tooltip(
+            "Oso da Mão (Ex: WeaponSpawnHandSlot) onde o arco fica quando sacado."
+        )]
         [SerializeField]
         private Transform _weaponHandSlot;
 
-        [Tooltip("Oso das Costas (Ex: Spine/BackSlot) onde o arco e a aljava ficam guardados.")]
+        [Tooltip(
+            "Oso das Costas (Ex: Spine/BackSlot) onde o arco e a aljava ficam guardados."
+        )]
         [SerializeField]
         private Transform _weaponBackSlot;
 
@@ -87,7 +91,10 @@ namespace nakatimat.RangedFramework
             if (!CanAimOrShoot())
                 return;
 
-            if (_currentWeapon != null && _currentWeapon.WeaponType == RangedWeaponType.Bow)
+            if (
+                _currentWeapon != null
+                && _currentWeapon.WeaponType == RangedWeaponType.Bow
+            )
             {
                 TryShoot();
             }
@@ -99,7 +106,10 @@ namespace nakatimat.RangedFramework
         // Caso 2: Arma de Fogo (Atira ao APERTAR o gatilho, MAS apenas enquanto estiver mirando)
         public void HandleAttackPressed()
         {
-            if (_currentWeapon == null || _currentWeapon.WeaponType != RangedWeaponType.Firearm)
+            if (
+                _currentWeapon == null
+                || _currentWeapon.WeaponType != RangedWeaponType.Firearm
+            )
                 return;
 
             if (_aimController.IsAiming)
@@ -135,7 +145,10 @@ namespace nakatimat.RangedFramework
             }
 
             Transform muzzle = null;
-            if (_weaponInstanceRef != null && _weaponInstanceRef.MuzzlePoint != null)
+            if (
+                _weaponInstanceRef != null
+                && _weaponInstanceRef.MuzzlePoint != null
+            )
             {
                 muzzle = _weaponInstanceRef.MuzzlePoint;
             }
@@ -157,7 +170,9 @@ namespace nakatimat.RangedFramework
             );
 
             // Passa o dano, direção e velocidade para o nosso script de projétil cuidar de tudo
-            if (projectile.TryGetComponent<RangedProjectile>(out var archerProj))
+            if (
+                projectile.TryGetComponent<RangedProjectile>(out var archerProj)
+            )
             {
                 archerProj.Initialize(
                     _currentWeapon.ProjectileDamage,
@@ -185,7 +200,10 @@ namespace nakatimat.RangedFramework
             // 2. Instancia o Quiver (Aljava) nas costas de forma permanente
             if (_currentWeapon.QuiverPrefab != null && _weaponBackSlot != null)
             {
-                _quiverInstance = Instantiate(_currentWeapon.QuiverPrefab, _weaponBackSlot);
+                _quiverInstance = Instantiate(
+                    _currentWeapon.QuiverPrefab,
+                    _weaponBackSlot
+                );
                 _quiverInstance.transform.localPosition = Vector3.zero;
                 _quiverInstance.transform.localRotation = Quaternion.identity;
             }
@@ -193,13 +211,18 @@ namespace nakatimat.RangedFramework
             // 3. Instancia a Arma nas costas por padrão (Guardada)
             if (_currentWeapon.WeaponPrefab != null && _weaponBackSlot != null)
             {
-                _weaponInstance = Instantiate(_currentWeapon.WeaponPrefab, _weaponBackSlot);
+                _weaponInstance = Instantiate(
+                    _currentWeapon.WeaponPrefab,
+                    _weaponBackSlot
+                );
                 if (_zeroLocalPositionOnEquip)
                 {
                     _weaponInstance.transform.localPosition = Vector3.zero;
-                    _weaponInstance.transform.localRotation = Quaternion.identity;
+                    _weaponInstance.transform.localRotation =
+                        Quaternion.identity;
                 }
-                _weaponInstanceRef = _weaponInstance.GetComponent<RangedWeaponInstance>();
+                _weaponInstanceRef =
+                    _weaponInstance.GetComponent<RangedWeaponInstance>();
             }
         }
 
@@ -212,7 +235,8 @@ namespace nakatimat.RangedFramework
                 if (_zeroLocalPositionOnEquip)
                 {
                     _weaponInstance.transform.localPosition = Vector3.zero;
-                    _weaponInstance.transform.localRotation = Quaternion.identity;
+                    _weaponInstance.transform.localRotation =
+                        Quaternion.identity;
                 }
             }
         }
@@ -270,7 +294,9 @@ namespace nakatimat.RangedFramework
             Camera mainCam = Camera.main;
             if (mainCam != null)
             {
-                Ray ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+                Ray ray = mainCam.ViewportPointToRay(
+                    new Vector3(0.5f, 0.5f, 0f)
+                );
                 if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
                 {
                     return (hit.point - muzzlePosition).normalized;

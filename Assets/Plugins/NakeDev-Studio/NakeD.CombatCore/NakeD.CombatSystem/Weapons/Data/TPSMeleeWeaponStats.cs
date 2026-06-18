@@ -13,7 +13,9 @@ namespace nakatimat.CombatSystem.MeleeSystem
     {
         public GameObject prefab;
 
-        [Tooltip("O Dano Base da arma. Será multiplicado pelo nó atual do combo.")]
+        [Tooltip(
+            "O Dano Base da arma. Será multiplicado pelo nó atual do combo."
+        )]
         public AttackData AttackData;
 
         [Header("Animation & Combat Graph")]

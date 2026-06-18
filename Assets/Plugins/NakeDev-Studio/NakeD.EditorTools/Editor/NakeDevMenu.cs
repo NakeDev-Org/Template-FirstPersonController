@@ -33,7 +33,9 @@ namespace nakatimat.Core.Editor
             player.AddComponent<nakatimat.RangedFramework.AimRigTargetController>(); // Rigging
 
             Selection.activeGameObject = player;
-            Debug.Log("🔦 Sobrevivente criado! Configure o peso e o consumo alto de Stamina.");
+            Debug.Log(
+                "🔦 Sobrevivente criado! Configure o peso e o consumo alto de Stamina."
+            );
         }
 
         [MenuItem("NakeDev/Template/Player/3. Hack & Slash", false, 12)]

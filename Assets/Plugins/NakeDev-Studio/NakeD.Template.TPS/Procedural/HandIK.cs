@@ -13,11 +13,15 @@ public class HandIK : MonoBehaviour
     private float handReachDistance = 0.75f;
 
     [SerializeField]
-    [Tooltip("Ajuste fino de distância da mão em relação à parede (evita atravessar os dedos)")]
+    [Tooltip(
+        "Ajuste fino de distância da mão em relação à parede (evita atravessar os dedos)"
+    )]
     private float handOffset = 0.12f;
 
     [SerializeField]
-    [Tooltip("Raio da esfera (SphereCast) para detectar paredes, simulando o volume da mão")]
+    [Tooltip(
+        "Raio da esfera (SphereCast) para detectar paredes, simulando o volume da mão"
+    )]
     private float handSphereRadius = 0.08f;
 
     [SerializeField]
@@ -56,7 +60,9 @@ public class HandIK : MonoBehaviour
 
     [Header("Integração com Locomoção/Combate")]
     [SerializeField]
-    [Tooltip("Desativa o IK automaticamente quando o personagem não estiver no chão")]
+    [Tooltip(
+        "Desativa o IK automaticamente quando o personagem não estiver no chão"
+    )]
     private bool checkGrounded = true;
 
     [Header("Visualização (Scene View)")]
@@ -104,17 +110,25 @@ public class HandIK : MonoBehaviour
         }
 
         // 1. Obter posições originais dos ombros
-        Transform leftShoulder = _animator.GetBoneTransform(HumanBodyBones.LeftShoulder);
-        Transform rightShoulder = _animator.GetBoneTransform(HumanBodyBones.RightShoulder);
+        Transform leftShoulder = _animator.GetBoneTransform(
+            HumanBodyBones.LeftShoulder
+        );
+        Transform rightShoulder = _animator.GetBoneTransform(
+            HumanBodyBones.RightShoulder
+        );
 
         Vector3 leftOrigin =
             leftShoulder != null
                 ? leftShoulder.position
-                : transform.position + Vector3.up * 1.4f - transform.right * 0.3f;
+                : transform.position
+                    + Vector3.up * 1.4f
+                    - transform.right * 0.3f;
         Vector3 rightOrigin =
             rightShoulder != null
                 ? rightShoulder.position
-                : transform.position + Vector3.up * 1.4f + transform.right * 0.3f;
+                : transform.position
+                    + Vector3.up * 1.4f
+                    + transform.right * 0.3f;
 
         // 2 & 3 & 4. Disparar o "radar" de 3 raios para cada braço e achar o melhor
         RaycastHit leftHit;
@@ -148,25 +162,42 @@ public class HandIK : MonoBehaviour
         );
     }
 
-    private bool GetBestWallHit(Vector3 origin, float sideMultiplier, out RaycastHit bestHit)
+    private bool GetBestWallHit(
+        Vector3 origin,
+        float sideMultiplier,
+        out RaycastHit bestHit
+    )
     {
         bestHit = new RaycastHit();
         bool foundAny = false;
         float closestDist = float.MaxValue;
 
-        float[] anglesToTest = { frontRayAngle, diagonalRayAngle, sideRayAngle };
+        float[] anglesToTest =
+        {
+            frontRayAngle,
+            diagonalRayAngle,
+            sideRayAngle,
+        };
 
         foreach (float hAngle in anglesToTest)
         {
             foreach (float vAngle in verticalRayAngles)
             {
                 // Rotação horizontal e vertical
-                Quaternion hRot = Quaternion.AngleAxis(hAngle * sideMultiplier, transform.up);
-                Quaternion vRot = Quaternion.AngleAxis(-vAngle, transform.right); // Negativo agora vai para baixo
+                Quaternion hRot = Quaternion.AngleAxis(
+                    hAngle * sideMultiplier,
+                    transform.up
+                );
+                Quaternion vRot = Quaternion.AngleAxis(
+                    -vAngle,
+                    transform.right
+                ); // Negativo agora vai para baixo
                 Vector3 dir = hRot * vRot * transform.forward;
 
                 RaycastHit hit;
-                if (CastRayIgnoringSelf(origin, dir, handReachDistance, out hit))
+                if (
+                    CastRayIgnoringSelf(origin, dir, handReachDistance, out hit)
+                )
                 {
                     if (hit.distance < closestDist)
                     {
@@ -244,7 +275,10 @@ public class HandIK : MonoBehaviour
             if (distanceRange > 0.01f)
             {
                 distanceFactor =
-                    1f - Mathf.Clamp01((adjustedDistance - handOffset) / distanceRange);
+                    1f
+                    - Mathf.Clamp01(
+                        (adjustedDistance - handOffset) / distanceRange
+                    );
                 distanceFactor = Mathf.SmoothStep(0f, 1f, distanceFactor);
             }
 
@@ -255,7 +289,9 @@ public class HandIK : MonoBehaviour
                 || (hand == AvatarIKGoal.LeftHand && DisableLeftHandIK)
                 || (hand == AvatarIKGoal.RightHand && DisableRightHandIK);
 
-            float targetWeight = isHandDisabled ? 0f : (globalHandWeight * distanceFactor);
+            float targetWeight = isHandDisabled
+                ? 0f
+                : (globalHandWeight * distanceFactor);
 
             // Interpola o peso do IK
             ikWeight = Mathf.MoveTowards(
@@ -268,11 +304,16 @@ public class HandIK : MonoBehaviour
             Vector3 targetPosition = hit.point + hit.normal * handOffset;
 
             // Rotação Antitorção e Antiflip
-            float facingWallFactor = Mathf.Abs(Vector3.Dot(transform.forward, hit.normal));
+            float facingWallFactor = Mathf.Abs(
+                Vector3.Dot(transform.forward, hit.normal)
+            );
             Vector3 referenceDirection = Vector3
                 .Lerp(transform.forward, transform.up, facingWallFactor)
                 .normalized;
-            Vector3 projectedForward = Vector3.ProjectOnPlane(referenceDirection, hit.normal);
+            Vector3 projectedForward = Vector3.ProjectOnPlane(
+                referenceDirection,
+                hit.normal
+            );
 
             if (projectedForward.sqrMagnitude < 0.001f)
             {
@@ -288,7 +329,10 @@ public class HandIK : MonoBehaviour
                 projectedForward = -projectedForward;
             }
 
-            Quaternion targetRotation = Quaternion.LookRotation(projectedForward, hit.normal);
+            Quaternion targetRotation = Quaternion.LookRotation(
+                projectedForward,
+                hit.normal
+            );
 
             ikPosition = Vector3.Lerp(
                 ikPosition,
@@ -308,14 +352,24 @@ public class HandIK : MonoBehaviour
 
             // Ajuste do Cotovelo (Hint)
             AvatarIKHint hint =
-                hand == AvatarIKGoal.LeftHand ? AvatarIKHint.LeftElbow : AvatarIKHint.RightElbow;
+                hand == AvatarIKGoal.LeftHand
+                    ? AvatarIKHint.LeftElbow
+                    : AvatarIKHint.RightElbow;
             Vector3 hintDir =
                 -transform.up
-                + (hand == AvatarIKGoal.LeftHand ? -transform.right : transform.right);
+                + (
+                    hand == AvatarIKGoal.LeftHand
+                        ? -transform.right
+                        : transform.right
+                );
             Vector3 shoulderPos =
                 hand == AvatarIKGoal.LeftHand
-                    ? _animator.GetBoneTransform(HumanBodyBones.LeftShoulder).position
-                    : _animator.GetBoneTransform(HumanBodyBones.RightShoulder).position;
+                    ? _animator
+                        .GetBoneTransform(HumanBodyBones.LeftShoulder)
+                        .position
+                    : _animator
+                        .GetBoneTransform(HumanBodyBones.RightShoulder)
+                        .position;
 
             Vector3 hintPos = shoulderPos + hintDir.normalized * 0.4f;
             _animator.SetIKHintPosition(hint, hintPos);
@@ -323,7 +377,11 @@ public class HandIK : MonoBehaviour
         }
         else
         {
-            ikWeight = Mathf.MoveTowards(ikWeight, 0f, Time.deltaTime * handTransitionSpeed);
+            ikWeight = Mathf.MoveTowards(
+                ikWeight,
+                0f,
+                Time.deltaTime * handTransitionSpeed
+            );
 
             if (ikWeight > 0.01f)
             {
@@ -399,7 +457,14 @@ public class HandIK : MonoBehaviour
             Vector3 rayDirection = hRot * vRot * transform.forward;
 
             RaycastHit hit;
-            if (CastRayIgnoringSelf(rayOrigin, rayDirection, handReachDistance, out hit))
+            if (
+                CastRayIgnoringSelf(
+                    rayOrigin,
+                    rayDirection,
+                    handReachDistance,
+                    out hit
+                )
+            )
             {
                 float weight =
                     (shoulderBone == HumanBodyBones.LeftShoulder)

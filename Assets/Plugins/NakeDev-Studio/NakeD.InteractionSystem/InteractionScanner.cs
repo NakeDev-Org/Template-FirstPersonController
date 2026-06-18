@@ -21,7 +21,9 @@ namespace nakatimat.InteractionSystem
         [SerializeField]
         private InputReader _inputReader;
 
-        [Tooltip("Arraste aquele IconInteraction que você criou no Canvas da Scene")]
+        [Tooltip(
+            "Arraste aquele IconInteraction que você criou no Canvas da Scene"
+        )]
         [SerializeField]
         private IconInteraction _interactionUI;
 
@@ -72,7 +74,8 @@ namespace nakatimat.InteractionSystem
 
             for (int i = 0; i < hits; i++)
             {
-                var interactable = _overlapResults[i].GetComponentInParent<IInteractable>();
+                var interactable = _overlapResults[i]
+                    .GetComponentInParent<IInteractable>();
                 if (interactable != null)
                 {
                     float distance = Vector3.SqrMagnitude(
@@ -119,7 +122,8 @@ namespace nakatimat.InteractionSystem
 
                 // Liga o ícone e posiciona com o offset calculado
                 _interactionUI.gameObject.SetActive(true);
-                _interactionUI.transform.position = interactable.GetUIPosition();
+                _interactionUI.transform.position =
+                    interactable.GetUIPosition();
             }
         }
 

@@ -69,7 +69,13 @@ namespace nakatimat.TPS.Player.Modular
             _isAiming = isAiming;
             _isBlocking = isBlocking;
             CalculateMoveDirection();
-            UpdateSpeedState(isSprinting, isCrouching, isBlocking, isMeleeCombat, isAiming);
+            UpdateSpeedState(
+                isSprinting,
+                isCrouching,
+                isBlocking,
+                isMeleeCombat,
+                isAiming
+            );
             ApplyMovementAndRotation();
         }
 
@@ -83,7 +89,10 @@ namespace nakatimat.TPS.Player.Modular
             }
             else
             {
-                VerticalVelocity += Physics.gravity.y * _stats.GravityMultiplier * Time.deltaTime;
+                VerticalVelocity +=
+                    Physics.gravity.y
+                    * _stats.GravityMultiplier
+                    * Time.deltaTime;
             }
 
             if (VerticalVelocity < _stats.TerminalVelocity)
@@ -92,7 +101,9 @@ namespace nakatimat.TPS.Player.Modular
             }
 
             // Apply vertical velocity
-            _characterController.Move(Vector3.up * VerticalVelocity * Time.deltaTime);
+            _characterController.Move(
+                Vector3.up * VerticalVelocity * Time.deltaTime
+            );
         }
 
         public void ProcessJump()
@@ -130,7 +141,9 @@ namespace nakatimat.TPS.Player.Modular
             }
             else
             {
-                spherePos = transform.position + Vector3.up * _capsuleStats.GroundedOffset;
+                spherePos =
+                    transform.position
+                    + Vector3.up * _capsuleStats.GroundedOffset;
             }
 
             IsGrounded = Physics.CheckSphere(
@@ -171,7 +184,10 @@ namespace nakatimat.TPS.Player.Modular
             bool isAiming
         )
         {
-            float inputMagnitude = new Vector2(MoveDirection.x, MoveDirection.z).magnitude;
+            float inputMagnitude = new Vector2(
+                MoveDirection.x,
+                MoveDirection.z
+            ).magnitude;
             float targetSpeed = 0f;
 
             if (inputMagnitude > 0.01f)
@@ -190,11 +206,15 @@ namespace nakatimat.TPS.Player.Modular
                 }
                 else if (isSprinting)
                 {
-                    targetSpeed = isMeleeCombat ? _stats.MeleeSprintSpeed : _stats.SprintSpeed;
+                    targetSpeed = isMeleeCombat
+                        ? _stats.MeleeSprintSpeed
+                        : _stats.SprintSpeed;
                 }
                 else
                 {
-                    targetSpeed = isMeleeCombat ? _stats.MeleeWalkSpeed : _stats.WalkSpeed;
+                    targetSpeed = isMeleeCombat
+                        ? _stats.MeleeWalkSpeed
+                        : _stats.WalkSpeed;
                 }
             }
 
@@ -214,7 +234,8 @@ namespace nakatimat.TPS.Player.Modular
 
                 // Entra em Strafe automaticamente se tiver um Target ou se estiver bloqueando
                 bool hasTarget =
-                    _targetingSystem != null && _targetingSystem.GetCurrentTarget() != null;
+                    _targetingSystem != null
+                    && _targetingSystem.GetCurrentTarget() != null;
 
                 if (hasTarget)
                     return LocomotionStyle.CameraStrafe;
@@ -256,12 +277,17 @@ namespace nakatimat.TPS.Player.Modular
 
             // Handle Rotation
             bool hasTarget =
-                _targetingSystem != null && _targetingSystem.GetCurrentTarget() != null;
+                _targetingSystem != null
+                && _targetingSystem.GetCurrentTarget() != null;
 
             if (hasTarget)
             {
-                Vector3 targetPos = _targetingSystem.GetCurrentTarget().position;
-                Vector3 directionToTarget = (targetPos - transform.position).normalized;
+                Vector3 targetPos = _targetingSystem
+                    .GetCurrentTarget()
+                    .position;
+                Vector3 directionToTarget = (
+                    targetPos - transform.position
+                ).normalized;
                 directionToTarget.y = 0f;
 
                 if (directionToTarget != Vector3.zero)
@@ -299,10 +325,15 @@ namespace nakatimat.TPS.Player.Modular
             }
             else // FreeDirectional
             {
-                bool shouldRotate = new Vector2(MoveDirection.x, MoveDirection.z).magnitude > 0.1f;
+                bool shouldRotate =
+                    new Vector2(MoveDirection.x, MoveDirection.z).magnitude
+                    > 0.1f;
                 if (shouldRotate)
                 {
-                    Quaternion targetRotation = Quaternion.LookRotation(MoveDirection, Vector3.up);
+                    Quaternion targetRotation = Quaternion.LookRotation(
+                        MoveDirection,
+                        Vector3.up
+                    );
                     transform.rotation = Quaternion.Slerp(
                         transform.rotation,
                         targetRotation,
@@ -318,7 +349,10 @@ namespace nakatimat.TPS.Player.Modular
 
             if (MoveDirection.sqrMagnitude > 0.01f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(MoveDirection, Vector3.up);
+                Quaternion targetRotation = Quaternion.LookRotation(
+                    MoveDirection,
+                    Vector3.up
+                );
                 transform.rotation = targetRotation;
             }
         }
@@ -327,12 +361,20 @@ namespace nakatimat.TPS.Player.Modular
         {
             if (isCrouching)
             {
-                _characterController.center = new Vector3(0f, _capsuleStats.CrouchingCenter, 0f);
+                _characterController.center = new Vector3(
+                    0f,
+                    _capsuleStats.CrouchingCenter,
+                    0f
+                );
                 _characterController.height = _capsuleStats.CrouchingHeight;
             }
             else
             {
-                _characterController.center = new Vector3(0f, _capsuleStats.StandingCenter, 0f);
+                _characterController.center = new Vector3(
+                    0f,
+                    _capsuleStats.StandingCenter,
+                    0f
+                );
                 _characterController.height = _capsuleStats.StandingHeight;
             }
         }
@@ -353,10 +395,12 @@ namespace nakatimat.TPS.Player.Modular
             if (_capsuleStats == null)
                 return true;
 
-            Vector3 standBottom = transform.position + Vector3.up * _capsuleStats.Radius;
+            Vector3 standBottom =
+                transform.position + Vector3.up * _capsuleStats.Radius;
             Vector3 standTop =
                 transform.position
-                + Vector3.up * (_capsuleStats.StandingHeight - _capsuleStats.Radius);
+                + Vector3.up
+                    * (_capsuleStats.StandingHeight - _capsuleStats.Radius);
 
             Collider[] hits = Physics.OverlapCapsule(
                 standBottom,

@@ -26,7 +26,9 @@ public class ProceduralFootIK : MonoBehaviour
     private float maxFootTiltAngle = 45f;
 
     [SerializeField]
-    [Tooltip("Comprimento aproximado do pé (calcanhar até a ponta) para compensar inclinações")]
+    [Tooltip(
+        "Comprimento aproximado do pé (calcanhar até a ponta) para compensar inclinações"
+    )]
     private float footLength = 0.22f;
 
     [Header("Pesos e Suavização")]
@@ -49,7 +51,9 @@ public class ProceduralFootIK : MonoBehaviour
 
     [Header("Ajuste de Caminhada/Corrida")]
     [SerializeField]
-    [Tooltip("O quanto a animação precisa levantar o pé acima da altura padrão para desligar o IK")]
+    [Tooltip(
+        "O quanto a animação precisa levantar o pé acima da altura padrão para desligar o IK"
+    )]
     private float liftThreshold = 0.08f;
 
     [SerializeField]
@@ -58,7 +62,9 @@ public class ProceduralFootIK : MonoBehaviour
 
     [Header("Ajuste da Pélvis (Quadril)")]
     [SerializeField]
-    [Tooltip("Se ativado, o corpo inteiro desce para permitir que os joelhos dobrem")]
+    [Tooltip(
+        "Se ativado, o corpo inteiro desce para permitir que os joelhos dobrem"
+    )]
     private bool enablePelvisAdjustment = true;
 
     [SerializeField]
@@ -67,7 +73,9 @@ public class ProceduralFootIK : MonoBehaviour
 
     [Header("Integração com Locomoção")]
     [SerializeField]
-    [Tooltip("Desativa o IK automaticamente quando o personagem não estiver no chão")]
+    [Tooltip(
+        "Desativa o IK automaticamente quando o personagem não estiver no chão"
+    )]
     private bool checkGrounded = true;
 
     [Header("Visualização (Scene View)")]
@@ -128,7 +136,8 @@ public class ProceduralFootIK : MonoBehaviour
             footData.DefaultY = 0.1f;
         }
 
-        footData.IkPosition = transform.position + Vector3.up * footData.DefaultY;
+        footData.IkPosition =
+            transform.position + Vector3.up * footData.DefaultY;
         footData.IkRotation = transform.rotation;
         footData.IkWeight = 0f;
     }
@@ -157,9 +166,14 @@ public class ProceduralFootIK : MonoBehaviour
         if (layerIndex != 0 || _animator == null)
             return;
 
-        float speedWeightFactor = Mathf.Clamp01(1f - (_currentSpeed / speedToDisableIk));
+        float speedWeightFactor = Mathf.Clamp01(
+            1f - (_currentSpeed / speedToDisableIk)
+        );
         bool isLocomotionBypass =
-            (!checkGrounded || IsGrounded) && !IsJumping && !IsSprinting && !IsAttacking;
+            (!checkGrounded || IsGrounded)
+            && !IsJumping
+            && !IsSprinting
+            && !IsAttacking;
         float stateWeightFactor = isLocomotionBypass ? speedWeightFactor : 0f;
 
         SolveFoot(AvatarIKGoal.LeftFoot, _leftFoot, stateWeightFactor);
@@ -171,12 +185,17 @@ public class ProceduralFootIK : MonoBehaviour
         }
     }
 
-    private void SolveFoot(AvatarIKGoal footType, FootData foot, float stateWeightFactor)
+    private void SolveFoot(
+        AvatarIKGoal footType,
+        FootData foot,
+        float stateWeightFactor
+    )
     {
         Vector3 animFootPos = _animator.GetIKPosition(footType);
         Quaternion animFootRot = _animator.GetIKRotation(footType);
 
-        float trueLiftHeight = (animFootPos.y - transform.position.y) - foot.DefaultY;
+        float trueLiftHeight =
+            (animFootPos.y - transform.position.y) - foot.DefaultY;
         float targetWeight = globalIkWeight * stateWeightFactor;
         float deltaTime = Time.deltaTime > 0.0001f ? Time.deltaTime : 0.016f;
 
@@ -214,7 +233,9 @@ public class ProceduralFootIK : MonoBehaviour
                 if (hit.distance <= 0f)
                 {
                     correctedHitY =
-                        hit.point.y > transform.position.y ? hit.point.y : animFootPos.y;
+                        hit.point.y > transform.position.y
+                            ? hit.point.y
+                            : animFootPos.y;
                 }
                 else
                 {
@@ -224,15 +245,23 @@ public class ProceduralFootIK : MonoBehaviour
                 float stepArc = Mathf.Max(0f, trueLiftHeight);
                 Vector3 targetPosition = animFootPos;
                 targetPosition.y =
-                    correctedHitY + footHeightOffset + slopeHeightCompensation + stepArc;
+                    correctedHitY
+                    + footHeightOffset
+                    + slopeHeightCompensation
+                    + stepArc;
 
                 Vector3 footForward = animFootRot * Vector3.forward;
                 Vector3 projectedForward = Vector3
                     .ProjectOnPlane(footForward, groundNormal)
                     .normalized;
-                Quaternion groundRotation = Quaternion.LookRotation(projectedForward, groundNormal);
+                Quaternion groundRotation = Quaternion.LookRotation(
+                    projectedForward,
+                    groundNormal
+                );
 
-                float rotationBlend = Mathf.Clamp01(stepArc / (liftThreshold * 2f));
+                float rotationBlend = Mathf.Clamp01(
+                    stepArc / (liftThreshold * 2f)
+                );
                 Quaternion targetRotation = Quaternion.Slerp(
                     groundRotation,
                     animFootRot,
@@ -244,7 +273,11 @@ public class ProceduralFootIK : MonoBehaviour
                     targetPosition.y,
                     deltaTime * footPositionSpeed
                 );
-                foot.IkPosition = new Vector3(targetPosition.x, smoothY, targetPosition.z);
+                foot.IkPosition = new Vector3(
+                    targetPosition.x,
+                    smoothY,
+                    targetPosition.z
+                );
                 foot.IkRotation = Quaternion.Slerp(
                     foot.IkRotation,
                     targetRotation,
@@ -270,7 +303,11 @@ public class ProceduralFootIK : MonoBehaviour
             animFootPos.y,
             deltaTime * footPositionSpeed
         );
-        foot.IkPosition = new Vector3(animFootPos.x, fallbackSmoothY, animFootPos.z);
+        foot.IkPosition = new Vector3(
+            animFootPos.x,
+            fallbackSmoothY,
+            animFootPos.z
+        );
 
         foot.IkRotation = Quaternion.Slerp(
             foot.IkRotation,
@@ -281,7 +318,11 @@ public class ProceduralFootIK : MonoBehaviour
         SetIK(footType, foot);
     }
 
-    private bool FindGround(Vector3 origin, float radius, out RaycastHit validHit)
+    private bool FindGround(
+        Vector3 origin,
+        float radius,
+        out RaycastHit validHit
+    )
     {
         validHit = default;
 
@@ -337,8 +378,12 @@ public class ProceduralFootIK : MonoBehaviour
 
         if (stateWeightFactor > 0.01f)
         {
-            Vector3 animLeftPos = _animator.GetIKPosition(AvatarIKGoal.LeftFoot);
-            Vector3 animRightPos = _animator.GetIKPosition(AvatarIKGoal.RightFoot);
+            Vector3 animLeftPos = _animator.GetIKPosition(
+                AvatarIKGoal.LeftFoot
+            );
+            Vector3 animRightPos = _animator.GetIKPosition(
+                AvatarIKGoal.RightFoot
+            );
 
             float leftOffset = _leftFoot.IkPosition.y - animLeftPos.y;
             float rightOffset = _rightFoot.IkPosition.y - animRightPos.y;
@@ -349,7 +394,9 @@ public class ProceduralFootIK : MonoBehaviour
 
         float deltaTime = Time.deltaTime > 0.0001f ? Time.deltaTime : 0.016f;
         float currentSpeed =
-            targetOffset < _currentPelvisOffset ? pelvisSpeed * 1.2f : pelvisSpeed * 0.8f;
+            targetOffset < _currentPelvisOffset
+                ? pelvisSpeed * 1.2f
+                : pelvisSpeed * 0.8f;
 
         _currentPelvisOffset = Mathf.Lerp(
             _currentPelvisOffset,
@@ -387,7 +434,8 @@ public class ProceduralFootIK : MonoBehaviour
         if (footTransform == null)
             return;
 
-        Vector3 rayOrigin = footTransform.position + Vector3.up * raycastHeightOffset;
+        Vector3 rayOrigin =
+            footTransform.position + Vector3.up * raycastHeightOffset;
         Vector3 rayEnd = rayOrigin + Vector3.down * raycastDistance;
         float sphereRadius = footLength * 0.4f;
 
@@ -401,7 +449,11 @@ public class ProceduralFootIK : MonoBehaviour
         Gizmos.DrawWireSphere(rayEnd, sphereRadius);
 
         Gizmos.color = Color.green;
-        Vector3 footOffsetPos = footTransform.position + Vector3.up * footHeightOffset;
-        Gizmos.DrawWireCube(footOffsetPos, new Vector3(gizmoSize, gizmoSize, gizmoSize));
+        Vector3 footOffsetPos =
+            footTransform.position + Vector3.up * footHeightOffset;
+        Gizmos.DrawWireCube(
+            footOffsetPos,
+            new Vector3(gizmoSize, gizmoSize, gizmoSize)
+        );
     }
 }

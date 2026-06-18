@@ -13,6 +13,9 @@ namespace nakatimat.InteractionSystem
         /// </summary>
         /// <param name="interactor">The player or entity triggering the interaction.</param>
         /// <param name="interactedObject">The object being interacted with.</param>
-        public abstract void Execute(GameObject interactor, GameObject interactedObject);
+        public abstract void Execute(
+            GameObject interactor,
+            GameObject interactedObject
+        );
     }
 }

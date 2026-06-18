@@ -9,7 +9,9 @@ namespace nakatimat.TPS.Player.Modular
         [SerializeField]
         private InputReader _inputReader;
 
-        [Tooltip("O objeto vazio (ex: CameraTarget) que o Cinemachine deve seguir/olhar.")]
+        [Tooltip(
+            "O objeto vazio (ex: CameraTarget) que o Cinemachine deve seguir/olhar."
+        )]
         [SerializeField]
         private Transform _cameraTarget;
 
@@ -18,14 +20,18 @@ namespace nakatimat.TPS.Player.Modular
         public Vector2 gamepadSensitivity = new Vector2(150f, 150f);
 
         [Header("Restrições de Ângulo (Clamp)")]
-        [Tooltip("O quanto a câmera pode olhar para baixo (valores negativos).")]
+        [Tooltip(
+            "O quanto a câmera pode olhar para baixo (valores negativos)."
+        )]
         public float bottomClamp = -60f;
 
         [Tooltip("O quanto a câmera pode olhar para cima (valores positivos).")]
         public float topClamp = 60f;
 
         [Header("Suavização (Smoothing)")]
-        [Tooltip("Ativa a inércia/suavização da câmera (aceleração e frenagem).")]
+        [Tooltip(
+            "Ativa a inércia/suavização da câmera (aceleração e frenagem)."
+        )]
         public bool enableSmoothing = true;
 
         [Tooltip(
@@ -77,7 +83,8 @@ namespace nakatimat.TPS.Player.Modular
                 return;
 
             bool hasTarget =
-                _targetingSystem != null && _targetingSystem.GetCurrentTarget() != null;
+                _targetingSystem != null
+                && _targetingSystem.GetCurrentTarget() != null;
 
             if (hasTarget)
             {
@@ -139,7 +146,11 @@ namespace nakatimat.TPS.Player.Modular
                 float.MinValue,
                 float.MaxValue
             );
-            _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, bottomClamp, topClamp);
+            _cinemachineTargetPitch = ClampAngle(
+                _cinemachineTargetPitch,
+                bottomClamp,
+                topClamp
+            );
 
             _cameraTarget.rotation = Quaternion.Euler(
                 -_cinemachineTargetPitch,

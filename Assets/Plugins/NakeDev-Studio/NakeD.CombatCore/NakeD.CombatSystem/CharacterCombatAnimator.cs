@@ -26,7 +26,9 @@ namespace nakatimat.CombatSystem.MeleeSystem
         private int TriggerEquipHash = Animator.StringToHash("Equip");
         private int TriggerUnequipHash = Animator.StringToHash("Unequip");
         private int IsAttackingHash = Animator.StringToHash("IsAttacking");
-        private int AttackSpeedMultiplierHash = Animator.StringToHash("AttackSpeedMultiplier");
+        private int AttackSpeedMultiplierHash = Animator.StringToHash(
+            "AttackSpeedMultiplier"
+        );
         private int IsBlockingHash = Animator.StringToHash("IsBlocking");
 
         [Header("Runtime - Combo Graph")]
@@ -74,7 +76,8 @@ namespace nakatimat.CombatSystem.MeleeSystem
                     ResetCombo();
                 }
 
-                AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+                AnimatorStateInfo stateInfo =
+                    _animator.GetCurrentAnimatorStateInfo(0);
 
                 // Só começamos a ler o tempo se a animação do nó realmente começou a tocar (evita ler na transição do Crossfade)
                 if (stateInfo.IsName(_currentComboNode.animationStateName))
@@ -93,7 +96,10 @@ namespace nakatimat.CombatSystem.MeleeSystem
                             Hit(); // Dispara Efeitos e Dano
                         }
                     }
-                    else if (nTime > _currentComboNode.hitboxEndTime && _isHitboxOpen)
+                    else if (
+                        nTime > _currentComboNode.hitboxEndTime
+                        && _isHitboxOpen
+                    )
                     {
                         _isHitboxOpen = false;
                         // Futuramente: Chamar CloseHitbox() aqui para desativar o collider físico
@@ -138,8 +144,10 @@ namespace nakatimat.CombatSystem.MeleeSystem
                 }
                 else if (_isMelee && _currentWeaponData != null)
                 {
-                    _handIK.DisableRightHandIK = _currentWeaponData.disableRightHandIK;
-                    _handIK.DisableLeftHandIK = _currentWeaponData.disableLeftHandIK;
+                    _handIK.DisableRightHandIK =
+                        _currentWeaponData.disableRightHandIK;
+                    _handIK.DisableLeftHandIK =
+                        _currentWeaponData.disableLeftHandIK;
                 }
                 else
                 {
@@ -175,7 +183,8 @@ namespace nakatimat.CombatSystem.MeleeSystem
 
             if (TPSMeleeWeaponStats.animatorOverride != null)
             {
-                _animator.runtimeAnimatorController = TPSMeleeWeaponStats.animatorOverride;
+                _animator.runtimeAnimatorController =
+                    TPSMeleeWeaponStats.animatorOverride;
             }
             else
             {
@@ -254,7 +263,10 @@ namespace nakatimat.CombatSystem.MeleeSystem
 
             _animator.SetBool(IsAttackingHash, true);
             // O CÓDIGO TOMA O CONTROLE: Injeta a animação ignorando setas do Animator
-            _animator.CrossFadeInFixedTime(_currentComboNode.animationStateName, 0.1f);
+            _animator.CrossFadeInFixedTime(
+                _currentComboNode.animationStateName,
+                0.1f
+            );
 
             _movementBlocker?.SetMovmentBlocked(true);
         }
@@ -294,7 +306,10 @@ namespace nakatimat.CombatSystem.MeleeSystem
 
             _animator.SetBool(IsAttackingHash, true);
             // Injeta a próxima animação
-            _animator.CrossFadeInFixedTime(_currentComboNode.animationStateName, 0.1f);
+            _animator.CrossFadeInFixedTime(
+                _currentComboNode.animationStateName,
+                0.1f
+            );
 
             _movementBlocker?.SetMovmentBlocked(true);
         }

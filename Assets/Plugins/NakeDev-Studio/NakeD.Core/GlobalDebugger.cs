@@ -96,13 +96,19 @@ namespace nakatimat.Core.DebugTools
             CharacterHealthManager.OnAnyDamageTaken -= HandleDamageEvent;
         }
 
-        private void HandleDamageEvent(GameObject victim, float originalDamage, float finalDamage)
+        private void HandleDamageEvent(
+            GameObject victim,
+            float originalDamage,
+            float finalDamage
+        )
         {
             if (!enableAllLogs || !logCombat)
                 return;
 
             bool isPlayer = victim.CompareTag("Player");
-            string targetName = isPlayer ? "JOGADOR" : $"INIMIGO ({victim.name})";
+            string targetName = isPlayer
+                ? "JOGADOR"
+                : $"INIMIGO ({victim.name})";
 
             if (finalDamage == 0 && originalDamage > 0)
             {
@@ -161,7 +167,8 @@ namespace nakatimat.Core.DebugTools
             // Player Physics
             if (drawPlayerPhysics)
             {
-                CharacterController cc = targetPlayer.GetComponent<CharacterController>();
+                CharacterController cc =
+                    targetPlayer.GetComponent<CharacterController>();
                 if (cc != null)
                 {
                     Gizmos.color = Color.cyan;
@@ -170,7 +177,8 @@ namespace nakatimat.Core.DebugTools
                     float radius = cc.radius;
 
                     Vector3 top = center + Vector3.up * (height / 2f - radius);
-                    Vector3 bottom = center - Vector3.up * (height / 2f - radius);
+                    Vector3 bottom =
+                        center - Vector3.up * (height / 2f - radius);
 
                     Gizmos.DrawWireSphere(top, radius);
                     Gizmos.DrawWireSphere(bottom, radius);

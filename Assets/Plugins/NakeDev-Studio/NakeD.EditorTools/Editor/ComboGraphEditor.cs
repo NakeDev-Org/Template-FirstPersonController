@@ -12,12 +12,17 @@ namespace nakatimat.EditorTools
         {
             serializedObject.Update();
 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("entryNode"));
+            EditorGUILayout.PropertyField(
+                serializedObject.FindProperty("entryNode")
+            );
 
             serializedObject.ApplyModifiedProperties();
 
             EditorGUILayout.Space(10);
-            EditorGUILayout.LabelField("Combo Tree Map", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField(
+                "Combo Tree Map",
+                EditorStyles.boldLabel
+            );
 
             ComboGraph graph = (ComboGraph)target;
             if (graph.entryNode != null)
@@ -35,7 +40,10 @@ namespace nakatimat.EditorTools
             }
         }
 
-        private void DrawNodeTree(ComboNode node, HashSet<ComboNode> visitedNodes)
+        private void DrawNodeTree(
+            ComboNode node,
+            HashSet<ComboNode> visitedNodes
+        )
         {
             if (node == null)
                 return;
@@ -56,13 +64,19 @@ namespace nakatimat.EditorTools
             }
             EditorGUILayout.EndHorizontal();
 
-            if (node.nextPossibleNodes != null && node.nextPossibleNodes.Count > 0)
+            if (
+                node.nextPossibleNodes != null
+                && node.nextPossibleNodes.Count > 0
+            )
             {
                 EditorGUI.indentLevel++;
                 foreach (var branch in node.nextPossibleNodes)
                 {
                     EditorGUILayout.LabelField($"[{branch.requiredInput}]");
-                    DrawNodeTree(branch.nextNode, new HashSet<ComboNode>(visitedNodes));
+                    DrawNodeTree(
+                        branch.nextNode,
+                        new HashSet<ComboNode>(visitedNodes)
+                    );
                 }
                 EditorGUI.indentLevel--;
             }

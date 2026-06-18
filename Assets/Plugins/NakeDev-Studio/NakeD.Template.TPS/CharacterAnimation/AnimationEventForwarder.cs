@@ -55,7 +55,10 @@ namespace nakatimat.TPS.CharacterAnimation
         private void Hit()
         {
             if (transform.parent != null)
-                transform.parent.SendMessageUpwards("Hit", SendMessageOptions.DontRequireReceiver);
+                transform.parent.SendMessageUpwards(
+                    "Hit",
+                    SendMessageOptions.DontRequireReceiver
+                );
         }
 
         private void OpenComboWindow()

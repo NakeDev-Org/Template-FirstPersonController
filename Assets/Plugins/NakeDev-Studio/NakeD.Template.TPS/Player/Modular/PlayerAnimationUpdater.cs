@@ -32,19 +32,32 @@ namespace nakatimat.TPS.Player.Modular
             _footIK = GetComponent<ProceduralFootIK>();
         }
 
-        public void UpdateAnimations(bool isSprinting, bool isCrouching, bool isJumping)
+        public void UpdateAnimations(
+            bool isSprinting,
+            bool isCrouching,
+            bool isJumping
+        )
         {
             if (_locomotion == null || _animatorHandler == null)
                 return;
 
             _animatorHandler.UpdateGrounded(_locomotion.IsGrounded);
             _animatorHandler.UpdateJumped(isJumping);
-            _animatorHandler.UpdateLocomotion(_locomotion.CurrentSpeed, isCrouching);
+            _animatorHandler.UpdateLocomotion(
+                _locomotion.CurrentSpeed,
+                isCrouching
+            );
 
             // Alimentamos o X e Y da BlendTree 2D sempre!
             if (
                 _locomotion.CurrentStyle
-                == nakatimat.TPS.Player.Modular.Data.LocomotionStyle.CameraStrafe
+                == nakatimat
+                    .TPS
+                    .Player
+                    .Modular
+                    .Data
+                    .LocomotionStyle
+                    .CameraStrafe
             )
             {
                 if (_inputReader != null)
@@ -67,7 +80,10 @@ namespace nakatimat.TPS.Player.Modular
             {
                 // Na exploração normal (FreeDirectional), o personagem sempre olha pra frente.
                 // Então o Horizontal é zero, e o Vertical é a velocidade atual!
-                _animatorHandler.UpdateStrafeParameters(0f, _locomotion.CurrentSpeed);
+                _animatorHandler.UpdateStrafeParameters(
+                    0f,
+                    _locomotion.CurrentSpeed
+                );
             }
 
             if (_handIK != null)

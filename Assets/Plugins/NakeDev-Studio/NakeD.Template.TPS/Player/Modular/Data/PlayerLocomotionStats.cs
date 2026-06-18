@@ -18,7 +18,8 @@ namespace nakatimat.TPS.Player.Modular.Data
         [Tooltip(
             "FreeDirectional: Estilo Zelda/Mario (1D).\nCameraStrafe: Estilo Dead Space/RE2 (2D Strafe)."
         )]
-        public LocomotionStyle DefaultLocomotionStyle = LocomotionStyle.FreeDirectional;
+        public LocomotionStyle DefaultLocomotionStyle =
+            LocomotionStyle.FreeDirectional;
 
         [Header("Movement Speeds")]
         public float WalkSpeed = 3f;

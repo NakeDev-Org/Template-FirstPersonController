@@ -7,14 +7,19 @@ namespace nakatimat.TPS.Player.Modular
 {
     [RequireComponent(typeof(CharacterEquipmentManager))]
     [RequireComponent(typeof(StaminaController))]
-    public class PlayerCombatManager : MonoBehaviour, ICombatAddon, IDefenseProvider
+    public class PlayerCombatManager
+        : MonoBehaviour,
+            ICombatAddon,
+            IDefenseProvider
     {
         [Header("Dependencies")]
         [SerializeField]
         private InputReader _inputReader;
 
         [Header("Defense & Parry Settings")]
-        [Tooltip("Tempo em segundos após levantar a guarda onde o Parry é ativado.")]
+        [Tooltip(
+            "Tempo em segundos após levantar a guarda onde o Parry é ativado."
+        )]
         public float parryWindow = 0.25f;
 
         [Tooltip(
@@ -148,7 +153,10 @@ namespace nakatimat.TPS.Player.Modular
 
         public bool TryConsumeStamina(float amount)
         {
-            if (_staminaController == null || !_staminaController.isActiveAndEnabled)
+            if (
+                _staminaController == null
+                || !_staminaController.isActiveAndEnabled
+            )
                 return true; // If no stamina system or disabled, it's free
 
             if (_staminaController.HasEnoughStamina(amount))
@@ -161,7 +169,10 @@ namespace nakatimat.TPS.Player.Modular
 
         public bool HasEnoughStamina(float amount)
         {
-            if (_staminaController == null || !_staminaController.isActiveAndEnabled)
+            if (
+                _staminaController == null
+                || !_staminaController.isActiveAndEnabled
+            )
                 return true;
             return _staminaController.HasEnoughStamina(amount);
         }
@@ -169,7 +180,10 @@ namespace nakatimat.TPS.Player.Modular
         // ==========================================
         // DEFENSE & PARRY (IDefenseProvider)
         // ==========================================
-        public float GetDefenseMultiplier(DamageType damageType, out bool parrySuccess)
+        public float GetDefenseMultiplier(
+            DamageType damageType,
+            out bool parrySuccess
+        )
         {
             parrySuccess = false;
 

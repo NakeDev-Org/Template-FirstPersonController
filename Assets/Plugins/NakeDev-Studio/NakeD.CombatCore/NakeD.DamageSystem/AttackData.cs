@@ -3,7 +3,10 @@ using UnityEngine;
 
 namespace nakatimat.DamageSystem
 {
-    [CreateAssetMenu(fileName = "AttackData", menuName = "NakeCore/TPS/Combat/Damage/Attack Data")]
+    [CreateAssetMenu(
+        fileName = "AttackData",
+        menuName = "NakeCore/TPS/Combat/Damage/Attack Data"
+    )]
     public class AttackData : ScriptableObject
     {
         public List<DamageInstance> damages = new List<DamageInstance>();

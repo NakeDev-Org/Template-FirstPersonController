@@ -8,7 +8,9 @@ namespace nakatimat.RangedFramework
     /// </summary>
     public class RangedWeaponInstance : MonoBehaviour
     {
-        [Tooltip("O ponto (Transform vazio) na ponta da arma/arco de onde o projétil vai nascer.")]
+        [Tooltip(
+            "O ponto (Transform vazio) na ponta da arma/arco de onde o projétil vai nascer."
+        )]
         public Transform MuzzlePoint;
     }
 }

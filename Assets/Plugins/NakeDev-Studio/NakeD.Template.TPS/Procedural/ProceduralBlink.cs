@@ -13,11 +13,15 @@ public class ProceduralBlink : MonoBehaviour
 
     [Header("Configurações das Blendshapes")]
     [SerializeField]
-    [Tooltip("Nome exato da blendshape do olho esquerdo no modelo (ex: Blink_L ou vrc.blink_left)")]
+    [Tooltip(
+        "Nome exato da blendshape do olho esquerdo no modelo (ex: Blink_L ou vrc.blink_left)"
+    )]
     private string leftEyeBlinkName = "Blink_L";
 
     [SerializeField]
-    [Tooltip("Nome exato da blendshape do olho direito no modelo (ex: Blink_R ou vrc.blink_right)")]
+    [Tooltip(
+        "Nome exato da blendshape do olho direito no modelo (ex: Blink_R ou vrc.blink_right)"
+    )]
     private string rightEyeBlinkName = "Blink_R";
 
     [Header("Configurações de Tempo")]
@@ -50,8 +54,12 @@ public class ProceduralBlink : MonoBehaviour
         if (bodyRenderer != null)
         {
             // Busca o índice das Blendshapes correspondentes pelo nome
-            leftBlinkIndex = bodyRenderer.sharedMesh.GetBlendShapeIndex(leftEyeBlinkName);
-            rightBlinkIndex = bodyRenderer.sharedMesh.GetBlendShapeIndex(rightEyeBlinkName);
+            leftBlinkIndex = bodyRenderer.sharedMesh.GetBlendShapeIndex(
+                leftEyeBlinkName
+            );
+            rightBlinkIndex = bodyRenderer.sharedMesh.GetBlendShapeIndex(
+                rightEyeBlinkName
+            );
 
             // Inicia o loop de piscadas caso encontre os índices
             if (leftBlinkIndex != -1 && rightBlinkIndex != -1)

@@ -62,7 +62,10 @@ namespace nakatimat.Core.Inspector
                 float lineWidth = (position.width - textSize.x - 20f) / 2f;
 
                 // Linha Esquerda
-                EditorGUI.DrawRect(new Rect(position.x, middleY, lineWidth, 2), color);
+                EditorGUI.DrawRect(
+                    new Rect(position.x, middleY, lineWidth, 2),
+                    color
+                );
 
                 // Texto Centralizado
                 EditorGUI.LabelField(
@@ -73,14 +76,22 @@ namespace nakatimat.Core.Inspector
 
                 // Linha Direita
                 EditorGUI.DrawRect(
-                    new Rect(position.x + lineWidth + textSize.x + 20f, middleY, lineWidth, 2),
+                    new Rect(
+                        position.x + lineWidth + textSize.x + 20f,
+                        middleY,
+                        lineWidth,
+                        2
+                    ),
                     color
                 );
             }
             else
             {
                 // Apenas a linha
-                EditorGUI.DrawRect(new Rect(position.x, middleY, position.width, 2), color);
+                EditorGUI.DrawRect(
+                    new Rect(position.x, middleY, position.width, 2),
+                    color
+                );
             }
         }
     }

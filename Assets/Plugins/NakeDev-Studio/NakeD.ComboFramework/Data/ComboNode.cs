@@ -13,7 +13,10 @@ namespace nakatimat.ComboFramework.Data
         public ComboNode nextNode;
     }
 
-    [CreateAssetMenu(fileName = "New Combo Node", menuName = "NakeCore/Combo Framework/Combo Node")]
+    [CreateAssetMenu(
+        fileName = "New Combo Node",
+        menuName = "NakeCore/Combo Framework/Combo Node"
+    )]
     public class ComboNode : ScriptableObject
     {
         [Header("Animation")]
@@ -24,7 +27,9 @@ namespace nakatimat.ComboFramework.Data
         [Tooltip("Multiplicador aplicado sobre o Dano Base da Arma equipada.")]
         public float damageMultiplier = 1.0f;
 
-        [Tooltip("Custo individual de stamina para executar apenas este ataque.")]
+        [Tooltip(
+            "Custo individual de stamina para executar apenas este ataque."
+        )]
         public float staminaCost = 15f;
 
         [Header("Conditions")]
@@ -59,7 +64,9 @@ namespace nakatimat.ComboFramework.Data
         public List<ComboBranch> nextPossibleNodes = new List<ComboBranch>();
 
         [Header("Editor & Preview (Ferramentas)")]
-        [Tooltip("Usado apenas pelo AttackPreviewHelper para testar a Hitbox na Scene.")]
+        [Tooltip(
+            "Usado apenas pelo AttackPreviewHelper para testar a Hitbox na Scene."
+        )]
         public AnimationClip previewClip;
 
         [Header("VFX Settings (Efeitos)")]

@@ -90,11 +90,17 @@ namespace nakatimat.TPS.Player.Modular
             _locomotion.HandleGravity();
 
             // Evaluate state transitions
-            if (!_locomotion.IsGrounded && CurrentState != PlayerState.ActionBlocked)
+            if (
+                !_locomotion.IsGrounded
+                && CurrentState != PlayerState.ActionBlocked
+            )
             {
                 CurrentState = PlayerState.Airborne;
             }
-            else if (_locomotion.IsGrounded && CurrentState == PlayerState.Airborne)
+            else if (
+                _locomotion.IsGrounded
+                && CurrentState == PlayerState.Airborne
+            )
             {
                 CurrentState = PlayerState.Locomotion;
                 _isJumping = false; // Reset jump state when landing
@@ -118,7 +124,11 @@ namespace nakatimat.TPS.Player.Modular
             // Update Animations
             if (_animationUpdater != null)
             {
-                _animationUpdater.UpdateAnimations(_isSprinting, _isCrouching, _isJumping);
+                _animationUpdater.UpdateAnimations(
+                    _isSprinting,
+                    _isCrouching,
+                    _isJumping
+                );
             }
         }
 
@@ -144,7 +154,8 @@ namespace nakatimat.TPS.Player.Modular
             {
                 if (
                     !_combatAddon.HasEnoughStamina(
-                        _locomotion.Stats.SprintStaminaCostPerSecond * Time.deltaTime
+                        _locomotion.Stats.SprintStaminaCostPerSecond
+                            * Time.deltaTime
                     )
                 )
                 {
@@ -154,14 +165,21 @@ namespace nakatimat.TPS.Player.Modular
                 else
                 {
                     _combatAddon.TryConsumeStamina(
-                        _locomotion.Stats.SprintStaminaCostPerSecond * Time.deltaTime
+                        _locomotion.Stats.SprintStaminaCostPerSecond
+                            * Time.deltaTime
                     );
                 }
             }
 
             // Pass isAiming parameter via the unused isBlocking slot, or we need to change PlayerLocomotion signature.
             // Wait, we need to change PlayerLocomotion to use isAiming.
-            _locomotion.HandleLocomotion(_isSprinting, _isCrouching, isBlocking, isMelee, isAiming);
+            _locomotion.HandleLocomotion(
+                _isSprinting,
+                _isCrouching,
+                isBlocking,
+                isMelee,
+                isAiming
+            );
 
             if (!_locomotion.IsGrounded && _locomotion.VerticalVelocity < 0f)
             {
@@ -177,7 +195,13 @@ namespace nakatimat.TPS.Player.Modular
             bool isAiming = _aimingAddon != null && _aimingAddon.IsAiming;
 
             // Maintain the current states in the air to prevent sudden deceleration
-            _locomotion.HandleLocomotion(_isSprinting, _isCrouching, isBlocking, isMelee, isAiming);
+            _locomotion.HandleLocomotion(
+                _isSprinting,
+                _isCrouching,
+                isBlocking,
+                isMelee,
+                isAiming
+            );
 
             if (_locomotion.VerticalVelocity > 0.1f)
             {
@@ -198,9 +222,15 @@ namespace nakatimat.TPS.Player.Modular
                 && _locomotion.Stats.RequireStaminaToJump
             )
             {
-                if (!_combatAddon.HasEnoughStamina(_locomotion.Stats.JumpStaminaCost))
+                if (
+                    !_combatAddon.HasEnoughStamina(
+                        _locomotion.Stats.JumpStaminaCost
+                    )
+                )
                     return;
-                _combatAddon.TryConsumeStamina(_locomotion.Stats.JumpStaminaCost);
+                _combatAddon.TryConsumeStamina(
+                    _locomotion.Stats.JumpStaminaCost
+                );
             }
 
             if (!_locomotion.IsGrounded)
