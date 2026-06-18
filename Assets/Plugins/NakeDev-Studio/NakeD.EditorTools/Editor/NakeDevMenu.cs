@@ -31,14 +31,9 @@ namespace nakatimat.Core.Editor
             player.AddComponent<Animator>();
             player.AddComponent<CharacterController>();
 
-            // NakeDev Core Locomotion
-            player.AddComponent<InputReader>();
+            // NakeDev Core Locomotion (PlayerManager's [RequireComponent] will automatically add:
+            // InputReader, PlayerLocomotion, PlayerAnimationUpdater, and TPSCameraAimController)
             player.AddComponent<PlayerManager>();
-            player.AddComponent<PlayerLocomotion>();
-            
-            // Animation
-            player.AddComponent<CharacterAnimationHandler>();
-            player.AddComponent<PlayerAnimationUpdater>();
             
             // Aiming / Interacting
             player.AddComponent<TargetingSystem>();

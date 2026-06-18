@@ -66,6 +66,8 @@ namespace nakatimat.TPS.Player.Modular
             bool isAiming
         )
         {
+            if (_stats == null) return;
+
             _isAiming = isAiming;
             _isBlocking = isBlocking;
             CalculateMoveDirection();
@@ -82,6 +84,8 @@ namespace nakatimat.TPS.Player.Modular
         public void HandleGravity()
         {
             GroundCheck();
+
+            if (_stats == null) return;
 
             if (IsGrounded && VerticalVelocity < 0f)
             {
@@ -108,7 +112,9 @@ namespace nakatimat.TPS.Player.Modular
 
         public void ProcessJump()
         {
-            if (IsGrounded && (_stats == null || _stats.CanJump))
+            if (_stats == null) return;
+            
+            if (IsGrounded && _stats.CanJump)
             {
                 VerticalVelocity = _stats.JumpForce;
                 IsGrounded = false;
@@ -126,14 +132,18 @@ namespace nakatimat.TPS.Player.Modular
                 return;
             }
 
-            // 1. Primary Check: Unity's native CharacterController Ground detection
             if (_characterController.isGrounded)
             {
                 IsGrounded = true;
                 return;
             }
 
-            // 2. Backup Check using Transform (bulletproof) or Fallback to math
+            if (_capsuleStats == null)
+            {
+                IsGrounded = false;
+                return;
+            }
+
             Vector3 spherePos;
             if (_groundCheckPoint != null)
             {
