@@ -1,0 +1,44 @@
+# Unity auto-generated and build directories
+Library/
+Temp/
+Obj/
+Build/
+Builds/
+Logs/
+UserSettings/
+MemoryCaptures/
+Recordings/
+
+# Avoid modifying auto-generated Unity files
+*.meta
+*.unity
+*.prefab
+*.asset
+*.mat
+*.anim
+*.controller
+*.overrideController
+*.physicMaterial
+*.physicsMaterial2D
+*.playable
+*.mask
+*.brush
+*.flare
+*.fontsettings
+*.guiskin
+*.giparams
+*.renderTexture
+*.spriteatlas
+*.terrainlayer
+*.mixer
+*.shadervariants
+*.preset
+*.asmdef
+
+# Ignore standard editor/rider/vs directories
+.vs/
+.idea/
+.vscode/
+
+# Ignore auto-generated input files (if applicable)
+**/*Controls.cs
