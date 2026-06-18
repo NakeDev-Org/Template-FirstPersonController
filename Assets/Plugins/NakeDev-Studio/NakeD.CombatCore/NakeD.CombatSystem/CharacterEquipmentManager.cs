@@ -75,16 +75,13 @@ namespace nakatimat.CombatSystem.MeleeSystem
             OnWeaponEquipped?.Invoke(TPSMeleeWeaponStats);
         }
 
-        public void Attack(
-            nakatimat.ComboFramework.Data.AttackInputType inputType =
-                nakatimat.ComboFramework.Data.AttackInputType.LightAttack
-        )
+        public void Attack()
         {
             if (_currentWeaponData == null)
             {
                 return;
             }
-            _animationHandler.Attack(_currentWeaponData.AttackData, inputType);
+            _animationHandler.Attack(_currentWeaponData.AttackData);
         }
 
         public bool GetIsCombatMelee()
@@ -103,14 +100,6 @@ namespace nakatimat.CombatSystem.MeleeSystem
 
         public float GetWeaponStaminaCost(float defaultCost = 15f)
         {
-            if (
-                _currentWeaponData != null
-                && _currentWeaponData.comboGraph != null
-                && _currentWeaponData.comboGraph.entryNode != null
-            )
-            {
-                return _currentWeaponData.comboGraph.entryNode.staminaCost;
-            }
             return defaultCost;
         }
 

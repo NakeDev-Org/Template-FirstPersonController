@@ -225,27 +225,6 @@ namespace nakatimat.TPS.Player.Modular
             );
         }
 
-        public LocomotionStyle CurrentStyle
-        {
-            get
-            {
-                if (_isAiming || _isBlocking)
-                    return LocomotionStyle.CameraStrafe;
-
-                // Entra em Strafe automaticamente se tiver um Target ou se estiver bloqueando
-                bool hasTarget =
-                    _targetingSystem != null
-                    && _targetingSystem.GetCurrentTarget() != null;
-
-                if (hasTarget)
-                    return LocomotionStyle.CameraStrafe;
-
-                return _stats != null
-                    ? _stats.DefaultLocomotionStyle
-                    : LocomotionStyle.FreeDirectional;
-            }
-        }
-
         private Vector3 _currentMoveVelocity;
 
         private void ApplyMovementAndRotation()
@@ -303,7 +282,7 @@ namespace nakatimat.TPS.Player.Modular
                     );
                 }
             }
-            else if (CurrentStyle == LocomotionStyle.CameraStrafe)
+            else
             {
                 if (_mainCamera != null)
                 {
@@ -321,24 +300,6 @@ namespace nakatimat.TPS.Player.Modular
                             _stats.RotationSmoothing * Time.deltaTime
                         );
                     }
-                }
-            }
-            else // FreeDirectional
-            {
-                bool shouldRotate =
-                    new Vector2(MoveDirection.x, MoveDirection.z).magnitude
-                    > 0.1f;
-                if (shouldRotate)
-                {
-                    Quaternion targetRotation = Quaternion.LookRotation(
-                        MoveDirection,
-                        Vector3.up
-                    );
-                    transform.rotation = Quaternion.Slerp(
-                        transform.rotation,
-                        targetRotation,
-                        _stats.RotationSmoothing * Time.deltaTime
-                    );
                 }
             }
         }

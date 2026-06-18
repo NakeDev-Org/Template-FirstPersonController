@@ -1,4 +1,3 @@
-using nakatimat.ComboFramework.Data;
 using nakatimat.DamageSystem;
 using UnityEngine;
 
@@ -19,47 +18,39 @@ namespace nakatimat.AttackSystem
         }
 
         public void TriggerAttack(
-            ComboNode comboNode,
-            AttackData baseAttackData
+            Vector3 hitBoxCenter,
+            Vector3 hitBoxSize,
+            AttackData baseAttackData,
+            float damageMultiplier = 1f
         )
         {
-            if (comboNode == null || baseAttackData == null)
+            if (baseAttackData == null)
             {
                 return;
             }
 
-            PlayVFX(comboNode);
+            PlayVFX();
 
-            // Calcula o dano final (Dano da Arma X Multiplicador do Golpe)
             AttackData finalAttackData = Instantiate(baseAttackData);
 
             for (int i = 0; i < finalAttackData.damages.Count; i++)
             {
                 DamageInstance instance = finalAttackData.damages[i];
-                instance.amount *= comboNode.damageMultiplier;
+                instance.amount *= damageMultiplier;
                 finalAttackData.damages[i] = instance;
             }
 
             _attackController.Attack(
-                comboNode.hitBoxCenter,
-                comboNode.hitBoxSize,
+                hitBoxCenter,
+                hitBoxSize,
                 finalAttackData
             );
         }
 
-        private void PlayVFX(ComboNode comboNode)
+        private void PlayVFX()
         {
             if (_slashVFX == null)
                 return;
-
-            _slashVFX.transform.localPosition = comboNode.vfxPosition;
-            _slashVFX.transform.localRotation = Quaternion.Euler(
-                comboNode.vfxRotation
-            );
-            _slashVFX.transform.localScale = Vector3.one * comboNode.vfxScale;
-
-            var mainModule = _slashVFX.main;
-            mainModule.startColor = comboNode.vfxColor;
 
             _slashVFX.Play();
         }

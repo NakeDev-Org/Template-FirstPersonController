@@ -48,41 +48,20 @@ namespace nakatimat.TPS.Player.Modular
                 isCrouching
             );
 
-            // Alimentamos o X e Y da BlendTree 2D sempre!
-            if (
-                _locomotion.CurrentStyle
-                == nakatimat
-                    .TPS
-                    .Player
-                    .Modular
-                    .Data
-                    .LocomotionStyle
-                    .CameraStrafe
-            )
+            // Alimentamos o X e Y da BlendTree 2D sempre, pois agora é CameraStrafe constante
+            if (_inputReader != null)
             {
-                if (_inputReader != null)
-                {
-                    float h = _inputReader.MoveInput.x;
-                    float v = _inputReader.MoveInput.y;
+                float h = _inputReader.MoveInput.x;
+                float v = _inputReader.MoveInput.y;
 
-                    // Normaliza o input para não passar de 1, e depois multiplica pela velocidade real do personagem
-                    Vector2 input = new Vector2(h, v);
-                    if (input.sqrMagnitude > 1f)
-                        input.Normalize();
+                // Normaliza o input para não passar de 1, e depois multiplica pela velocidade real do personagem
+                Vector2 input = new Vector2(h, v);
+                if (input.sqrMagnitude > 1f)
+                    input.Normalize();
 
-                    _animatorHandler.UpdateStrafeParameters(
-                        input.x * _locomotion.CurrentSpeed,
-                        input.y * _locomotion.CurrentSpeed
-                    );
-                }
-            }
-            else
-            {
-                // Na exploração normal (FreeDirectional), o personagem sempre olha pra frente.
-                // Então o Horizontal é zero, e o Vertical é a velocidade atual!
                 _animatorHandler.UpdateStrafeParameters(
-                    0f,
-                    _locomotion.CurrentSpeed
+                    input.x * _locomotion.CurrentSpeed,
+                    input.y * _locomotion.CurrentSpeed
                 );
             }
 

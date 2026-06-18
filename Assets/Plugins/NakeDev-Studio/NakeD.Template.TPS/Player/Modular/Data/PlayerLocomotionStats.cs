@@ -2,25 +2,12 @@ using UnityEngine;
 
 namespace nakatimat.TPS.Player.Modular.Data
 {
-    public enum LocomotionStyle
-    {
-        FreeDirectional, // O personagem vira o corpo para onde anda (1D)
-        CameraStrafe, // O personagem sempre olha para frente e usa strafe (2D)
-    }
-
     [CreateAssetMenu(
         fileName = "PlayerLocomotionStats",
         menuName = "NakeCore/Player/Locomotion Stats"
     )]
     public class PlayerLocomotionStats : ScriptableObject
     {
-        [Header("Movement Style")]
-        [Tooltip(
-            "FreeDirectional: Estilo Zelda/Mario (1D).\nCameraStrafe: Estilo Dead Space/RE2 (2D Strafe)."
-        )]
-        public LocomotionStyle DefaultLocomotionStyle =
-            LocomotionStyle.FreeDirectional;
-
         [Header("Movement Speeds")]
         public float WalkSpeed = 3f;
         public float CrouchSpeed = 2f;
