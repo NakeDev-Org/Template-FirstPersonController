@@ -16,12 +16,12 @@ namespace nakatimat.Core
             Instance = this;
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             ApplyCursorBehaviour();
         }
 
-        private void ApplyCursorBehaviour()
+        protected virtual void ApplyCursorBehaviour()
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
