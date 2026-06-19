@@ -154,7 +154,7 @@ namespace nakatimat.TPS.Player.Modular
             );
         }
 
-        private void CalculateMoveDirection()
+        protected virtual void CalculateMoveDirection()
         {
             if (_mainCamera == null || _inputReader == null)
                 return;
@@ -176,7 +176,7 @@ namespace nakatimat.TPS.Player.Modular
             }
         }
 
-        private void UpdateSpeedState(
+        protected virtual void UpdateSpeedState(
             bool isSprinting,
             bool isCrouching,
             bool isBlocking,
@@ -227,7 +227,7 @@ namespace nakatimat.TPS.Player.Modular
 
         private Vector3 _currentMoveVelocity;
 
-        private void ApplyMovementAndRotation()
+        protected virtual void ApplyMovementAndRotation()
         {
             // Calculate what the speed SHOULD be based on input
             Vector3 targetVelocityXZ = MoveDirection * CurrentSpeed;
