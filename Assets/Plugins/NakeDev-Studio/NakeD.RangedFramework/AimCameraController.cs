@@ -1,5 +1,5 @@
 using nakatimat.Core.Interfaces;
-using Unity.Cinemachine;
+using Cinemachine;
 using UnityEngine;
 
 namespace nakatimat.RangedFramework
@@ -9,7 +9,7 @@ namespace nakatimat.RangedFramework
         [Header("References")]
         [Tooltip("Arraste a câmera de mira (CM vcam_Aim) aqui.")]
         [SerializeField]
-        private CinemachineCamera _aimCamera;
+        private CinemachineVirtualCamera _aimCamera;
 
         private IAimingAddon _aimingAddon;
 

@@ -1,9 +1,5 @@
 using UnityEngine;
-#if UNITY_6000_0_OR_NEWER
-using Unity.Cinemachine;
-#else
 using Cinemachine;
-#endif
 
 namespace nakatimat.TPS.Player
 {
@@ -112,13 +108,8 @@ namespace nakatimat.TPS.Player
 
                 if (lockOnVirtualCamera != null)
                 {
-#if UNITY_6000_0_OR_NEWER
-                    var cam =
-                        lockOnVirtualCamera.GetComponent<CinemachineCamera>();
-#else
                     var cam =
                         lockOnVirtualCamera.GetComponent<CinemachineVirtualCamera>();
-#endif
                     if (cam != null)
                     {
                         // FOV aumenta conforme a distância aumenta (até o limite de quebra)
@@ -339,23 +330,13 @@ namespace nakatimat.TPS.Player
                 if (lockOnVirtualCamera != null)
                 {
                     lockOnVirtualCamera.SetActive(true);
-#if UNITY_6000_0_OR_NEWER
                     var cam =
-                        lockOnVirtualCamera.GetComponent<Unity.Cinemachine.CinemachineCamera>();
+                        lockOnVirtualCamera.GetComponent<CinemachineVirtualCamera>();
                     if (cam != null)
                     {
                         cam.LookAt = currentTarget;
                         cam.Follow = currentTarget; // Faz a câmera ancorar no inimigo para orbitá-lo!
                     }
-#else
-                    var cam =
-                        lockOnVirtualCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>();
-                    if (cam != null)
-                    {
-                        cam.LookAt = currentTarget;
-                        cam.Follow = currentTarget; // Faz a câmera ancorar no inimigo para orbitá-lo!
-                    }
-#endif
                 }
             }
         }
