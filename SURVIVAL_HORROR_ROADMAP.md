@@ -8,10 +8,18 @@ Este documento serve como nosso guia definitivo para transformar o framework TPS
 - [x] Configurar o `PlayerAnimationUpdater.cs` para enviar `Horizontal` (X) e `Vertical` (Y) reais para pilotar a BlendTree 2D de Strafe.
 - [x] **YAGNI / Limpeza:** Remover completamente o conceito de **Pulo** do jogo (`ProcessJump`, inputs, hashes no Animator e variáveis no `PlayerLocomotionStats`), focando no peso realista.
 
+## ✅ Phase 1.1: Locomotion Polish (Concluído)
+- [x] Corrigir BlendTree 2D: Mapear valores enviados ao Animator para uma escala exata (0.5 max para Walk, 1.0 max para Jog), abandonando a injeção da velocidade física direta (`CurrentSpeed`).
+- [x] Suavizar entrada do analógico para evitar "snaps" na animação.
+
 ## ✅ Phase 2: Purging the Combo System (Concluído)
 - [x] Excluir a pasta `NakeD.ComboFramework` inteira.
 - [x] Limpar `PlayerManager.cs` / `PlayerCombat.cs` para desvincular o sistema de grafos de combo.
 - [x] Manter o corpo-a-corpo restrito a apenas 1 hit defensivo rápido.
+
+## ⏳ Phase 2.1: Purging RPG Elements from Melee (Próximo Passo)
+- [ ] Simplificar o sistema de `MeleeWeaponStats`. Remover variáveis complexas de RPG (Dano de Fogo, Luz, Sangramento, etc).
+- [ ] Focar em um sistema de dano simples, físico e direto (Raw Damage + Impacto).
 
 ## ⏳ Phase 3: Ranged Combat (Próximo Passo)
 - [ ] Remover ou deletar componentes específicos para Arco e Flecha (Física balística complexa de projéteis lentos) do `NakeD.RangedFramework`.

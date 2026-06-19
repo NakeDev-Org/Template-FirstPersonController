@@ -1,8 +1,8 @@
 {
   "name": "com.nakedev.studio",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "displayName": "NakeDev TPS Framework",
-  "description": "Modular Action RPG and Survival Horror Framework by Nakemo/Matheus Nakati.",
+  "description": "Modular Survival Horror Framework by (Nakemo | Matheus Nakati).",
   "unity": "2022.3",
   "author": {
     "name": "NakeDev Studio",
@@ -12,6 +12,7 @@
   "dependencies": {
     "com.unity.inputsystem": "1.7.0",
     "com.unity.animation.rigging": "1.2.1",
-    "com.unity.cinemachine": "2.9.7"
+    "com.unity.cinemachine": "2.9.7",
+    "com.unity.textmeshpro": "3.0.6"
   }
 }

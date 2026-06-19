@@ -32,6 +32,8 @@ namespace nakatimat.TPS.Player.Modular
             _footIK = GetComponent<ProceduralFootIK>();
         }
 
+        private Vector2 _currentBlendInput;
+
         public void UpdateAnimations(
             bool isSprinting,
             bool isCrouching
@@ -43,20 +45,31 @@ namespace nakatimat.TPS.Player.Modular
             _animatorHandler.UpdateGrounded(_locomotion.IsGrounded);
             _animatorHandler.UpdateLocomotion(isCrouching);
 
-            // Alimentamos o X e Y da BlendTree 2D sempre, pois agora é CameraStrafe constante
+            // Alimentamos o X e Y da BlendTree 2D sempre, limitando para as faixas corretas de animação
             if (_inputReader != null)
             {
-                float h = _inputReader.MoveInput.x;
-                float v = _inputReader.MoveInput.y;
-
-                // Normaliza o input para não passar de 1, e depois multiplica pela velocidade real do personagem
-                Vector2 input = new Vector2(h, v);
+                Vector2 input = _inputReader.MoveInput;
+                
+                // Normaliza para não passar de 1 em diagonais
                 if (input.sqrMagnitude > 1f)
                     input.Normalize();
 
+                // Regra do Survival Horror:
+                // Se não está correndo, limita a magnitude em 0.5 (Walking)
+                // Se está correndo, permite ir até 1.0 (Jogging)
+                float maxBlend = isSprinting ? 1f : 0.5f;
+
+                if (input.magnitude > maxBlend)
+                {
+                    input = input.normalized * maxBlend;
+                }
+
+                // Suavização manual para a animação transicionar fluidamente (evita snaps)
+                _currentBlendInput = Vector2.Lerp(_currentBlendInput, input, Time.deltaTime * 10f);
+
                 _animatorHandler.UpdateStrafeParameters(
-                    input.x * _locomotion.CurrentSpeed,
-                    input.y * _locomotion.CurrentSpeed
+                    _currentBlendInput.x,
+                    _currentBlendInput.y
                 );
             }
 

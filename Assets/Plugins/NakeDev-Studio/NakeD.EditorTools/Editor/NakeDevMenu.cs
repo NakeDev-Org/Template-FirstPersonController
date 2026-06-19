@@ -12,34 +12,24 @@ namespace nakatimat.Core.Editor
         // 🧍‍♂️ CRIADORES DE PLAYER (TEMPLATES)
         // ==========================================
 
-        [MenuItem("NakeDev/Template/Player/1. Walking Simulator", false, 10)]
-        public static void CreateWalkingSimPlayer()
-        {
-            GameObject player = new GameObject("Player_WalkingSimulator");
-            player.AddComponent<PlayerManager>();
 
-            Selection.activeGameObject = player;
-            Debug.Log("🧍 Caminhante criado! Configure as câmeras lentas.");
-        }
 
-        [MenuItem("NakeDev/Template/Player/2. Survival Horror", false, 11)]
+        [MenuItem("NakeDev/Template/Spawn Player (Dummy)", false, 11)]
         public static void CreateSurvivalHorrorPlayer()
         {
-            GameObject player = new GameObject("Player_SurvivalHorror");
+            string prefabPath = "Assets/Plugins/NakeDev-Studio/NakeD.QuickSetup/PlayerPrefab/Player_Dummy_Survival.prefab";
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
             
-            // Unity Core
-            player.AddComponent<Animator>();
-            player.AddComponent<CharacterController>();
-
-            // NakeDev Core Locomotion (PlayerManager's [RequireComponent] will automatically add:
-            // InputReader, PlayerLocomotion, PlayerAnimationUpdater, and TPSCameraAimController)
-            player.AddComponent<PlayerManager>();
-            
-            // Aiming / Interacting
-            player.AddComponent<TargetingSystem>();
-
-            Selection.activeGameObject = player;
-            Debug.Log("🔦 Sobrevivente criado! Locomoção, inputs e animações básicas adicionadas.");
+            if (prefab != null)
+            {
+                GameObject player = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+                Selection.activeGameObject = player;
+                Debug.Log("🔦 Sobrevivente (Dummy) instanciado na cena! Configure a malha 3D e o Avatar.");
+            }
+            else
+            {
+                Debug.LogError($"[NakeDev] Prefab Dummy não encontrado no caminho:\n{prefabPath}\nVerifique se o prefab foi criado corretamente!");
+            }
         }
 
         // ==========================================
