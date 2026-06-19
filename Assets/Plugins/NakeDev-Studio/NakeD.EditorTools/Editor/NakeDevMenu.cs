@@ -17,19 +17,22 @@ namespace nakatimat.Core.Editor
         [MenuItem("NakeDev/Template/Spawn Player (Dummy)", false, 11)]
         public static void CreateSurvivalHorrorPlayer()
         {
-            string prefabPath = "Assets/Plugins/NakeDev-Studio/NakeD.QuickSetup/PlayerPrefab/Player_Dummy_Survival.prefab";
-            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+            string[] guids = AssetDatabase.FindAssets("Player_Dummy_Survival t:Prefab");
+            if (guids.Length > 0)
+            {
+                string prefabPath = AssetDatabase.GUIDToAssetPath(guids[0]);
+                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+                
+                if (prefab != null)
+                {
+                    GameObject player = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+                    Selection.activeGameObject = player;
+                    Debug.Log("🔦 Sobrevivente (Dummy) instanciado na cena! Configure a malha 3D e o Avatar.");
+                    return;
+                }
+            }
             
-            if (prefab != null)
-            {
-                GameObject player = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
-                Selection.activeGameObject = player;
-                Debug.Log("🔦 Sobrevivente (Dummy) instanciado na cena! Configure a malha 3D e o Avatar.");
-            }
-            else
-            {
-                Debug.LogError($"[NakeDev] Prefab Dummy não encontrado no caminho:\n{prefabPath}\nVerifique se o prefab foi criado corretamente!");
-            }
+            Debug.LogError("[NakeDev] Prefab Dummy ('Player_Dummy_Survival') não encontrado no projeto. Verifique se a Framework foi importada corretamente!");
         }
 
         // ==========================================
