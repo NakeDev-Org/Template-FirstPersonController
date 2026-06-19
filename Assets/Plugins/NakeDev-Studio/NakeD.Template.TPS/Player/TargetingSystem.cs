@@ -1,5 +1,5 @@
 using UnityEngine;
-using Cinemachine;
+using Unity.Cinemachine;
 
 namespace nakatimat.TPS.Player
 {
@@ -109,7 +109,7 @@ namespace nakatimat.TPS.Player
                 if (lockOnVirtualCamera != null)
                 {
                     var cam =
-                        lockOnVirtualCamera.GetComponent<CinemachineVirtualCamera>();
+                        lockOnVirtualCamera.GetComponent<CinemachineCamera>();
                     if (cam != null)
                     {
                         // FOV aumenta conforme a distância aumenta (até o limite de quebra)
@@ -331,7 +331,7 @@ namespace nakatimat.TPS.Player
                 {
                     lockOnVirtualCamera.SetActive(true);
                     var cam =
-                        lockOnVirtualCamera.GetComponent<CinemachineVirtualCamera>();
+                        lockOnVirtualCamera.GetComponent<CinemachineCamera>();
                     if (cam != null)
                     {
                         cam.LookAt = currentTarget;
