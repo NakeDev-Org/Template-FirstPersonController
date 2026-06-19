@@ -3,7 +3,7 @@
     "rootNamespace": "NakeDev.Studio",
     "references": [
         "Unity.InputSystem",
-        "Unity.Cinemachine",
+        "Cinemachine",
         "Unity.Animation.Rigging",
         "Unity.TextMeshPro"
     ],
