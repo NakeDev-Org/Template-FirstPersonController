@@ -2,46 +2,33 @@ using UnityEngine;
 
 namespace nakatimat.RangedFramework
 {
-    public enum RangedWeaponType
-    {
-        Bow, // Atira ao soltar a mira
-        Firearm, // Atira ao apertar ataque enquanto mira
-    }
-
     [CreateAssetMenu(
         fileName = "New RangedWeapon",
-        menuName = "NakeCore/ArcherFramework/Ranged Weapon Stats"
+        menuName = "NakeCore/TPS/Combat/Ranged Weapon Stats"
     )]
     public class RangedWeaponStats : ScriptableObject
     {
-        [Header("Weapon Behavior")]
-        [Tooltip(
-            "Bow: Dispara ao soltar o gatilho de mira.\nFirearm: Dispara ao apertar o botão de ataque durante a mira."
-        )]
-        public RangedWeaponType WeaponType = RangedWeaponType.Bow;
-
         [Header("Models & Instantiation")]
         [Tooltip(
-            "O Prefab 3D da Arma/Arco que será instanciado na mão/costas do personagem."
+            "O Prefab 3D da Arma que será instanciado na mão/costas do personagem."
         )]
         public GameObject WeaponPrefab;
 
-        [Tooltip(
-            "Opcional: O Prefab 3D da Aljava/Coldre que ficará permanentemente nas costas/cintura."
-        )]
-        public GameObject QuiverPrefab;
+        [Header("Gun Stats (Hitscan)")]
+        [Tooltip("Dano base infligido no impacto do hitscan.")]
+        public float BaseDamage = 15f;
 
-        [Header("Projectile Info")]
-        public GameObject ProjectilePrefab;
-
-        [Tooltip("Velocidade do projétil ao sair da arma.")]
-        public float ProjectileSpeed = 30f;
-
-        [Tooltip("Dano base infligido no impacto.")]
-        public float ProjectileDamage = 15f;
-
-        [Header("Timing")]
-        [Tooltip("Tempo necessário de cooldown entre os disparos.")]
+        [Tooltip("Tempo necessário de cooldown entre os disparos (Fire Rate).")]
         public float TimeBetweenShots = 0.5f;
+
+        [Tooltip("Layers que o hitscan da arma pode acertar.")]
+        public LayerMask HitMask = Physics.DefaultRaycastLayers;
+
+        [Header("Ammo System")]
+        [Tooltip("Tamanho do pente (Clip)")]
+        public int ClipSize = 10;
+
+        [Tooltip("Tempo em segundos para recarregar a arma.")]
+        public float ReloadTime = 1.5f;
     }
 }

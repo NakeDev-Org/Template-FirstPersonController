@@ -20,7 +20,6 @@ namespace nakatimat.TPS.Player.Modular
 
         // Optional dependencies
         private Transform _mainCamera;
-        private TargetingSystem _targetingSystem;
 
         // Components
         private CharacterController _characterController;
@@ -39,8 +38,7 @@ namespace nakatimat.TPS.Player.Modular
             if (_inputReader == null)
                 _inputReader = GetComponent<InputReader>();
 
-            // Assuming TargetingSystem might be on the same object
-            _targetingSystem = GetComponent<TargetingSystem>();
+            // Targeting System Removido (Fase 4)
 
             if (Camera.main != null)
             {
@@ -254,57 +252,25 @@ namespace nakatimat.TPS.Player.Modular
             // Apply horizontal movement
             _characterController.Move(_currentMoveVelocity * Time.deltaTime);
 
-            // Handle Rotation
-            bool hasTarget =
-                _targetingSystem != null
-                && _targetingSystem.GetCurrentTarget() != null;
-
-            if (hasTarget)
+            // Handle Rotation (OTS - Sempre alinhado à Câmera se movendo ou mirando)
+            if (MoveDirection.sqrMagnitude > 0.01f || _isAiming)
             {
-                Vector3 targetPos = _targetingSystem
-                    .GetCurrentTarget()
-                    .position;
-                Vector3 directionToTarget = (
-                    targetPos - transform.position
-                ).normalized;
-                directionToTarget.y = 0f;
+                if (_mainCamera != null)
+                {
+                    Vector3 camForward = _mainCamera.forward;
+                    camForward.y = 0f;
 
-                if (directionToTarget != Vector3.zero)
-                {
-                    Quaternion targetRotation = Quaternion.LookRotation(
-                        directionToTarget,
-                        Vector3.up
-                    );
-                    transform.rotation = Quaternion.Slerp(
-                        transform.rotation,
-                        targetRotation,
-                        _stats.RotationSmoothing * 2f * Time.deltaTime
-                    );
-                }
-            }
-            else
-            {
-                // Se estiver se movendo OU mirando, o personagem sempre olha para a frente da câmera (Strafe).
-                // Se estiver parado e sem mirar, a câmera fica livre (personagem não gira).
-                if (MoveDirection.sqrMagnitude > 0.01f || _isAiming)
-                {
-                    if (_mainCamera != null)
+                    if (camForward != Vector3.zero)
                     {
-                        Vector3 camForward = _mainCamera.forward;
-                        camForward.y = 0f;
-
-                        if (camForward != Vector3.zero)
-                        {
-                            Quaternion targetRotation = Quaternion.LookRotation(
-                                camForward.normalized,
-                                Vector3.up
-                            );
-                            transform.rotation = Quaternion.Slerp(
-                                transform.rotation,
-                                targetRotation,
-                                _stats.RotationSmoothing * Time.deltaTime
-                            );
-                        }
+                        Quaternion targetRotation = Quaternion.LookRotation(
+                            camForward.normalized,
+                            Vector3.up
+                        );
+                        transform.rotation = Quaternion.Slerp(
+                            transform.rotation,
+                            targetRotation,
+                            _stats.RotationSmoothing * Time.deltaTime
+                        );
                     }
                 }
             }

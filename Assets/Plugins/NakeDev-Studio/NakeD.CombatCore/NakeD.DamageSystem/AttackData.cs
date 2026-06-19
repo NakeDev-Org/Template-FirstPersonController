@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace nakatimat.DamageSystem
@@ -9,38 +8,16 @@ namespace nakatimat.DamageSystem
     )]
     public class AttackData : ScriptableObject
     {
-        public List<DamageInstance> damages = new List<DamageInstance>();
+        [Header("Dano Bruto (Survival Horror)")]
+        [Tooltip("Dano base infligido no alvo")]
+        public float baseDamage;
+        
+        [Tooltip("Força de impacto para efeitos de Knockback (se necessário)")]
+        public float impactForce = 1f;
+
         public LayerMask damageableLayer;
 
         [Header("Attack Speed")]
         public float attackSpeedMultiplier = 1;
-
-        [Header("Critico (optional)")]
-        public bool canCrit = false;
-
-        [Range(0f, 1f)]
-        public float critChance = 0.1f;
-        public float critMultiplier = 1.5f;
-
-        public float GetCriticalMultiplier()
-        {
-            if (canCrit == true)
-            {
-                float rool = Random.value;
-                if (rool <= critChance)
-                {
-                    return critMultiplier;
-                }
-            }
-
-            return 1f;
-        }
-    }
-
-    [System.Serializable]
-    public struct DamageInstance
-    {
-        public float amount;
-        public DamageType damageType;
     }
 }

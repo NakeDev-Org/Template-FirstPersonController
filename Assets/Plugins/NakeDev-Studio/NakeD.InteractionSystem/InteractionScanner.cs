@@ -31,7 +31,7 @@ namespace nakatimat.InteractionSystem
         private IInteractable _closestInteractable;
         private Collider[] _overlapResults = new Collider[10];
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             if (_inputReader == null)
                 _inputReader = GetComponent<InputReader>();
@@ -41,7 +41,7 @@ namespace nakatimat.InteractionSystem
             }
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             if (_inputReader != null)
             {
@@ -49,7 +49,7 @@ namespace nakatimat.InteractionSystem
             }
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (Time.time >= _nextScanTime)
             {
@@ -58,7 +58,7 @@ namespace nakatimat.InteractionSystem
             }
         }
 
-        private void PerformScan()
+        protected virtual void PerformScan()
         {
             // Faz um OverlapSphere para achar qualquer coisa na Layer "Interactable"
             int hits = Physics.OverlapSphereNonAlloc(
@@ -105,7 +105,7 @@ namespace nakatimat.InteractionSystem
             }
         }
 
-        private void TryInteract()
+        protected virtual void TryInteract()
         {
             if (_closestInteractable != null)
             {
@@ -113,7 +113,7 @@ namespace nakatimat.InteractionSystem
             }
         }
 
-        private void ShowInteractionUI(IInteractable interactable)
+        protected virtual void ShowInteractionUI(IInteractable interactable)
         {
             if (_interactionUI != null)
             {
@@ -127,7 +127,7 @@ namespace nakatimat.InteractionSystem
             }
         }
 
-        private void HideInteractionUI()
+        protected virtual void HideInteractionUI()
         {
             if (_interactionUI != null)
             {

@@ -34,7 +34,7 @@ namespace nakatimat.TPS.Player.Modular
         public event Action OnAimStarted;
         public event Action OnAimCanceled;
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             if (_inputActions == null)
             {
@@ -46,7 +46,7 @@ namespace nakatimat.TPS.Player.Modular
             _inputActions.Enable();
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             if (_inputActions != null)
             {
@@ -54,12 +54,12 @@ namespace nakatimat.TPS.Player.Modular
             }
         }
 
-        public void OnMovement(InputAction.CallbackContext context)
+        public virtual void OnMovement(InputAction.CallbackContext context)
         {
             MoveInput = context.ReadValue<Vector2>();
         }
 
-        public void OnLook(InputAction.CallbackContext context)
+        public virtual void OnLook(InputAction.CallbackContext context)
         {
             LookInput = context.ReadValue<Vector2>();
 
@@ -70,25 +70,25 @@ namespace nakatimat.TPS.Player.Modular
             }
         }
 
-        public void OnJump(InputAction.CallbackContext context)
+        public virtual void OnJump(InputAction.CallbackContext context)
         {
             if (context.performed)
                 OnJumpPressed?.Invoke();
         }
 
-        public void OnLightAttack(InputAction.CallbackContext context)
+        public virtual void OnLightAttack(InputAction.CallbackContext context)
         {
             if (context.performed)
                 OnAttackPressed?.Invoke();
         }
 
-        public void OnHeavyAttack(InputAction.CallbackContext context)
+        public virtual void OnHeavyAttack(InputAction.CallbackContext context)
         {
             if (context.performed)
                 OnHeavyAttackPressed?.Invoke();
         }
 
-        public void OnSprint(InputAction.CallbackContext context)
+        public virtual void OnSprint(InputAction.CallbackContext context)
         {
             if (context.performed)
                 OnSprintStarted?.Invoke();
@@ -96,25 +96,25 @@ namespace nakatimat.TPS.Player.Modular
                 OnSprintCanceled?.Invoke();
         }
 
-        public void OnCrouch(InputAction.CallbackContext context)
+        public virtual void OnCrouch(InputAction.CallbackContext context)
         {
             if (context.performed)
                 OnCrouchToggled?.Invoke();
         }
 
-        public void OnInteraction(InputAction.CallbackContext context)
+        public virtual void OnInteraction(InputAction.CallbackContext context)
         {
             if (context.performed)
                 OnInteractionPressed?.Invoke();
         }
 
-        public void OnWeapon(InputAction.CallbackContext context)
+        public virtual void OnWeapon(InputAction.CallbackContext context)
         {
             if (context.performed)
                 OnWeaponToggled?.Invoke();
         }
 
-        public void OnBlockTargetParry(InputAction.CallbackContext context)
+        public virtual void OnBlockTargetParry(InputAction.CallbackContext context)
         {
             if (context.performed)
                 OnBlockStarted?.Invoke();
@@ -122,7 +122,7 @@ namespace nakatimat.TPS.Player.Modular
                 OnBlockCanceled?.Invoke();
         }
 
-        public void OnAim(InputAction.CallbackContext context)
+        public virtual void OnAim(InputAction.CallbackContext context)
         {
             if (context.performed)
                 OnAimStarted?.Invoke();

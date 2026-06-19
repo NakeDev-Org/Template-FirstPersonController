@@ -9,6 +9,5 @@ namespace nakatimat.DamageSystem
     public class TPSHealthStats : ScriptableObject
     {
         public int maxHP = 100;
-        public TPSDamageResistances TPSDamageResistances;
     }
 }

@@ -42,19 +42,12 @@ namespace nakatimat.DamageSystem
                 {
                     if (AttackData != null)
                     {
-                        foreach (var damage in AttackData.damages)
-                        {
-                            float multiplier =
-                                AttackData.GetCriticalMultiplier();
-                            float finalDamage = damage.amount * multiplier;
-                            damageable.ApplyDamage(
-                                finalDamage,
-                                damage.damageType,
-                                transform.root.gameObject
-                            );
+                        damageable.ApplyDamage(
+                            AttackData.baseDamage,
+                            transform.root.gameObject
+                        );
 
-                            OnEnemyHit?.Invoke(hit.ClosestPoint(boxCenter));
-                        }
+                        OnEnemyHit?.Invoke(hit.ClosestPoint(boxCenter));
                     }
                 }
             }

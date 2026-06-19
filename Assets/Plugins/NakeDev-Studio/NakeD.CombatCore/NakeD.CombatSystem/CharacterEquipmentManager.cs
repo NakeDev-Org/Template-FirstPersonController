@@ -34,7 +34,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
         private bool _isBlocking;
         private float _parryEndTime;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             if (_animationHandler == null)
             {
@@ -42,7 +42,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
             }
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             if (_startingWeapon != null)
             {
@@ -50,7 +50,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
             }
         }
 
-        public void WeaponEquip(TPSMeleeWeaponStats TPSMeleeWeaponStats)
+        public virtual void WeaponEquip(TPSMeleeWeaponStats TPSMeleeWeaponStats)
         {
             if (TPSMeleeWeaponStats == null)
             {
@@ -75,7 +75,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
             OnWeaponEquipped?.Invoke(TPSMeleeWeaponStats);
         }
 
-        public void Attack()
+        public virtual void Attack()
         {
             if (_currentWeaponData == null)
             {
@@ -84,26 +84,26 @@ namespace nakatimat.CombatSystem.MeleeSystem
             _animationHandler.Attack(_currentWeaponData.AttackData);
         }
 
-        public bool GetIsCombatMelee()
+        public virtual bool GetIsCombatMelee()
         {
             if (_animationHandler == null)
                 return false;
             return _animationHandler.GetIsCombatMode();
         }
 
-        public bool IsAttacking()
+        public virtual bool IsAttacking()
         {
             if (_animationHandler == null)
                 return false;
             return _animationHandler.IsAttacking();
         }
 
-        public float GetWeaponStaminaCost(float defaultCost = 15f)
+        public virtual float GetWeaponStaminaCost(float defaultCost = 15f)
         {
             return defaultCost;
         }
 
-        public void ToggleCombatMode()
+        public virtual void ToggleCombatMode()
         {
             if (_currentWeaponData == null)
             {
@@ -120,7 +120,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
             }
         }
 
-        public void UnequipWeapon()
+        public virtual void UnequipWeapon()
         {
             if (_weaponInstance != null)
             {
@@ -131,7 +131,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
         }
 
         #region Defense Logic
-        public void StartBlock()
+        public virtual void StartBlock()
         {
             if (!GetIsCombatMelee())
                 return;
@@ -140,34 +140,34 @@ namespace nakatimat.CombatSystem.MeleeSystem
             _animationHandler?.SetBlocking(true);
         }
 
-        public void StopBlock()
+        public virtual void StopBlock()
         {
             _isBlocking = false;
             _animationHandler?.SetBlocking(false);
         }
 
-        public bool IsBlocking()
+        public virtual bool IsBlocking()
         {
             return _isBlocking;
         }
         #endregion
 
 
-        private void ResetWeapon()
+        protected virtual void ResetWeapon()
         {
             _weaponInstance.transform.localPosition = Vector3.zero;
             _weaponInstance.transform.localRotation = Quaternion.identity;
         }
 
         #region Animation Event Callback
-        public void Equip()
+        public virtual void Equip()
         {
             _weaponInstance.transform.SetParent(_weaponHandSlot);
             ResetWeapon();
             _animationHandler.SetWeaponInHand(true);
         }
 
-        private void Unequip()
+        protected virtual void Unequip()
         {
             _weaponInstance.transform.SetParent(_weaponBackSlot);
             ResetWeapon();

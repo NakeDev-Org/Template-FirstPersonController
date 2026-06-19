@@ -6,7 +6,6 @@ namespace nakatimat.DamageSystem
     {
         public void ApplyDamage(
             float damageAmount,
-            DamageType damageType = DamageType.Physical,
             GameObject attacker = null
         );
     }

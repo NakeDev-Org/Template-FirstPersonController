@@ -33,7 +33,7 @@ namespace nakatimat.TPS.Player.Modular
         // Modules that might exist on the player
         private CharacterEquipmentManager _weaponHandler;
         private StaminaController _staminaController;
-        private TargetingSystem _targetingSystem;
+        // TargetingSystem removido
 
         public bool IsMeleeStance { get; private set; }
         public bool IsBlocking { get; private set; }
@@ -45,7 +45,7 @@ namespace nakatimat.TPS.Player.Modular
                 _inputReader = GetComponent<InputReader>();
             _weaponHandler = GetComponent<CharacterEquipmentManager>();
             _staminaController = GetComponent<StaminaController>();
-            _targetingSystem = GetComponent<TargetingSystem>();
+            // TargetingSystem removido
         }
 
         private void OnEnable()
@@ -133,22 +133,14 @@ namespace nakatimat.TPS.Player.Modular
             _blockStartTime = Time.time;
             _weaponHandler?.StartBlock();
 
-            // Z-Targeting inteligente: Só trava se tiver alguém bem perto e na frente da câmera!
-            if (_targetingSystem != null)
-            {
-                _targetingSystem.SetTargeting(true, true);
-            }
+            // Z-Targeting Removido
         }
 
         private void HandleBlockStop()
         {
             _weaponHandler?.StopBlock();
 
-            // Solta a mira ao soltar a defesa
-            if (_targetingSystem != null)
-            {
-                _targetingSystem.SetTargeting(false);
-            }
+            // Solta a mira ao soltar a defesa Removido
         }
 
         public bool TryConsumeStamina(float amount)
@@ -180,10 +172,7 @@ namespace nakatimat.TPS.Player.Modular
         // ==========================================
         // DEFENSE & PARRY (IDefenseProvider)
         // ==========================================
-        public float GetDefenseMultiplier(
-            DamageType damageType,
-            out bool parrySuccess
-        )
+        public float GetDefenseMultiplier(out bool parrySuccess)
         {
             parrySuccess = false;
 

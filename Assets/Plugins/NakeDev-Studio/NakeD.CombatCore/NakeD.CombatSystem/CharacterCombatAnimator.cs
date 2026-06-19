@@ -37,7 +37,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
         private HandIK _handIK;
         private ProceduralFootIK _footIK;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             if (_animator == null)
             {
@@ -55,7 +55,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
             _footIK = GetComponent<ProceduralFootIK>();
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             
@@ -93,7 +93,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
             }
         }
 
-        public void EquipWeapon(TPSMeleeWeaponStats TPSMeleeWeaponStats)
+        public virtual void EquipWeapon(TPSMeleeWeaponStats TPSMeleeWeaponStats)
         {
             if (TPSMeleeWeaponStats == null)
                 return;
@@ -124,7 +124,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
             }
         }
 
-        public void Attack(AttackData attackData)
+        public virtual void Attack(AttackData attackData)
         {
             if (attackData == null)
                 return;
@@ -146,7 +146,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
             PerformAttack();
         }
 
-        private void PerformAttack()
+        protected virtual void PerformAttack()
         {
             if (_currentWeaponData == null)
             {
@@ -162,24 +162,24 @@ namespace nakatimat.CombatSystem.MeleeSystem
             _movementBlocker?.SetMovmentBlocked(true);
         }
 
-        public void ResetAttack()
+        public virtual void ResetAttack()
         {
             _buffAttack = false;
             _animator.SetBool(IsAttackingHash, false);
             _movementBlocker?.SetMovmentBlocked(false);
         }
 
-        public bool GetIsCombatMode()
+        public virtual bool GetIsCombatMode()
         {
             return _isMelee;
         }
 
-        public bool IsAttacking()
+        public virtual bool IsAttacking()
         {
             return _buffAttack;
         }
 
-        public void EnterCombatMode()
+        public virtual void EnterCombatMode()
         {
             _isMelee = true;
             _animator.SetBool(IsMeleeHash, _isMelee);
@@ -187,7 +187,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
             _animator.SetTrigger(TriggerEquipHash);
         }
 
-        public void ExitCombatMode()
+        public virtual void ExitCombatMode()
         {
             if (_isMelee == true)
             {
@@ -199,12 +199,12 @@ namespace nakatimat.CombatSystem.MeleeSystem
             _animator.SetBool(IsMeleeHash, _isMelee);
         }
 
-        public void SetWeaponInHand(bool inHand)
+        public virtual void SetWeaponInHand(bool inHand)
         {
             _isWeaponInHand = inHand;
         }
 
-        public void SetBlocking(bool isBlocking)
+        public virtual void SetBlocking(bool isBlocking)
         {
             if (_animator != null)
             {
@@ -213,7 +213,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
         }
 
         // Call this via Animation Event on the "Attack1" animation
-        public void Hit()
+        public virtual void Hit()
         {
             Vector3 center = transform.position + transform.forward * 1f + transform.up * 1f;
             Vector3 size = new Vector3(1f, 1f, 1f);

@@ -11,6 +11,10 @@ namespace nakatimat.RangedFramework
         [SerializeField]
         private CinemachineCamera _aimCamera;
 
+        [Tooltip("Arraste o GameObject/UI da sua retícula de mira (Crosshair) aqui.")]
+        [SerializeField]
+        private GameObject _crosshairUI;
+
         private IAimingAddon _aimingAddon;
 
         [Header("Settings")]
@@ -25,6 +29,9 @@ namespace nakatimat.RangedFramework
         private void Awake()
         {
             _aimingAddon = GetComponent<IAimingAddon>();
+
+            if (_crosshairUI != null)
+                _crosshairUI.SetActive(false); // Garante que começa desligado
         }
 
         private void Update()
@@ -38,6 +45,9 @@ namespace nakatimat.RangedFramework
                 {
                     _aimCamera.gameObject.SetActive(true);
                     _aimCamera.Priority = _activePriority;
+
+                    if (_crosshairUI != null)
+                        _crosshairUI.SetActive(true);
                 }
             }
             else
@@ -46,6 +56,9 @@ namespace nakatimat.RangedFramework
                 {
                     _aimCamera.Priority = _inactivePriority;
                     _aimCamera.gameObject.SetActive(false);
+
+                    if (_crosshairUI != null)
+                        _crosshairUI.SetActive(false);
                 }
             }
         }

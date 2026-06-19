@@ -44,9 +44,7 @@ namespace nakatimat.TPS.Player.Modular
         private float _cinemachineTargetYaw;
         private Vector2 _currentLookInput;
         private Vector2 _lookInputVelocity;
-        private bool _wasLockedOn;
-
-        private TargetingSystem _targetingSystem;
+        // Lock-On removido
 
         private void Awake()
         {
@@ -54,7 +52,7 @@ namespace nakatimat.TPS.Player.Modular
             {
                 _inputReader = GetComponent<InputReader>();
             }
-            _targetingSystem = GetComponent<TargetingSystem>();
+            // Nada de Targeting System
         }
 
         private void Start()
@@ -82,32 +80,7 @@ namespace nakatimat.TPS.Player.Modular
             if (_inputReader == null || _cameraTarget == null)
                 return;
 
-            bool hasTarget =
-                _targetingSystem != null
-                && _targetingSystem.GetCurrentTarget() != null;
-
-            if (hasTarget)
-            {
-                // Deixa a Target Camera (Cinemachine) assumir 100% do controle orbital.
-                _wasLockedOn = true;
-                return;
-            }
-
-            // A Mágica do Anti-Snap ao SAIR do Lock-On:
-            if (!hasTarget && _wasLockedOn)
-            {
-                if (Camera.main != null)
-                {
-                    Vector3 camEuler = Camera.main.transform.eulerAngles;
-                    _cinemachineTargetYaw = camEuler.y;
-
-                    float pitch = camEuler.x;
-                    if (pitch > 180f)
-                        pitch -= 360f;
-                    _cinemachineTargetPitch = -pitch;
-                }
-                _wasLockedOn = false;
-            }
+            // Câmera OTS 100% livre
 
             Vector2 targetLookDelta = _inputReader.LookInput;
 

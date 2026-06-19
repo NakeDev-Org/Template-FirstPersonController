@@ -10,43 +10,29 @@ namespace nakatimat.DamageSystem
 
         // --- OBSERVER PATTERN (Eventos Locais para UI/Áudio) ---
         public event Action<float, float> OnHealthChanged; // (currentHP, maxHP)
-        public event Action<float, DamageType> OnDamageReceived; // (dano recebido, tipo de dano)
+        public event Action<float> OnDamageReceived; // (dano recebido)
         public event Action OnDeath;
 
         public TPSHealthStats TPSHealthStats;
 
         [SerializeField]
-        private float currentHP;
-        private IDefenseProvider _defenseProvider;
+        protected float currentHP;
+        protected IDefenseProvider _defenseProvider;
 
-        private void Start()
+        protected virtual void Start()
         {
             currentHP = TPSHealthStats != null ? TPSHealthStats.maxHP : 100;
             _defenseProvider = GetComponent<IDefenseProvider>();
         }
 
-        public void ApplyDamage(
-            float damageAmount,
-            DamageType damageType,
-            GameObject attacker = null
-        )
+        public virtual void ApplyDamage(float damageAmount, GameObject attacker = null)
         {
             float multiplier = 1f;
-
-            if (TPSHealthStats.TPSDamageResistances != null)
-            {
-                multiplier = TPSHealthStats.TPSDamageResistances.GetMultiplier(
-                    damageType
-                );
-            }
 
             if (_defenseProvider != null)
             {
                 bool isParry = false;
-                float defenseMultiplier = _defenseProvider.GetDefenseMultiplier(
-                    damageType,
-                    out isParry
-                );
+                float defenseMultiplier = _defenseProvider.GetDefenseMultiplier(out isParry);
                 multiplier *= defenseMultiplier;
 
                 if (isParry && attacker != null)
@@ -59,22 +45,27 @@ namespace nakatimat.DamageSystem
 
             // Notifica o Debugger e o mundo
             OnAnyDamageTaken?.Invoke(gameObject, damageAmount, finalDamage);
-            OnDamageReceived?.Invoke(finalDamage, damageType);
+            OnDamageReceived?.Invoke(finalDamage);
 
             currentHP -= finalDamage;
 
-            if (currentHP > TPSHealthStats.maxHP)
+            if (TPSHealthStats != null && currentHP > TPSHealthStats.maxHP)
             {
                 currentHP = TPSHealthStats.maxHP;
             }
 
-            OnHealthChanged?.Invoke(currentHP, TPSHealthStats.maxHP);
+            OnHealthChanged?.Invoke(currentHP, TPSHealthStats != null ? TPSHealthStats.maxHP : 100);
 
             if (currentHP <= 0)
             {
-                OnDeath?.Invoke();
-                gameObject.SetActive(false);
+                Die();
             }
+        }
+
+        protected virtual void Die()
+        {
+            OnDeath?.Invoke();
+            gameObject.SetActive(false);
         }
     }
 }

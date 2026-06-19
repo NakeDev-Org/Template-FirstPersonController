@@ -44,7 +44,7 @@ namespace nakatimat.TPS.Player.Modular
         private bool _isSprinting;
         private bool _isCrouching;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             if (_cameraController == null)
                 _cameraController = GetComponent<TPSCameraAimController>();
@@ -58,7 +58,7 @@ namespace nakatimat.TPS.Player.Modular
                 _animationUpdater = GetComponent<PlayerAnimationUpdater>();
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             if (_inputReader != null)
             {
@@ -68,7 +68,7 @@ namespace nakatimat.TPS.Player.Modular
             }
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             if (_inputReader != null)
             {
@@ -78,7 +78,7 @@ namespace nakatimat.TPS.Player.Modular
             }
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (_locomotion == null)
                 return;
@@ -127,7 +127,7 @@ namespace nakatimat.TPS.Player.Modular
             }
         }
 
-        private void UpdateLocomotionState()
+        protected virtual void UpdateLocomotionState()
         {
             bool isMelee = _combatAddon != null && _combatAddon.IsMeleeStance;
             bool isBlocking = _combatAddon != null && _combatAddon.IsBlocking;
@@ -183,7 +183,7 @@ namespace nakatimat.TPS.Player.Modular
             }
         }
 
-        private void UpdateAirborneState()
+        protected virtual void UpdateAirborneState()
         {
             bool isMelee = _combatAddon != null && _combatAddon.IsMeleeStance;
             bool isBlocking = _combatAddon != null && _combatAddon.IsBlocking;
@@ -207,7 +207,7 @@ namespace nakatimat.TPS.Player.Modular
         // --- Input Callbacks ---
 
 
-        private void OnSprintStarted()
+        protected virtual void OnSprintStarted()
         {
             if (CurrentState != PlayerState.Locomotion)
                 return;
@@ -234,12 +234,12 @@ namespace nakatimat.TPS.Player.Modular
             _locomotion.SetCapsuleCrouchState(_isCrouching);
         }
 
-        private void OnSprintCanceled()
+        protected virtual void OnSprintCanceled()
         {
             _isSprinting = false;
         }
 
-        private void OnCrouchToggled()
+        protected virtual void OnCrouchToggled()
         {
             if (CurrentState != PlayerState.Locomotion)
                 return;
@@ -253,7 +253,7 @@ namespace nakatimat.TPS.Player.Modular
         /// <summary>
         /// Call this from external scripts (like taking damage or hard-locking attacks) to block movement.
         /// </summary>
-        public void SetActionBlocked(bool isBlocked)
+        public virtual void SetActionBlocked(bool isBlocked)
         {
             if (isBlocked)
             {
@@ -268,7 +268,7 @@ namespace nakatimat.TPS.Player.Modular
             }
         }
 
-        public void SetMovmentBlocked(bool value)
+        public virtual void SetMovmentBlocked(bool value)
         {
             SetActionBlocked(value);
 

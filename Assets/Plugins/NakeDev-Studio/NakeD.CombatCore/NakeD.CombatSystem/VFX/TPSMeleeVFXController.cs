@@ -32,13 +32,7 @@ namespace nakatimat.AttackSystem
             PlayVFX();
 
             AttackData finalAttackData = Instantiate(baseAttackData);
-
-            for (int i = 0; i < finalAttackData.damages.Count; i++)
-            {
-                DamageInstance instance = finalAttackData.damages[i];
-                instance.amount *= damageMultiplier;
-                finalAttackData.damages[i] = instance;
-            }
+            finalAttackData.baseDamage *= damageMultiplier;
 
             _attackController.Attack(
                 hitBoxCenter,

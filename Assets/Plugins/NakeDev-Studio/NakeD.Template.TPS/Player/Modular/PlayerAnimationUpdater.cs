@@ -19,7 +19,7 @@ namespace nakatimat.TPS.Player.Modular
         private HandIK _handIK;
         private ProceduralFootIK _footIK;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             if (_locomotion == null)
                 _locomotion = GetComponent<PlayerLocomotion>();
@@ -34,7 +34,7 @@ namespace nakatimat.TPS.Player.Modular
 
         private Vector2 _currentBlendInput;
 
-        public void UpdateAnimations(
+        public virtual void UpdateAnimations(
             bool isSprinting,
             bool isCrouching
         )
