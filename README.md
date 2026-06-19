@@ -19,3 +19,10 @@ https://github.com/NakeDev-Org/template-3d-tps.git?path=/Assets/Plugins/NakeDev-
 ```
 
 > **Nota para Desenvolvedores:** A framework injetará automaticamente as dependências necessárias, como *New Input System*, *Cinemachine* e *Animation Rigging*. Não modifique os scripts base diretamente! Se precisar estender uma funcionalidade, utilize Herança (`override`) ou assine os Eventos (`Actions/UnityEvents`) fornecidos pela framework em seus próprios scripts na pasta `Assets`.
+
+### 📚 Pré-Requisitos de Estudo (O Poder da Framework)
+Para extrair o máximo do design *Read-Only* desta framework sem nunca precisar alterar os scripts originais, é fundamental dominar os conceitos de Programação Orientada a Objetos abaixo. Eles ensinam como conectar as mecânicas específicas do seu jogo (Lataria) no nosso código base (Motor):
+
+* **[Herança no C# (O Conceito de Pai e Filho)](https://learn.microsoft.com/pt-br/dotnet/csharp/fundamentals/object-oriented/inheritance)**
+* **[A Palavra-chave 'base' (Executando as funções originais)](https://learn.microsoft.com/pt-br/dotnet/csharp/language-reference/keywords/base)**
+* **[O Combo 'virtual' e 'override' (Sequestrando e Sobrescrevendo Matemática)](https://learn.microsoft.com/pt-br/dotnet/csharp/language-reference/keywords/override)**
