@@ -110,16 +110,6 @@ namespace nakatimat.TPS.Player.Modular
             );
         }
 
-        public void ProcessJump()
-        {
-            if (_stats == null) return;
-            
-            if (IsGrounded && _stats.CanJump)
-            {
-                VerticalVelocity = _stats.JumpForce;
-                IsGrounded = false;
-            }
-        }
 
         [SerializeField]
         private Transform _groundCheckPoint;
@@ -294,21 +284,27 @@ namespace nakatimat.TPS.Player.Modular
             }
             else
             {
-                if (_mainCamera != null)
+                // Se estiver se movendo OU mirando, o personagem sempre olha para a frente da câmera (Strafe).
+                // Se estiver parado e sem mirar, a câmera fica livre (personagem não gira).
+                if (MoveDirection.sqrMagnitude > 0.01f || _isAiming)
                 {
-                    Vector3 camForward = _mainCamera.forward;
-                    camForward.y = 0f;
-                    if (camForward != Vector3.zero)
+                    if (_mainCamera != null)
                     {
-                        Quaternion targetRotation = Quaternion.LookRotation(
-                            camForward.normalized,
-                            Vector3.up
-                        );
-                        transform.rotation = Quaternion.Slerp(
-                            transform.rotation,
-                            targetRotation,
-                            _stats.RotationSmoothing * Time.deltaTime
-                        );
+                        Vector3 camForward = _mainCamera.forward;
+                        camForward.y = 0f;
+
+                        if (camForward != Vector3.zero)
+                        {
+                            Quaternion targetRotation = Quaternion.LookRotation(
+                                camForward.normalized,
+                                Vector3.up
+                            );
+                            transform.rotation = Quaternion.Slerp(
+                                transform.rotation,
+                                targetRotation,
+                                _stats.RotationSmoothing * Time.deltaTime
+                            );
+                        }
                     }
                 }
             }

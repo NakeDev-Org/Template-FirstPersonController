@@ -21,21 +21,12 @@ namespace nakatimat.TPS.Player.Modular.Data
         public float RotationSmoothing = 10f;
         public float SpeedChangeDamping = 10f;
 
-        [Header("Jumping & Gravity")]
-        [Tooltip(
-            "Desmarque para impedir que o personagem pule (Ex: dentro de casas ou em jogos sem pulo)."
-        )]
-        public bool CanJump = true;
-        public float JumpForce = 5f;
+        [Header("Gravity")]
         public float GravityMultiplier = 2f;
         public float TerminalVelocity = -53f;
 
         [Header("Stamina Costs")]
         public bool RequireStaminaToSprint = true;
         public float SprintStaminaCostPerSecond = 15f;
-
-        [Space]
-        public bool RequireStaminaToJump = true;
-        public float JumpStaminaCost = 10f;
     }
 }

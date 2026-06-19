@@ -8,10 +8,8 @@ namespace nakatimat.TPS.Player
         [SerializeField]
         private Animator _animator;
 
-        private int CurrentSpeedHash = Animator.StringToHash("CurrentSpeed");
         private int IsCrouchingHash = Animator.StringToHash("IsCrouching");
         private int IsGroundedHash = Animator.StringToHash("IsGrounded");
-        private int IsJumpingHash = Animator.StringToHash("IsJumping");
 
         // 2D BlendTree Hashes
         private int HorizontalHash = Animator.StringToHash("Horizontal");
@@ -31,9 +29,8 @@ namespace nakatimat.TPS.Player
             }
         }
 
-        public void UpdateLocomotion(float speed, bool isCrouching)
+        public void UpdateLocomotion(bool isCrouching)
         {
-            _animator.SetFloat(CurrentSpeedHash, speed);
             _animator.SetBool(IsCrouchingHash, isCrouching);
         }
 
@@ -46,13 +43,6 @@ namespace nakatimat.TPS.Player
         public void UpdateGrounded(bool isGrounded)
         {
             _animator.SetBool(IsGroundedHash, isGrounded);
-        }
-
-        public void UpdateJumped(bool isJumping)
-        {
-            if (_animator == null)
-                return;
-            _animator.SetBool(IsJumpingHash, isJumping);
         }
 
         public void UpdateAiming(bool isAiming)

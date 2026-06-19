@@ -43,7 +43,6 @@ namespace nakatimat.TPS.Player.Modular
         // Internal State
         private bool _isSprinting;
         private bool _isCrouching;
-        private bool _isJumping;
 
         private void Awake()
         {
@@ -63,7 +62,6 @@ namespace nakatimat.TPS.Player.Modular
         {
             if (_inputReader != null)
             {
-                _inputReader.OnJumpPressed += OnJumpPressed;
                 _inputReader.OnSprintStarted += OnSprintStarted;
                 _inputReader.OnSprintCanceled += OnSprintCanceled;
                 _inputReader.OnCrouchToggled += OnCrouchToggled;
@@ -74,7 +72,6 @@ namespace nakatimat.TPS.Player.Modular
         {
             if (_inputReader != null)
             {
-                _inputReader.OnJumpPressed -= OnJumpPressed;
                 _inputReader.OnSprintStarted -= OnSprintStarted;
                 _inputReader.OnSprintCanceled -= OnSprintCanceled;
                 _inputReader.OnCrouchToggled -= OnCrouchToggled;
@@ -103,7 +100,6 @@ namespace nakatimat.TPS.Player.Modular
             )
             {
                 CurrentState = PlayerState.Locomotion;
-                _isJumping = false; // Reset jump state when landing
             }
 
             // Run state logic
@@ -126,8 +122,7 @@ namespace nakatimat.TPS.Player.Modular
             {
                 _animationUpdater.UpdateAnimations(
                     _isSprinting,
-                    _isCrouching,
-                    _isJumping
+                    _isCrouching
                 );
             }
         }
@@ -205,46 +200,12 @@ namespace nakatimat.TPS.Player.Modular
 
             if (_locomotion.VerticalVelocity > 0.1f)
             {
-                _isJumping = true;
+                // Falling / Air behavior
             }
         }
 
         // --- Input Callbacks ---
 
-        private void OnJumpPressed()
-        {
-            if (CurrentState != PlayerState.Locomotion)
-                return;
-
-            if (
-                _combatAddon != null
-                && _locomotion.Stats != null
-                && _locomotion.Stats.RequireStaminaToJump
-            )
-            {
-                if (
-                    !_combatAddon.HasEnoughStamina(
-                        _locomotion.Stats.JumpStaminaCost
-                    )
-                )
-                    return;
-                _combatAddon.TryConsumeStamina(
-                    _locomotion.Stats.JumpStaminaCost
-                );
-            }
-
-            if (!_locomotion.IsGrounded)
-                return;
-            if (!_locomotion.CanStandUp())
-                return;
-
-            _isJumping = true;
-            _isCrouching = false;
-            _locomotion.SetCapsuleCrouchState(false);
-
-            _locomotion.ProcessJump();
-            CurrentState = PlayerState.Airborne;
-        }
 
         private void OnSprintStarted()
         {

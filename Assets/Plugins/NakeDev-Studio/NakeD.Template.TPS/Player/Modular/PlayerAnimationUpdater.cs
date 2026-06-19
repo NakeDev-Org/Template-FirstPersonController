@@ -34,19 +34,14 @@ namespace nakatimat.TPS.Player.Modular
 
         public void UpdateAnimations(
             bool isSprinting,
-            bool isCrouching,
-            bool isJumping
+            bool isCrouching
         )
         {
             if (_locomotion == null || _animatorHandler == null)
                 return;
 
             _animatorHandler.UpdateGrounded(_locomotion.IsGrounded);
-            _animatorHandler.UpdateJumped(isJumping);
-            _animatorHandler.UpdateLocomotion(
-                _locomotion.CurrentSpeed,
-                isCrouching
-            );
+            _animatorHandler.UpdateLocomotion(isCrouching);
 
             // Alimentamos o X e Y da BlendTree 2D sempre, pois agora é CameraStrafe constante
             if (_inputReader != null)
@@ -73,7 +68,6 @@ namespace nakatimat.TPS.Player.Modular
             if (_footIK != null)
             {
                 _footIK.IsSprinting = isSprinting;
-                _footIK.IsJumping = isJumping;
             }
         }
     }

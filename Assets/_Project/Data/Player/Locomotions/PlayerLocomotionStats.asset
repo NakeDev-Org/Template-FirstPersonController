@@ -12,18 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5963d3c5b60cb3c48a6114f8a5159afd, type: 3}
   m_Name: PlayerLocomotionStats
   m_EditorClassIdentifier: NakeDevStudio.Runtime::nakatimat.TPS.Player.Modular.Data.PlayerLocomotionStats
-  WalkSpeed: 3
+  WalkSpeed: 1.5
   CrouchSpeed: 2
-  SprintSpeed: 6
+  SprintSpeed: 2.5
   MeleeWalkSpeed: 2
   MeleeSprintSpeed: 4
   RotationSmoothing: 10
   SpeedChangeDamping: 10
-  CanJump: 1
-  JumpForce: 5
   GravityMultiplier: 2
   TerminalVelocity: -53
   RequireStaminaToSprint: 1
   SprintStaminaCostPerSecond: 15
-  RequireStaminaToJump: 1
-  JumpStaminaCost: 10
