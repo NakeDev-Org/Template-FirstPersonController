@@ -37,3 +37,15 @@ Usando os **Eventos** e **Herança**.
 1. Se uma arma de fogo do jogo precisar de dano de Fogo, você herda o `CharacterRangedCombat` e no método `PerformShoot()` (que é `virtual`), você executa o tiro original da base e instancia uma faísca.
 2. O inimigo atingido vai disparar o evento `OnTakeDamage`. Se o seu inimigo no projeto final for um zumbi fraco a fogo, você lê esse evento no seu `ZombieBurnLogic.cs` e tira a vida extra por 5 segundos.
 3. A Framework dá o dano bruto. O seu jogo aplica os "Enfeites" por cima usando a comunicação de Eventos.
+
+---
+
+### 5. O meu GameManager do Jogo (Lataria) deve fazer TUDO? (Inventário, Quests, Saves?)
+**Definitivamente NÃO!** Isso criaria o que chamamos na programação de "God Class" (A Classe Deus) — um script gigante de 5.000 linhas que se der um bug, o jogo inteiro quebra.
+
+**A Regra da Modularidade (Manager of Managers):**
+O seu `PH_GameManager` é o Maestro, mas ele não toca os instrumentos. Ele apenas rege.
+* Você criará um script separado chamado `PH_InventoryManager.cs`.
+* Você criará outro script chamado `PH_SaveManager.cs`.
+* O `PH_GameManager` apenas diz a eles o que fazer.
+* Exemplo prático: O jogador aperta Start. O `PH_GameManager` pausa o jogo (escala de tempo zero), e avisa o `PH_InventoryManager`: *"Pode desenhar a maleta na tela agora!"*. O GameManager **não sabe** desenhar maletas, ele apenas dá a ordem. Isso mantém seu código blindado contra bugs.
