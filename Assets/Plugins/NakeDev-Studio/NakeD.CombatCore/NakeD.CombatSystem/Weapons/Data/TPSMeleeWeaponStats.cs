@@ -26,8 +26,6 @@ namespace nakatimat.CombatSystem.MeleeSystem
         [Header("Defense Settings")]
         public BlockStats BlockStats;
 
-        [Header("IK Settings")]
-        public bool disableRightHandIK = true;
-        public bool disableLeftHandIK = false;
+
     }
 }
