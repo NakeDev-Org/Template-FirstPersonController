@@ -4,7 +4,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
 {
     [CreateAssetMenu(
         fileName = "Defense Data",
-        menuName = "NakeCore/TPS/Combat/Weapons/Defense Data"
+        menuName = "NakeD/Combat/Defense Data"
     )]
     public class BlockStats : ScriptableObject
     {

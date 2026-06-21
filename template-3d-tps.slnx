@@ -1,5 +1,4 @@
 ﻿<Solution>
   <Project Path="NakeDev.Studio.Runtime.csproj" />
   <Project Path="NakeDev.Studio.Editor.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
 </Solution>

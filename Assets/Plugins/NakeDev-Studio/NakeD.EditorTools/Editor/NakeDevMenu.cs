@@ -35,17 +35,6 @@ namespace nakatimat.Core.Editor
             Debug.LogError("[NakeDev] Prefab Dummy ('Player_Dummy_Survival') não encontrado no projeto. Verifique se a Framework foi importada corretamente!");
         }
 
-        // ==========================================
-        // 💾 CRIADORES DE DADOS (ATALHOS)
-        // ==========================================
-
-        [MenuItem("NakeDev/Data/Create New Weapon Data", false, 50)]
-        public static void CreateWeaponDataShortcut()
-        {
-            EditorApplication.ExecuteMenuItem(
-                "Assets/Create/NakeCore/TPS/Combat/Weapons/Weapon Data"
-            );
-        }
     }
 }
 #endif

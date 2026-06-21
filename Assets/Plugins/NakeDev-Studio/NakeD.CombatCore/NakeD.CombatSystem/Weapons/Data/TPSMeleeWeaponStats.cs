@@ -7,7 +7,7 @@ namespace nakatimat.CombatSystem.MeleeSystem
 {
     [CreateAssetMenu(
         fileName = "Weapon Data",
-        menuName = "NakeCore/TPS/Combat/Weapons/Weapon Data"
+        menuName = "NakeD/Combat/Melee Weapon Stats"
     )]
     public class TPSMeleeWeaponStats : ScriptableObject
     {

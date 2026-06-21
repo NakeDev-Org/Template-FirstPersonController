@@ -13,13 +13,10 @@ MonoBehaviour:
   m_Name: PlayerLocomotionStats
   m_EditorClassIdentifier: NakeDevStudio.Runtime::nakatimat.TPS.Player.Modular.Data.PlayerLocomotionStats
   WalkSpeed: 1.5
-  CrouchSpeed: 2
   SprintSpeed: 2.5
-  MeleeWalkSpeed: 2
-  MeleeSprintSpeed: 4
+  MeleeWalkSpeed: 1.5
+  MeleeSprintSpeed: 2.5
+  WeightProfile: 0
   RotationSmoothing: 10
-  SpeedChangeDamping: 10
   GravityMultiplier: 2
   TerminalVelocity: -53
-  RequireStaminaToSprint: 1
-  SprintStaminaCostPerSecond: 15

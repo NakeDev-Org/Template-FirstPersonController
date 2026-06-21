@@ -4,7 +4,7 @@ namespace nakatimat.DamageSystem
 {
     [CreateAssetMenu(
         fileName = "AttackData",
-        menuName = "NakeCore/TPS/Combat/Damage/Attack Data"
+        menuName = "NakeD/Combat/Attack Data"
     )]
     public class AttackData : ScriptableObject
     {
