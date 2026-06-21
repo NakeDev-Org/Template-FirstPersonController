@@ -4,5 +4,6 @@ namespace nakatimat.Core.Interfaces
     {
         bool IsMeleeStance { get; }
         bool IsBlocking { get; }
+        bool HasRangedWeapon { get; }
     }
 }

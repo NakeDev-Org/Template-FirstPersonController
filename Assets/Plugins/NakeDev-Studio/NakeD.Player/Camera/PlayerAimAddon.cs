@@ -120,9 +120,11 @@ namespace nakatimat.TPS.Player.Modular
 
         public virtual void HandleAimStarted()
         {
-            // Opcional: Se houver combate, não pode mirar se estiver usando espada
-            if (_combatAddon != null && _combatAddon.IsMeleeStance)
-                return;
+            if (_combatAddon != null)
+            {
+                if (_combatAddon.IsMeleeStance) return;
+                if (!_combatAddon.HasRangedWeapon) return;
+            }
 
             IsAiming = true;
             OnAimStateChanged?.Invoke(IsAiming);

@@ -21,6 +21,7 @@ namespace nakatimat.Core.Character
         // ICombatAddon
         public bool IsMeleeStance { get; protected set; }
         public bool IsBlocking { get; protected set; }
+        public bool HasRangedWeapon => _currentRangedWeapon != null;
 
 
         // Events
@@ -196,5 +197,6 @@ namespace nakatimat.Core.Character
         }
         
         public TPSMeleeWeaponStats GetCurrentMeleeWeapon() => _currentMeleeWeapon;
+        public RangedWeaponStats GetCurrentRangedWeapon() => _currentRangedWeapon;
     }
 }
