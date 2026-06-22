@@ -166,11 +166,47 @@ namespace nakatimat.Core.Character
 
             Ray ray = GetShootRay();
             
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, _currentRangedWeapon.HitMask))
+            if (_currentRangedWeapon.ProjectilePrefab != null)
             {
-                if (hit.collider.TryGetComponent<IDamageable>(out var damageable))
+                // Descobrir o ponto de onde o tiro vai sair (Pivot)
+                Transform spawnPoint = _rangedWeaponInstanceRef != null && _rangedWeaponInstanceRef.MuzzlePoint != null 
+                    ? _rangedWeaponInstanceRef.MuzzlePoint 
+                    : (_defaultMuzzlePoint != null ? _defaultMuzzlePoint : transform);
+                    
+                // Calcular direção correta em direção à mira da câmera
+                Vector3 targetPoint = ray.GetPoint(100f); 
+                if (Physics.Raycast(ray, out RaycastHit aimHit, 1000f, _currentRangedWeapon.HitMask))
                 {
-                    damageable.ApplyDamage(_currentRangedWeapon.BaseDamage, gameObject);
+                    targetPoint = aimHit.point;
+                }
+                Vector3 shootDirection = (targetPoint - spawnPoint.position).normalized;
+
+                // Instanciar o projétil
+                GameObject projObj = Instantiate(_currentRangedWeapon.ProjectilePrefab, spawnPoint.position, Quaternion.LookRotation(shootDirection));
+                
+                // Aplicar velocidade
+                if (projObj.TryGetComponent<Rigidbody>(out var rb))
+                {
+                    rb.linearVelocity = shootDirection * _currentRangedWeapon.ProjectileSpeed;
+                }
+                
+                // Configurar danos e atributos no script Projectile
+                if (projObj.TryGetComponent<Projectile>(out var proj))
+                {
+                    proj.Damage = _currentRangedWeapon.BaseDamage;
+                    proj.Instigator = gameObject;
+                    proj.HitMask = _currentRangedWeapon.HitMask;
+                }
+            }
+            else
+            {
+                // Comportamento original Hitscan
+                if (Physics.Raycast(ray, out RaycastHit hit, 1000f, _currentRangedWeapon.HitMask))
+                {
+                    if (hit.collider.TryGetComponent<IDamageable>(out var damageable))
+                    {
+                        damageable.ApplyDamage(_currentRangedWeapon.BaseDamage, gameObject);
+                    }
                 }
             }
         }

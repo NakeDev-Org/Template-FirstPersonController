@@ -17,8 +17,15 @@ namespace nakatimat.RangedFramework
         [Tooltip("O Animator Controller específico dessa arma (Substitui as animações base).")]
         public RuntimeAnimatorController animatorOverride;
 
-        [Header("Gun Stats (Hitscan)")]
-        [Tooltip("Dano base infligido no impacto do hitscan.")]
+        [Header("Projectile (Optional)")]
+        [Tooltip("Prefab do projétil a ser instanciado. Se vazio, a arma funcionará como Hitscan.")]
+        public GameObject ProjectilePrefab;
+
+        [Tooltip("Velocidade de movimento do projétil (se aplicável).")]
+        public float ProjectileSpeed = 50f;
+
+        [Header("Gun Stats")]
+        [Tooltip("Dano base infligido no impacto.")]
         public float BaseDamage = 15f;
 
         [Tooltip("Tempo necessário de cooldown entre os disparos (Fire Rate).")]
