@@ -19,6 +19,10 @@ namespace nakatimat.TPS.Player.Modular
         [SerializeField]
         private PlayerCapsuleStats _capsuleStats;
 
+        [Separator("View Mode", 150, 150, 150)]
+        [SerializeField]
+        private bool _isFirstPerson = true;
+
         // Optional dependencies
         private Transform _mainCamera;
 
@@ -262,24 +266,27 @@ namespace nakatimat.TPS.Player.Modular
             _characterController.Move(_currentMoveVelocity * Time.deltaTime);
 
             // Handle Rotation (OTS - Sempre alinhado à Câmera se movendo ou mirando)
-            if (MoveDirection.sqrMagnitude > 0.01f || _isAiming)
+            if (!_isFirstPerson)
             {
-                if (_mainCamera != null)
+                if (MoveDirection.sqrMagnitude > 0.01f || _isAiming)
                 {
-                    Vector3 camForward = _mainCamera.forward;
-                    camForward.y = 0f;
-
-                    if (camForward != Vector3.zero)
+                    if (_mainCamera != null)
                     {
-                        Quaternion targetRotation = Quaternion.LookRotation(
-                            camForward.normalized,
-                            Vector3.up
-                        );
-                        transform.rotation = Quaternion.Slerp(
-                            transform.rotation,
-                            targetRotation,
-                            _stats.RotationSmoothing * Time.deltaTime
-                        );
+                        Vector3 camForward = _mainCamera.forward;
+                        camForward.y = 0f;
+
+                        if (camForward != Vector3.zero)
+                        {
+                            Quaternion targetRotation = Quaternion.LookRotation(
+                                camForward.normalized,
+                                Vector3.up
+                            );
+                            transform.rotation = Quaternion.Slerp(
+                                transform.rotation,
+                                targetRotation,
+                                _stats.RotationSmoothing * Time.deltaTime
+                            );
+                        }
                     }
                 }
             }
@@ -287,6 +294,8 @@ namespace nakatimat.TPS.Player.Modular
 
         public void SnapToInputDirection()
         {
+            if (_isFirstPerson) return; // Em FPS a rotação já é instantânea pela câmera
+
             CalculateMoveDirection(); // Atualiza a direção com base no analógico atual
 
             if (MoveDirection.sqrMagnitude > 0.01f)

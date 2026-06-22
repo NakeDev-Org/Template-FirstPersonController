@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5963d3c5b60cb3c48a6114f8a5159afd, type: 3}
   m_Name: PlayerLocomotionStats
   m_EditorClassIdentifier: NakeDevStudio.Runtime::nakatimat.TPS.Player.Modular.Data.PlayerLocomotionStats
-  WalkSpeed: 1.5
-  SprintSpeed: 2.5
+  WalkSpeed: 2
+  SprintSpeed: 6
   MeleeWalkSpeed: 1.5
   MeleeSprintSpeed: 2.5
   WeightProfile: 0

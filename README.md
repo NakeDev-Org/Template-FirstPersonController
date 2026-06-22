@@ -1,9 +1,9 @@
-# NakeDev TPS Framework
+# NakeDev Survival Horror FPS Framework
 
-Bem-vindo à **NakeDev TPS Framework**! 
-Este é o motor central focado na construção de experiências **Survival Horror** e **Action TPS** com peso, realismo e impacto. 
+Bem-vindo à **NakeDev Survival Horror FPS Framework**! 
+Este é o motor central focado na construção de experiências **Survival Horror** e **Action FPS** com peso, realismo e impacto. 
 
-Construída sob a filosofia de ser ágil, pragmática e modular (para Solo Devs), a NakeDev Framework fornece toda a base complexa de Locomoção, Cinemachine e Combate para que você possa focar 100% na Arte, Narrativa e no *Game Feel* do seu projeto.
+Construída sob a filosofia de ser ágil, pragmática e modular (para Solo Devs), a NakeDev Framework fornece toda a base complexa de Locomoção e Combate para que você possa focar 100% na Arte, Narrativa e no *Game Feel* do seu projeto.
 
 ## 🚀 Instalação Rápida (UPM)
 
@@ -15,7 +15,7 @@ A maneira oficial e recomendada de instalar esta framework no seu jogo é atrav�
 4. Copie e cole o link exato abaixo:
 
 ```text
-https://github.com/NakeDev-Org/template-3d-tps.git?path=/Assets/Plugins/NakeDev-Studio
+https://github.com/NakeDev-Org/template-survivalhorror.git?path=/Assets/Plugins/NakeDev-Studio#dev/FPS
 ```
 
 > **Nota para Desenvolvedores:** A framework injetará automaticamente as dependências necessárias, como *New Input System*, *Cinemachine* e *Animation Rigging*. Não modifique os scripts base diretamente! Se precisar estender uma funcionalidade, utilize Herança (`override`) ou assine os Eventos (`Actions/UnityEvents`) fornecidos pela framework em seus próprios scripts na pasta `Assets`.
