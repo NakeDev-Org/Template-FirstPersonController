@@ -3,17 +3,18 @@ using nakatimat.Core.Interfaces;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using nakatimat.Core.Inspector;
 
 namespace nakatimat.TPS.Player.Modular
 {
     [RequireComponent(typeof(InputReader))]
     public class PlayerAimAddon : MonoBehaviour, IAimingAddon
     {
-        [Header("Camera Targets")]
+        [Separator("Camera Targets", 50, 200, 255)]
         [Tooltip("O objeto vazio (ex: CameraTarget) que o Cinemachine deve seguir.")]
         [SerializeField] protected Transform _cameraTarget;
 
-        [Header("Cinemachine Cameras")]
+        [Separator("Cinemachine Cameras", 0, 150, 255)]
         [Tooltip("Arraste a câmera de mira (CM vcam_Aiming) aqui.")]
         [SerializeField] protected CinemachineCamera _aimCamera;
         [Tooltip("A prioridade que a câmera terá quando estiver mirando.")]
@@ -21,11 +22,11 @@ namespace nakatimat.TPS.Player.Modular
         [Tooltip("A prioridade que a câmera terá quando NÃO estiver mirando.")]
         [SerializeField] protected int _inactivePriority = 0;
 
-        [Header("UI")]
+        [Separator("UI", 255, 100, 200)]
         [Tooltip("Arraste o GameObject/UI da sua retícula de mira (Crosshair) aqui.")]
         [SerializeField] protected GameObject _crosshairUI;
 
-        [Header("Rigging (IK)")]
+        [Separator("Rigging (IK)", 255, 180, 50)]
         [Tooltip("Arraste apenas o seu Aim_Spine_Constraint aqui.")]
         [SerializeField] protected MultiAimConstraint _spineAimConstraint;
         [Tooltip("O GameObject alvo que o Multi-Aim vai seguir (o flutuante).")]
@@ -35,15 +36,15 @@ namespace nakatimat.TPS.Player.Modular
         [Tooltip("Distância que o alvo virtual vai ficar na frente da câmera.")]
         [SerializeField] protected float _targetDistance = 50f;
 
-        [Header("Sensibilidade da Câmera (Mouse/Gamepad)")]
+        [Separator("Sensibilidade da Câmera (Mouse/Gamepad)", 180, 255, 100)]
         public Vector2 mouseSensitivity = new Vector2(2f, 2f);
         public Vector2 gamepadSensitivity = new Vector2(150f, 150f);
 
-        [Header("Restrições de Ângulo (Clamp)")]
+        [Separator("Restrições de Ângulo (Clamp)", 255, 100, 100)]
         public float bottomClamp = -60f;
         public float topClamp = 60f;
 
-        [Header("Suavização (Smoothing)")]
+        [Separator("Suavização (Smoothing)", 100, 255, 200)]
         public bool enableSmoothing = true;
         [Range(0.01f, 0.5f)] public float smoothTime = 0.05f;
 

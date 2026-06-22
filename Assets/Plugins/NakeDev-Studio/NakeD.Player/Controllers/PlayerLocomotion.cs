@@ -1,5 +1,6 @@
 using nakatimat.TPS.Player.Modular.Data;
 using UnityEngine;
+using nakatimat.Core.Inspector;
 
 namespace nakatimat.TPS.Player.Modular
 {
@@ -7,7 +8,7 @@ namespace nakatimat.TPS.Player.Modular
     [RequireComponent(typeof(InputReader))]
     public class PlayerLocomotion : MonoBehaviour
     {
-        [Header("Dependencies")]
+        [Separator("Dependencies", 255, 150, 50)]
         [SerializeField]
         private InputReader _inputReader;
 

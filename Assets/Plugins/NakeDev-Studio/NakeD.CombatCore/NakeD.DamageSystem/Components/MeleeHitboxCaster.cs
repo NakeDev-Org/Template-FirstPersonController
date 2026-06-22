@@ -1,4 +1,5 @@
 using UnityEngine;
+using nakatimat.Core.Inspector;
 
 namespace nakatimat.DamageSystem
 {

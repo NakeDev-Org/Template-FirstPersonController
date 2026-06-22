@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using nakatimat.Core.Inspector;
 
 namespace nakatimat.TPS.Player.Modular
 {

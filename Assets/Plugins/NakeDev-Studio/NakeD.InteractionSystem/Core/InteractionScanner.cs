@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using nakatimat.InteractionSystem.UI;
 using nakatimat.TPS.Player.Modular;
 using UnityEngine;
+using nakatimat.Core.Inspector;
 
 namespace nakatimat.InteractionSystem
 {
     public class InteractionScanner : MonoBehaviour
     {
-        [Header("Scanner Settings")]
+        [Separator("Scanner Settings", 255, 200, 50)]
         [SerializeField]
         private float _scanRadius = 2f;
 
@@ -17,7 +18,7 @@ namespace nakatimat.InteractionSystem
         [SerializeField]
         private float _scanInterval = 0.1f; // Não roda todo frame para poupar CPU
 
-        [Header("Dependencies")]
+        [Separator("Dependencies", 255, 150, 50)]
         [SerializeField]
         private InputReader _inputReader;
 

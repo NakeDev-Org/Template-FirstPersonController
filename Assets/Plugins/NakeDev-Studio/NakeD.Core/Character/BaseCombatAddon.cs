@@ -4,17 +4,18 @@ using nakatimat.DamageSystem;
 using nakatimat.RangedFramework;
 using nakatimat.CombatSystem.MeleeSystem;
 using UnityEngine;
+using nakatimat.Core.Inspector;
 
 namespace nakatimat.Core.Character
 {
     public abstract class BaseCombatAddon : MonoBehaviour, ICombatAddon
     {
-        [Header("Weapon Slots")]
+        [Separator("Weapon Slots", 255, 50, 50)]
         [SerializeField] protected Transform _weaponHandSlot;
         [SerializeField] protected Transform _weaponBackSlot;
         [SerializeField] protected Transform _defaultMuzzlePoint;
 
-        [Header("Starting Equipment")]
+        [Separator("Starting Equipment", 255, 100, 100)]
         [SerializeField] protected TPSMeleeWeaponStats _startingMeleeWeapon;
         [SerializeField] protected RangedWeaponStats _startingRangedWeapon;
 

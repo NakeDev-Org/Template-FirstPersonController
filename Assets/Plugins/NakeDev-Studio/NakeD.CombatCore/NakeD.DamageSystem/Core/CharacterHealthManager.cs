@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using nakatimat.Core.Inspector;
 
 namespace nakatimat.DamageSystem
 {
@@ -13,6 +14,7 @@ namespace nakatimat.DamageSystem
         public event Action<float> OnDamageReceived; // (dano recebido)
         public event Action OnDeath;
 
+        [Separator("Character Health Manager", 50, 255, 100)]
         public TPSHealthStats TPSHealthStats;
 
         [SerializeField]

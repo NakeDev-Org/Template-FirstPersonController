@@ -2,6 +2,7 @@ using System;
 using nakatimat.Core.Interfaces;
 using nakatimat.Core.Character;
 using UnityEngine;
+using nakatimat.Core.Inspector;
 
 namespace nakatimat.TPS.Player.Modular
 {

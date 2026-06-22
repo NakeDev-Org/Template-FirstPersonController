@@ -1,12 +1,13 @@
 using nakatimat.DamageSystem;
 using UnityEngine;
+using nakatimat.Core.Inspector;
 
 namespace nakatimat.AttackSystem
 {
     [RequireComponent(typeof(MeleeHitboxCaster))]
     public class TPSMeleeVFXController : MonoBehaviour
     {
-        [Header("Ref")]
+        [Separator("Ref", 150, 150, 150)]
         private MeleeHitboxCaster _attackController;
 
         [SerializeField]

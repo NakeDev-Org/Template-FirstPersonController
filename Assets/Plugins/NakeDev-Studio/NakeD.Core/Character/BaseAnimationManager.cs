@@ -4,16 +4,17 @@ using nakatimat.CombatSystem.MeleeSystem;
 using nakatimat.RangedFramework;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using nakatimat.Core.Inspector;
 
 namespace nakatimat.Core.Character
 {
     public abstract class BaseAnimationManager : MonoBehaviour
     {
-        [Header("Animator Components")]
+        [Separator("Animator Components", 200, 50, 255)]
         [SerializeField] protected Animator _animator;
         [SerializeField] protected RigBuilder _rigBuilder;
 
-        [Header("Animation Damp Times")]
+        [Separator("Animation Damp Times", 150, 50, 200)]
         [SerializeField] protected float _locomotionDampTime = 0.1f;
 
         // State parameters hashes

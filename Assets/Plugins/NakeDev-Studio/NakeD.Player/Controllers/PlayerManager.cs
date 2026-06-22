@@ -1,6 +1,7 @@
 using nakatimat.Core.Interfaces;
 using nakatimat.TPS.Player.Modular.Data;
 using UnityEngine;
+using nakatimat.Core.Inspector;
 
 namespace nakatimat.TPS.Player.Modular
 {
@@ -20,10 +21,10 @@ namespace nakatimat.TPS.Player.Modular
     [RequireComponent(typeof(PlayerLocomotion))]
     public class PlayerManager : MonoBehaviour, IMovementBlocker
     {
-        [Header("State")]
+        [Separator("State", 50, 255, 100)]
         public PlayerState CurrentState = PlayerState.Locomotion;
 
-        [Header("Modules")]
+        [Separator("Modules", 150, 100, 255)]
         [SerializeField]
         private InputReader _inputReader;
 
