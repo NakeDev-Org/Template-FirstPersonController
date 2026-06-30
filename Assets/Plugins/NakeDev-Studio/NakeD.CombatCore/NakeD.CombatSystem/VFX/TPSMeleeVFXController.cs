@@ -21,24 +21,17 @@ namespace nakatimat.AttackSystem
         public void TriggerAttack(
             Vector3 hitBoxCenter,
             Vector3 hitBoxSize,
-            AttackData baseAttackData,
-            float damageMultiplier = 1f
+            float baseDamage,
+            LayerMask damageableLayer
         )
         {
-            if (baseAttackData == null)
-            {
-                return;
-            }
-
             PlayVFX();
-
-            AttackData finalAttackData = Instantiate(baseAttackData);
-            finalAttackData.baseDamage *= damageMultiplier;
 
             _attackController.Attack(
                 hitBoxCenter,
                 hitBoxSize,
-                finalAttackData
+                baseDamage,
+                damageableLayer
             );
         }
 

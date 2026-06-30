@@ -4,25 +4,13 @@ namespace nakatimat.RangedFramework
 {
     [CreateAssetMenu(
         fileName = "New RangedWeapon",
-        menuName = "NakeD/Combat/Ranged Weapon Stats"
+        menuName = "NakeD/Combat/Ranged Weapon Data"
     )]
-    public class RangedWeaponStats : ScriptableObject
+    public class RangedWeaponData : ScriptableObject
     {
         [Header("Models & Instantiation")]
-        [Tooltip(
-            "O Prefab 3D da Arma que será instanciado na mão/costas do personagem."
-        )]
+        [Tooltip("O Prefab 3D da Arma que será instanciado.")]
         public GameObject WeaponPrefab;
-
-        [Tooltip("O Animator Controller específico dessa arma (Substitui as animações base).")]
-        public RuntimeAnimatorController animatorOverride;
-
-        [Header("Projectile (Optional)")]
-        [Tooltip("Prefab do projétil a ser instanciado. Se vazio, a arma funcionará como Hitscan.")]
-        public GameObject ProjectilePrefab;
-
-        [Tooltip("Velocidade de movimento do projétil (se aplicável).")]
-        public float ProjectileSpeed = 50f;
 
         [Header("Gun Stats")]
         [Tooltip("Dano base infligido no impacto.")]

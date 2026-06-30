@@ -1,5 +1,3 @@
-using nakatimat.Core.Interfaces;
-using nakatimat.TPS.Player.Modular.Data;
 using UnityEngine;
 using nakatimat.Core.Inspector;
 
@@ -19,7 +17,7 @@ namespace nakatimat.TPS.Player.Modular
     /// </summary>
     [RequireComponent(typeof(InputReader))]
     [RequireComponent(typeof(PlayerLocomotion))]
-    public class PlayerManager : MonoBehaviour, IMovementBlocker
+    public class PlayerManager : MonoBehaviour
     {
         [Separator("State", 50, 255, 100)]
         public PlayerState CurrentState = PlayerState.Locomotion;
@@ -31,8 +29,8 @@ namespace nakatimat.TPS.Player.Modular
         [SerializeField]
         private PlayerLocomotion _locomotion;
         
-        private ICombatAddon _combatAddon;
-        private IAimingAddon _aimingAddon;
+        private PlayerCombatAddon _combatAddon;
+        private PlayerFPSAimAddon _aimingAddon;
 
         // Internal State
         private bool _isSprinting;
@@ -43,8 +41,8 @@ namespace nakatimat.TPS.Player.Modular
                 _inputReader = GetComponent<InputReader>();
             if (_locomotion == null)
                 _locomotion = GetComponent<PlayerLocomotion>();
-            _combatAddon = GetComponent<ICombatAddon>();
-            _aimingAddon = GetComponent<IAimingAddon>();
+            _combatAddon = GetComponent<PlayerCombatAddon>();
+            _aimingAddon = GetComponent<PlayerFPSAimAddon>();
         }
 
         protected virtual void OnEnable()
@@ -109,7 +107,6 @@ namespace nakatimat.TPS.Player.Modular
 
         protected virtual void UpdateLocomotionState()
         {
-            bool isMelee = _combatAddon != null && _combatAddon.IsMeleeStance;
             bool isBlocking = _combatAddon != null && _combatAddon.IsBlocking;
             bool isAiming = _aimingAddon != null && _aimingAddon.IsAiming;
 
@@ -122,7 +119,6 @@ namespace nakatimat.TPS.Player.Modular
             _locomotion.HandleLocomotion(
                 _isSprinting,
                 isBlocking,
-                isMelee,
                 isAiming
             );
 
@@ -135,7 +131,6 @@ namespace nakatimat.TPS.Player.Modular
 
         protected virtual void UpdateAirborneState()
         {
-            bool isMelee = _combatAddon != null && _combatAddon.IsMeleeStance;
             bool isBlocking = _combatAddon != null && _combatAddon.IsBlocking;
             bool isAiming = _aimingAddon != null && _aimingAddon.IsAiming;
 
@@ -143,7 +138,6 @@ namespace nakatimat.TPS.Player.Modular
             _locomotion.HandleLocomotion(
                 _isSprinting,
                 isBlocking,
-                isMelee,
                 isAiming
             );
 
@@ -190,13 +184,6 @@ namespace nakatimat.TPS.Player.Modular
         public virtual void SetMovmentBlocked(bool value)
         {
             SetActionBlocked(value);
-
-            // Se o movimento foi bloqueado (ex: por um ataque), podemos forçar
-            // o personagem a rotacionar instantaneamente para a direção do analógico.
-            if (value && _locomotion != null)
-            {
-                _locomotion.SnapToInputDirection();
-            }
         }
     }
 }

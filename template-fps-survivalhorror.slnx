@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="NakeDev.Studio.Runtime.csproj" />
+  <Project Path="NakeDev.Studio.Editor.csproj" />
+</Solution>

@@ -1,4 +1,4 @@
-using nakatimat.Core.Interfaces;
+using nakatimat.TPS.Player.Modular;
 using UnityEngine;
 
 namespace nakatimat.InteractionSystem.Actions
@@ -16,14 +16,14 @@ namespace nakatimat.InteractionSystem.Actions
         {
             if (interactor != null)
             {
-                var blocker = interactor.GetComponent<IMovementBlocker>();
+                var blocker = interactor.GetComponent<PlayerManager>();
                 if (blocker != null)
                 {
                     blocker.SetMovmentBlocked(BlockMovement);
                 }
                 else
                 {
-                    Debug.LogWarning($"[InteractionSystem] O interactor {interactor.name} não possui um IMovementBlocker.");
+                    Debug.LogWarning($"[InteractionSystem] O interactor {interactor.name} não possui um PlayerManager.");
                 }
             }
         }

@@ -1,12 +1,11 @@
 using System;
-using nakatimat.Core.Interfaces;
 using UnityEngine;
 using nakatimat.Core.Inspector;
 
 namespace nakatimat.TPS.Player.Modular
 {
     [RequireComponent(typeof(InputReader))]
-    public class PlayerFPSAimAddon : MonoBehaviour, IAimingAddon
+    public class PlayerFPSAimAddon : MonoBehaviour
     {
         [Separator("FPS Camera", 50, 200, 255)]
         [Tooltip("A Câmera Principal do FPS (ex: Main Camera posicionada na cabeça do Player).")]
@@ -28,12 +27,12 @@ namespace nakatimat.TPS.Player.Modular
         [Tooltip("Arraste o GameObject/UI da sua retícula de mira (Crosshair) aqui.")]
         [SerializeField] protected GameObject _crosshairUI;
 
-        // IAimingAddon implementation
+        // Aim State
         public bool IsAiming { get; protected set; }
         public event Action<bool> OnAimStateChanged;
 
         protected InputReader _inputReader;
-        protected ICombatAddon _combatAddon;
+        protected PlayerCombatAddon _combatAddon;
         
         // Internal State
         protected float _cameraPitch = 0f;
@@ -47,7 +46,7 @@ namespace nakatimat.TPS.Player.Modular
         {
             _playerYaw = transform.eulerAngles.y;
             _inputReader = GetComponent<InputReader>();
-            _combatAddon = GetComponent<ICombatAddon>();
+            _combatAddon = GetComponent<PlayerCombatAddon>();
             
             if (_fpsCamera == null)
             {
@@ -92,7 +91,7 @@ namespace nakatimat.TPS.Player.Modular
             if (_combatAddon != null)
             {
                 if (_combatAddon.IsMeleeStance) return;
-                if (!_combatAddon.HasRangedWeapon) return;
+                if (_combatAddon.CurrentRangedWeapon == null) return;
             }
 
             IsAiming = true;

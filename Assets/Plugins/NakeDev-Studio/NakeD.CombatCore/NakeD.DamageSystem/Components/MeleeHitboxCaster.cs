@@ -11,7 +11,8 @@ namespace nakatimat.DamageSystem
         public void Attack(
             Vector3 center,
             Vector3 boxSize,
-            AttackData AttackData
+            float baseDamage,
+            LayerMask damageableLayer
         )
         {
             Vector3 boxCenter =
@@ -21,7 +22,7 @@ namespace nakatimat.DamageSystem
                 boxCenter,
                 halfExtents,
                 transform.rotation,
-                AttackData.damageableLayer
+                damageableLayer
             );
 
 #if UNITY_EDITOR
@@ -41,15 +42,12 @@ namespace nakatimat.DamageSystem
             {
                 if (hit.TryGetComponent<IDamageable>(out var damageable))
                 {
-                    if (AttackData != null)
-                    {
-                        damageable.ApplyDamage(
-                            AttackData.baseDamage,
-                            transform.root.gameObject
-                        );
+                    damageable.ApplyDamage(
+                        baseDamage,
+                        transform.root.gameObject
+                    );
 
-                        OnEnemyHit?.Invoke(hit.ClosestPoint(boxCenter));
-                    }
+                    OnEnemyHit?.Invoke(hit.ClosestPoint(boxCenter));
                 }
             }
         }

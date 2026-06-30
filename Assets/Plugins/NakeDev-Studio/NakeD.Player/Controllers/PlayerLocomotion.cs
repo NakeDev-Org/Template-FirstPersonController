@@ -1,9 +1,14 @@
-using nakatimat.TPS.Player.Modular.Data;
 using UnityEngine;
 using nakatimat.Core.Inspector;
 
 namespace nakatimat.TPS.Player.Modular
 {
+    public enum MovementWeightProfile
+    {
+        Standard,   // Com peso/inércia ao arrancar
+        Responsive  // Arrancada imediata (Arcade)
+    }
+
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(InputReader))]
     public class PlayerLocomotion : MonoBehaviour
@@ -12,16 +17,28 @@ namespace nakatimat.TPS.Player.Modular
         [SerializeField]
         private InputReader _inputReader;
 
-        [SerializeField]
-        private PlayerLocomotionStats _stats;
-        public PlayerLocomotionStats Stats => _stats;
+        [Separator("Movement Settings", 150, 200, 100)]
+        [Header("Movement Speeds")]
+        public float WalkSpeed = 3f;
+        public float SprintSpeed = 6f;
 
-        [SerializeField]
-        private PlayerCapsuleStats _capsuleStats;
+        [Header("Aiming Speeds")]
+        public float AimSpeed = 2f;
 
-        [Separator("View Mode", 150, 150, 150)]
-        [SerializeField]
-        private bool _isFirstPerson = true;
+        [Header("Responsiveness")]
+        public MovementWeightProfile WeightProfile = MovementWeightProfile.Standard;
+
+        [Header("Gravity")]
+        public float GravityMultiplier = 2f;
+        public float TerminalVelocity = -53f;
+
+        [Separator("Ground Check", 150, 200, 100)]
+        [SerializeField] private Transform _groundCheckPoint;
+        public float GroundCheckRadius = 0.28f;
+        public float GroundedOffset = -0.14f;
+        public LayerMask GroundLayerMask = -1;
+
+
 
         // Optional dependencies
         private Transform _mainCamera;
@@ -35,6 +52,8 @@ namespace nakatimat.TPS.Player.Modular
         public float VerticalVelocity { get; private set; }
         public Vector3 MoveDirection { get; private set; }
         public bool IsSprinting { get; private set; }
+        private bool _isAiming;
+        private bool _isBlocking;
 
         private void Awake()
         {
@@ -44,33 +63,18 @@ namespace nakatimat.TPS.Player.Modular
             if (_inputReader == null)
                 _inputReader = GetComponent<InputReader>();
 
-
             if (Camera.main != null)
             {
                 _mainCamera = Camera.main.transform;
             }
-
-            // Apply default Capsule Stats to the CharacterController
-            if (_capsuleStats != null && _characterController != null)
-            {
-                _characterController.radius = _capsuleStats.Radius;
-                _characterController.center = new Vector3(0f, _capsuleStats.StandingCenter, 0f);
-                _characterController.height = _capsuleStats.StandingHeight;
-            }
         }
-
-        private bool _isAiming;
-        private bool _isBlocking;
 
         public void HandleLocomotion(
             bool isSprinting,
             bool isBlocking,
-            bool isMeleeCombat,
             bool isAiming
         )
         {
-            if (_stats == null) return;
-
             IsSprinting = isSprinting;
             _isAiming = isAiming;
             _isBlocking = isBlocking;
@@ -78,7 +82,6 @@ namespace nakatimat.TPS.Player.Modular
             UpdateSpeedState(
                 isSprinting,
                 isBlocking,
-                isMeleeCombat,
                 isAiming
             );
             ApplyMovementAndRotation();
@@ -88,34 +91,23 @@ namespace nakatimat.TPS.Player.Modular
         {
             GroundCheck();
 
-            if (_stats == null) return;
-
             if (IsGrounded && VerticalVelocity < 0f)
             {
                 VerticalVelocity = -2f; // Stick to ground
             }
             else
             {
-                VerticalVelocity +=
-                    Physics.gravity.y
-                    * _stats.GravityMultiplier
-                    * Time.deltaTime;
+                VerticalVelocity += Physics.gravity.y * GravityMultiplier * Time.deltaTime;
             }
 
-            if (VerticalVelocity < _stats.TerminalVelocity)
+            if (VerticalVelocity < TerminalVelocity)
             {
-                VerticalVelocity = _stats.TerminalVelocity;
+                VerticalVelocity = TerminalVelocity;
             }
 
             // Apply vertical velocity
-            _characterController.Move(
-                Vector3.up * VerticalVelocity * Time.deltaTime
-            );
+            _characterController.Move(Vector3.up * VerticalVelocity * Time.deltaTime);
         }
-
-
-        [SerializeField]
-        private Transform _groundCheckPoint;
 
         private void GroundCheck()
         {
@@ -131,12 +123,6 @@ namespace nakatimat.TPS.Player.Modular
                 return;
             }
 
-            if (_capsuleStats == null)
-            {
-                IsGrounded = false;
-                return;
-            }
-
             Vector3 spherePos;
             if (_groundCheckPoint != null)
             {
@@ -144,15 +130,13 @@ namespace nakatimat.TPS.Player.Modular
             }
             else
             {
-                spherePos =
-                    transform.position
-                    + Vector3.up * _capsuleStats.GroundedOffset;
+                spherePos = transform.position + Vector3.up * GroundedOffset;
             }
 
             IsGrounded = Physics.CheckSphere(
                 spherePos,
-                _capsuleStats.GroundCheckRadius + 0.05f,
-                _capsuleStats.GroundLayerMask,
+                GroundCheckRadius + 0.05f,
+                GroundLayerMask,
                 QueryTriggerInteraction.Ignore
             );
         }
@@ -182,7 +166,6 @@ namespace nakatimat.TPS.Player.Modular
         protected virtual void UpdateSpeedState(
             bool isSprinting,
             bool isBlocking,
-            bool isMeleeCombat,
             bool isAiming
         )
         {
@@ -196,23 +179,19 @@ namespace nakatimat.TPS.Player.Modular
             {
                 if (isAiming)
                 {
-                    targetSpeed = _stats.MeleeWalkSpeed * 0.7f;
+                    targetSpeed = AimSpeed;
                 }
                 else if (isBlocking)
                 {
-                    targetSpeed = _stats.MeleeWalkSpeed * 0.5f;
+                    targetSpeed = WalkSpeed * 0.5f;
                 }
                 else if (isSprinting)
                 {
-                    targetSpeed = isMeleeCombat
-                        ? _stats.MeleeSprintSpeed
-                        : _stats.SprintSpeed;
+                    targetSpeed = SprintSpeed;
                 }
                 else
                 {
-                    targetSpeed = isMeleeCombat
-                        ? _stats.MeleeWalkSpeed
-                        : _stats.WalkSpeed;
+                    targetSpeed = WalkSpeed;
                 }
             }
 
@@ -225,8 +204,7 @@ namespace nakatimat.TPS.Player.Modular
 
         private float GetAccelerationDamping()
         {
-            if (_stats == null) return 10f;
-            switch (_stats.WeightProfile)
+            switch (WeightProfile)
             {
                 case MovementWeightProfile.Standard: return 4f; // Peso na aceleração (Motor)
                 case MovementWeightProfile.Responsive: return 20f; // Instantâneo
@@ -265,48 +243,11 @@ namespace nakatimat.TPS.Player.Modular
             // Apply horizontal movement
             _characterController.Move(_currentMoveVelocity * Time.deltaTime);
 
-            // Handle Rotation (OTS - Sempre alinhado à Câmera se movendo ou mirando)
-            if (!_isFirstPerson)
-            {
-                if (MoveDirection.sqrMagnitude > 0.01f || _isAiming)
-                {
-                    if (_mainCamera != null)
-                    {
-                        Vector3 camForward = _mainCamera.forward;
-                        camForward.y = 0f;
-
-                        if (camForward != Vector3.zero)
-                        {
-                            Quaternion targetRotation = Quaternion.LookRotation(
-                                camForward.normalized,
-                                Vector3.up
-                            );
-                            transform.rotation = Quaternion.Slerp(
-                                transform.rotation,
-                                targetRotation,
-                                _stats.RotationSmoothing * Time.deltaTime
-                            );
-                        }
-                    }
-                }
-            }
+            // Em FPS, a rotação do personagem já é feita instantaneamente pela câmera (PlayerFPSAimAddon),
+            // então não precisamos girar o modelo/cápsula suavemente via código aqui.
         }
 
-        public void SnapToInputDirection()
-        {
-            if (_isFirstPerson) return; // Em FPS a rotação já é instantânea pela câmera
 
-            CalculateMoveDirection(); // Atualiza a direção com base no analógico atual
-
-            if (MoveDirection.sqrMagnitude > 0.01f)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(
-                    MoveDirection,
-                    Vector3.up
-                );
-                transform.rotation = targetRotation;
-            }
-        }
 
         public void ApplyRootMotion(Animator animator)
         {
