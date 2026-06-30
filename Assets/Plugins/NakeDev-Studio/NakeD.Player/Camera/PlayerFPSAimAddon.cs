@@ -22,7 +22,7 @@ namespace nakatimat.TPS.Player.Modular
 
         [Separator("Suavização/Aceleração", 100, 255, 200)]
         public bool enableSmoothing = true;
-        public float cameraAcceleration = 5f;
+        public float cameraAcceleration = 15f;
 
         [Separator("UI", 255, 100, 200)]
         [Tooltip("Arraste o GameObject/UI da sua retícula de mira (Crosshair) aqui.")]
@@ -38,6 +38,10 @@ namespace nakatimat.TPS.Player.Modular
         // Internal State
         protected float _cameraPitch = 0f;
         protected float _playerYaw = 0f;
+        
+        // Public Access for Sway scripts
+        public float TargetPitch => _cameraPitch;
+        public float TargetYaw => _playerYaw;
 
         protected virtual void Awake()
         {
