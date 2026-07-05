@@ -1,28 +1,38 @@
-# NakeDev Survival Horror FPS Framework
+# 🩸 NakeDev Template: FPS & Survival Horror Framework
 
-Bem-vindo à **NakeDev Survival Horror FPS Framework**! 
-Este é o motor central focado na construção de experiências **Survival Horror** e **Action FPS** com peso, realismo e impacto. 
+Bem-vindo ao **NakeDev Template**! 
+Este é o motor central focado na construção de experiências **Survival Horror** e **Action FPS** com peso, realismo e impacto.
 
-Construída sob a filosofia de ser ágil, pragmática e modular (para Solo Devs), a NakeDev Framework fornece toda a base complexa de Locomoção e Combate para que você possa focar 100% na Arte, Narrativa e no *Game Feel* do seu projeto.
+Construído sob a rigorosa filosofia de ser ágil, pragmático e modular **(Foco total no Solo Dev)**, o NakeDev fornece a base sólida de Locomoção, Interação e Inventário para que você possa focar 100% na Arte, Narrativa e no *Game Feel* do seu projeto, sem enlouquecer com código espaguete!
 
-## 🚀 Instalação Rápida (UPM)
+---
 
-A maneira oficial e recomendada de instalar esta framework no seu jogo é através do **Unity Package Manager (UPM)**. Isso garante que o código permaneça limpo, intocável e receba atualizações facilmente.
+## ✨ Features (Construídas com a Regra de Ouro: KISS & YAGNI)
 
-1. Abra o seu novo projeto na Unity (Versão Recomendada: 2022.3 ou superior).
-2. Acesse `Window > Package Manager`.
-3. Clique no botão `+` (canto superior esquerdo) e escolha **"Add package from git URL..."**.
-4. Copie e cole o link exato abaixo:
+* **🏃‍♂️ Player Locomotion Limpo:** Um PlayerManager que atua como cérebro, com movimento fluido, câmera nativa de First Person pura e sistema modular de Sway para armas e câmera.
+* **⚡ Sistema de Interação Zero-Code:** Baseado integralmente em *ScriptableObjects*. Quer que um cubo seja coletado ou uma porta seja aberta? Adicione o script `InteractableObject` no objeto 3D e arraste a Ação (ScriptableObject) para ele no Inspector. Simples assim.
+* **🎒 Inventário Extremamente Enxuto:** Sem dados pesados. O `InventoryManager` é um dicionário veloz que escuta o jogo e guarda seus itens por ID (String). Tem visualização de Debug integrada ao Inspector.
+* **📼 Retro Animator (Opcional):** Transforme qualquer modelo 3D num clássico de PS1 com nosso script que trava o framerate das animações em 12 ou 15 FPS.
+* **🔧 Liberdade Total:** Nada de UPM (Unity Package Manager) bloqueando o seu código. Este template é seu! Você tem a posse do código e pode modificá-lo da forma que seu jogo precisar.
 
-```text
-https://github.com/NakeDev-Org/template-survivalhorror.git?path=/Assets/Plugins/NakeDev-Studio#dev/FPS
-```
+---
 
-> **Nota para Desenvolvedores:** A framework injetará automaticamente as dependências necessárias, como *New Input System*, *Cinemachine* e *Animation Rigging*. Não modifique os scripts base diretamente! Se precisar estender uma funcionalidade, utilize Herança (`override`) ou assine os Eventos (`Actions/UnityEvents`) fornecidos pela framework em seus próprios scripts na pasta `Assets`.
+## 🚀 Como Usar (Instalação Limpa)
 
-### 📚 Pré-Requisitos de Estudo (O Poder da Framework)
-Para extrair o máximo do design *Read-Only* desta framework sem nunca precisar alterar os scripts originais, é fundamental dominar os conceitos de Programação Orientada a Objetos abaixo. Eles ensinam como conectar as mecânicas específicas do seu jogo (Lataria) no nosso código base (Motor):
+Esqueça o Unity Package Manager para o core do seu jogo. A NakeDev preza pela **liberdade de edição**.
 
-* **[Herança no C# (O Conceito de Pai e Filho)](https://learn.microsoft.com/pt-br/dotnet/csharp/fundamentals/object-oriented/inheritance)**
-* **[A Palavra-chave 'base' (Executando as funções originais)](https://learn.microsoft.com/pt-br/dotnet/csharp/language-reference/keywords/base)**
-* **[O Combo 'virtual' e 'override' (Sequestrando e Sobrescrevendo Matemática)](https://learn.microsoft.com/pt-br/dotnet/csharp/language-reference/keywords/override)**
+1. **Requisito Mínimo:** Unity 6.x (6000.x+).
+2. **Clone ou Baixe** este repositório (Recomendamos baixar diretamente da branch `master`).
+3. Adicione a pasta extraída no seu **Unity Hub** e abra o projeto.
+4. Todo o coração da framework estará dentro da pasta: `Assets/NakeDev-Template`.
+5. Modifique, estude e altere qualquer código! A arquitetura é sua.
+
+---
+
+## 🛠 Dependências Nativas
+O projeto já vem pré-configurado utilizando as ferramentas oficiais mais recentes da Unity:
+- **Input System:** Novo sistema de eventos focado em Action Maps.
+- **Cinemachine 3+:** Para manuseio avançado da câmera.
+
+> *"Menos código solto = Menos bugs de madrugada."*
+> - O Lema do Indie Dev.
