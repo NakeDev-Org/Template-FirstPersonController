@@ -23,6 +23,8 @@ namespace nakatimat.Player
         // --- Properties (Stateful Inputs) ---
         public Vector2 MoveInput { get; private set; }
         public Vector2 LookInput { get; private set; }
+        public Vector2 RawLookInput { get; private set; }
+
         public bool IsGamepad { get; private set; }
 
         // --- Events (Action Inputs) ---
@@ -67,13 +69,15 @@ namespace nakatimat.Player
 
         public virtual void OnLook(InputAction.CallbackContext context)
         {
+            RawLookInput = context.ReadValue<Vector2>();
+
             if (_gameState != null && !_gameState.IsPlaying()) 
             {
                 LookInput = Vector2.zero;
                 return;
             }
 
-            LookInput = context.ReadValue<Vector2>();
+            LookInput = RawLookInput;
 
             // Verifica se o dispositivo usado para olhar foi um controle (Gamepad)
             if (context.control != null && context.control.device != null)

@@ -23,6 +23,7 @@ namespace nakatimat.InteractionSystem
             return transform.position;
         }
 
+
         public void Interact(GameObject interactor)
         {
             if (_actionsToExecute == null) return;
