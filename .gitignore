@@ -72,3 +72,7 @@ crashlytics-build.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Claude Code
+.claude/
+claude.json

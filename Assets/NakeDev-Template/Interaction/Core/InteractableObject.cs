@@ -96,5 +96,24 @@ namespace nakatimat.InteractionSystem
                 _myIcon.SetTargeted(isTargeted);
             }
         }
+
+        /// <summary>
+        /// Chamado pelo InspectSystem ao entrar/sair do modo de inspeção deste item:
+        /// desliga o collider (evita que o InteractionScanner mire nele enquanto está na mão)
+        /// e esconde o ícone de interação (que ficaria colado na câmera).
+        /// </summary>
+        public void SetInspecting(bool isInspecting)
+        {
+            Collider col = GetComponent<Collider>();
+            if (col != null)
+            {
+                col.enabled = !isInspecting;
+            }
+
+            if (_myIcon != null)
+            {
+                _myIcon.gameObject.SetActive(!isInspecting);
+            }
+        }
     }
 }
