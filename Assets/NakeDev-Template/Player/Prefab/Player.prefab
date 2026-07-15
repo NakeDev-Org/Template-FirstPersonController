@@ -159,6 +159,135 @@ Transform:
   - {fileID: 6719212207507248743}
   m_Father: {fileID: 4966466823209825762}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &349450665503453689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7524691310492043840}
+  - component: {fileID: 5886956002970065981}
+  - component: {fileID: 6167880258437151827}
+  m_Layer: 8
+  m_Name: InspectCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7524691310492043840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349450665503453689}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2204939451685129179}
+  m_Father: {fileID: 728914896289681590}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &5886956002970065981
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349450665503453689}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 4
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.05
+  far clip plane: 5
+  field of view: 40
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 256
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!114 &6167880258437151827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349450665503453689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 0
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 1
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &379867244821112927
 GameObject:
   m_ObjectHideFlags: 0
@@ -3692,6 +3821,37 @@ Transform:
   - {fileID: 5471544429732336689}
   m_Father: {fileID: 2115408667775257395}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5325073637636724983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2204939451685129179}
+  m_Layer: 0
+  m_Name: InspectPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2204939451685129179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5325073637636724983}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7524691310492043840}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5370220123104626224
 GameObject:
   m_ObjectHideFlags: 0
@@ -4687,6 +4847,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4925532767888026668}
+  - {fileID: 7524691310492043840}
   m_Father: {fileID: 1449259321287065729}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &820341236042753363
@@ -4766,6 +4927,7 @@ MonoBehaviour:
   m_CameraType: 0
   m_Cameras:
   - {fileID: 4168808409668188418}
+  - {fileID: 5886956002970065981}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -6491,6 +6653,7 @@ GameObject:
   - component: {fileID: 4308591020047637273}
   - component: {fileID: 2831124086690904184}
   - component: {fileID: 7781787517175514053}
+  - component: {fileID: 8811777602360591930}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -6553,7 +6716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d631f5db53518d478b71c8a20aaedf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: NakeDev.Studio.Runtime::nakatimat.TPS.Player.Modular.InputReader
-  _gameState: {fileID: 0}
+  _gameState: {fileID: 11400000, guid: 6284ab168914b2f49a62b1d4d6151e22, type: 2}
 --- !u!114 &7970993391640301612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6654,7 +6817,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8880351067941468530}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 497b9370c7294c94bab297a69e3a36ff, type: 3}
   m_Name: 
@@ -6698,6 +6861,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 340d1200c43a66f43be97d03b5047edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::nakatimat.InventorySystem.InventoryManager
+  _debugInventoryViewer: []
+--- !u!114 &8811777602360591930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8880351067941468530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d0c75c1b56bce4198f179522fc61f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::nakatimat.InspectSystem.InspectSystem
+  _inputReader: {fileID: 1546102880243637780}
+  _gameState: {fileID: 11400000, guid: 6284ab168914b2f49a62b1d4d6151e22, type: 2}
+  _inspectedItemsRegistry: {fileID: 11400000, guid: c0438aae13fa74541b85746e440b9dff, type: 2}
+  _inspectPoint: {fileID: 2204939451685129179}
+  _inspectCamera: {fileID: 5886956002970065981}
+  _inspectLayerName: InspectItem
+  _rotationSpeed: 10
+  _gamepadRotationSpeed: 180
 --- !u!1 &8884242264096351365
 GameObject:
   m_ObjectHideFlags: 0

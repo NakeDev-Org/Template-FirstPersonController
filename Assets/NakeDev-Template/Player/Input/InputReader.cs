@@ -23,7 +23,12 @@ namespace nakatimat.Player
         // --- Properties (Stateful Inputs) ---
         public Vector2 MoveInput { get; private set; }
         public Vector2 LookInput { get; private set; }
+        public Vector2 RawLookInput { get; private set; }
+
         public bool IsGamepad { get; private set; }
+
+        // Verdadeiro enquanto o botão de rotação da inspeção (clique esquerdo do mouse) está pressionado.
+        public bool IsInspectRotateHeld { get; private set; }
 
         // --- Events (Action Inputs) ---
         public event Action OnJumpPressed;
@@ -34,6 +39,7 @@ namespace nakatimat.Player
         public event Action OnFlashlightToggled;
         public event Action OnAimStarted;
         public event Action OnAimCanceled;
+        public event Action OnCancelPressed;
 
         protected virtual void OnEnable()
         {
@@ -67,13 +73,15 @@ namespace nakatimat.Player
 
         public virtual void OnLook(InputAction.CallbackContext context)
         {
+            RawLookInput = context.ReadValue<Vector2>();
+
             if (_gameState != null && !_gameState.IsPlaying()) 
             {
                 LookInput = Vector2.zero;
                 return;
             }
 
-            LookInput = context.ReadValue<Vector2>();
+            LookInput = RawLookInput;
 
             // Verifica se o dispositivo usado para olhar foi um controle (Gamepad)
             if (context.control != null && context.control.device != null)
@@ -106,10 +114,34 @@ namespace nakatimat.Player
 
         public virtual void OnInteraction(InputAction.CallbackContext context)
         {
-            if (_gameState != null && !_gameState.IsPlaying()) return;
+            // CanInteract() (em vez de IsPlaying()) permite reusar o mesmo botão para
+            // iniciar a interação normal E confirmar a coleta enquanto o InspectSystem está ativo.
+            if (_gameState != null && !_gameState.CanInteract()) return;
 
             if (context.performed)
                 OnInteractionPressed?.Invoke();
+        }
+
+        public virtual void OnCancel(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                OnCancelPressed?.Invoke();
+        }
+
+        public virtual void OnInspectRotate(InputAction.CallbackContext context)
+        {
+            // O release sempre é processado (mesmo fora do estado "Playing"), pra nunca travar
+            // IsInspectRotateHeld em true caso o GameState mude enquanto o botão está pressionado.
+            if (context.canceled)
+            {
+                IsInspectRotateHeld = false;
+                return;
+            }
+
+            if (_gameState != null && !_gameState.CanInteract()) return;
+
+            if (context.performed)
+                IsInspectRotateHeld = true;
         }
 
         public virtual void OnFlashlight(InputAction.CallbackContext context)

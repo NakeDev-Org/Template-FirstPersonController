@@ -1,4 +1,4 @@
-using nakatimat.InteractionSystem;
+using nakatimat.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,19 +16,25 @@ namespace nakatimat.InteractionSystem.UI
 
         [Header("Ícones")]
         [Tooltip("Ícone de ponto de interesse (Longe)")]
-        public Sprite pointOfInterestSprite;
-        [Tooltip("Ícone de botão de interação (Perto/Mirado)")]
-        public Sprite interactButtonSprite;
+        public Sprite globalIcon;
+        
+        [Tooltip("Ícone de botão de interação - Teclado (Perto/Mirado)")]
+        public Sprite keyboardIcon;
+
+        [Tooltip("Ícone de botão de interação - Controle (Perto/Mirado)")]
+        public Sprite gamepadIcon;
 
         [Header("Configurações")]
         [Tooltip("Distância máxima para mostrar o ícone na tela")]
         public float maxDistance = 5f;
 
         private Transform _playerTransform;
+        private InputReader _inputReader;
         private Camera _mainCamera;
         private Canvas _canvas;
 
         private bool _isTargeted = false;
+        private bool _lastIsGamepad = false;
 
         public void Setup()
         {
@@ -37,7 +43,10 @@ namespace nakatimat.InteractionSystem.UI
             // Tenta encontrar o player automaticamente (KISS)
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
+            {
                 _playerTransform = player.transform;
+                _inputReader = player.GetComponentInChildren<InputReader>();
+            }
 
             _canvas = GetComponentInChildren<Canvas>();
             if (_canvas == null)
@@ -54,7 +63,19 @@ namespace nakatimat.InteractionSystem.UI
         {
             if (iconImage != null)
             {
-                iconImage.sprite = _isTargeted ? interactButtonSprite : pointOfInterestSprite;
+                if (!_isTargeted)
+                {
+                    iconImage.sprite = globalIcon;
+                }
+                else
+                {
+                    bool isGamepad = _inputReader != null && _inputReader.IsGamepad;
+                    iconImage.sprite = isGamepad ? gamepadIcon : keyboardIcon;
+                }
+                
+                // Evita que ícones de proporções diferentes fiquem espremidos/esticados
+                iconImage.preserveAspect = true;
+                iconImage.SetNativeSize();
             }
         }
 
@@ -62,6 +83,16 @@ namespace nakatimat.InteractionSystem.UI
         {
             if (_playerTransform == null || _mainCamera == null || iconImage == null)
                 return;
+                
+            // Monitora a troca de controle vs teclado em tempo real se estiver mirando
+            if (_isTargeted && _inputReader != null)
+            {
+                if (_inputReader.IsGamepad != _lastIsGamepad)
+                {
+                    _lastIsGamepad = _inputReader.IsGamepad;
+                    UpdateIconSprite();
+                }
+            }
 
             // Calcula a distância usando a própria posição deste objeto no mundo 3D
             float distance = Vector3.Distance(transform.position, _playerTransform.position);

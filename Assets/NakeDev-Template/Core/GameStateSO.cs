@@ -7,7 +7,8 @@ namespace nakatimat.Core
     {
         Playing,
         Paused,
-        InventoryOpen
+        InventoryOpen,
+        Inspecting
     }
 
     /// <summary>
@@ -41,16 +42,30 @@ namespace nakatimat.Core
                 Cursor.visible = false;
                 Time.timeScale = 1f;
             }
+            else if (CurrentState == GameState.Inspecting)
+            {
+                // Cursor travado e invisível, igual ao modo Playing: o item gira direto pelo
+                // movimento do mouse (RawLookInput), sem precisar clicar e arrastar. O mundo
+                // continua rodando (sem pausar).
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                Time.timeScale = 1f;
+            }
             else
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
-                
+
                 // Pausa o jogo fisicamente se estiver no menu de pause ou inventário (opcional)
-                Time.timeScale = 0f; 
+                Time.timeScale = 0f;
             }
         }
 
         public bool IsPlaying() => CurrentState == GameState.Playing;
+
+        /// <summary>
+        /// Verdadeiro quando o jogador pode acionar a Interação (jogando normalmente ou inspecionando um item).
+        /// </summary>
+        public bool CanInteract() => CurrentState == GameState.Playing || CurrentState == GameState.Inspecting;
     }
 }

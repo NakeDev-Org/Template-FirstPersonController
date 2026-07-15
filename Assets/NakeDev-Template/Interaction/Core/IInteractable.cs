@@ -9,6 +9,7 @@ namespace nakatimat.InteractionSystem
         /// </summary>
         void Interact(GameObject interactor);
 
+
         /// <summary>
         /// Gets the exact Vector3 position where the UI floating icon should appear.
         /// </summary>
