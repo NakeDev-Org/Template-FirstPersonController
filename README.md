@@ -28,7 +28,7 @@ O framework vive dentro de `Assets/NakeDev-Template`, que é um pacote UPM compl
 1. Abra `Packages/manifest.json` do seu projeto.
 2. Adicione a dependência:
    ```json
-   "com.nakatimat.template": "https://github.com/SEU_USUARIO/SEU_REPO.git?path=/Assets/NakeDev-Template#master"
+   "com.nakatimat.template": "https://github.com/NakeDev-Org/template-fps-survivalhorror.git?path=/Assets/NakeDev-Template#master"
    ```
 3. Volte pro Unity Editor e deixe o Package Manager resolver a instalação.
 4. Configure manualmente as **Tags** (`Player`) e **Layers** (`Interactable`, `InspectItem`, `ArmsLayers`) no seu projeto — elas não vêm com o pacote, pois ficam em `ProjectSettings` (fora do escopo de um pacote UPM).
