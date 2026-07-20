@@ -223,6 +223,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::nakatimat.InteractionSystem.UI.IconInteraction
   iconImage: {fileID: 803117219504157742}
-  pointOfInterestSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  interactButtonSprite: {fileID: 21300000, guid: 2f6618ca4af94df49884ca327b3c36f6, type: 3}
+  iconSet: {fileID: 11400000, guid: d2507d1c57ea52e4fa05d3babdb59f44, type: 2}
   maxDistance: 5

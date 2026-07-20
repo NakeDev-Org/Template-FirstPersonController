@@ -27,6 +27,9 @@ namespace nakatimat.Player
 
         public bool IsGamepad { get; private set; }
 
+        // Marca/tipo do dispositivo atual (teclado, Xbox, PlayStation, Nintendo...), usada para escolher ícones de UI.
+        public InputDeviceType CurrentDeviceType { get; private set; } = InputDeviceType.Keyboard;
+
         // Verdadeiro enquanto o botão de rotação da inspeção (clique esquerdo do mouse) está pressionado.
         public bool IsInspectRotateHeld { get; private set; }
 
@@ -86,8 +89,31 @@ namespace nakatimat.Player
             // Verifica se o dispositivo usado para olhar foi um controle (Gamepad)
             if (context.control != null && context.control.device != null)
             {
-                IsGamepad = context.control.device is Gamepad;
+                InputDevice device = context.control.device;
+                IsGamepad = device is Gamepad;
+                CurrentDeviceType = ClassifyDevice(device);
             }
+        }
+
+        // Classificação leve por nome/layout do dispositivo — evita depender de classes de
+        // plugins específicos (ex: suporte a Switch), que podem não estar habilitados no projeto.
+        private static InputDeviceType ClassifyDevice(InputDevice device)
+        {
+            if (!(device is Gamepad))
+                return InputDeviceType.Keyboard;
+
+            string probe = ((device.layout ?? "") + " " + (device.displayName ?? device.name ?? "")).ToLowerInvariant();
+
+            if (probe.Contains("dualshock") || probe.Contains("dualsense") || probe.Contains("ps4") || probe.Contains("ps5") || probe.Contains("playstation"))
+                return InputDeviceType.PlayStation;
+
+            if (probe.Contains("switch") || probe.Contains("nintendo") || probe.Contains("joycon") || probe.Contains("joy-con"))
+                return InputDeviceType.Nintendo;
+
+            if (probe.Contains("xbox") || probe.Contains("xinput"))
+                return InputDeviceType.Xbox;
+
+            return InputDeviceType.GenericGamepad;
         }
 
         public virtual void OnJump(InputAction.CallbackContext context)

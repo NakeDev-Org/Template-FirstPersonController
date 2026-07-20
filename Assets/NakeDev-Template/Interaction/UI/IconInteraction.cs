@@ -1,3 +1,4 @@
+using nakatimat.Core;
 using nakatimat.Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,14 +16,8 @@ namespace nakatimat.InteractionSystem.UI
         public Image iconImage;
 
         [Header("Ícones")]
-        [Tooltip("Ícone de ponto de interesse (Longe)")]
-        public Sprite globalIcon;
-        
-        [Tooltip("Ícone de botão de interação - Teclado (Perto/Mirado)")]
-        public Sprite keyboardIcon;
-
-        [Tooltip("Ícone de botão de interação - Controle (Perto/Mirado)")]
-        public Sprite gamepadIcon;
+        [Tooltip("Conjunto de ícones (global/teclado/gamepad). Crie um asset via Create > NakeDev > Interaction > Icon Set e reutilize em qualquer interactable.")]
+        public InteractionIconSetSO iconSet;
 
         [Header("Configurações")]
         [Tooltip("Distância máxima para mostrar o ícone na tela")]
@@ -34,7 +29,7 @@ namespace nakatimat.InteractionSystem.UI
         private Canvas _canvas;
 
         private bool _isTargeted = false;
-        private bool _lastIsGamepad = false;
+        private InputDeviceType _lastDeviceType = InputDeviceType.Keyboard;
 
         public void Setup()
         {
@@ -61,22 +56,15 @@ namespace nakatimat.InteractionSystem.UI
 
         private void UpdateIconSprite()
         {
-            if (iconImage != null)
-            {
-                if (!_isTargeted)
-                {
-                    iconImage.sprite = globalIcon;
-                }
-                else
-                {
-                    bool isGamepad = _inputReader != null && _inputReader.IsGamepad;
-                    iconImage.sprite = isGamepad ? gamepadIcon : keyboardIcon;
-                }
-                
-                // Evita que ícones de proporções diferentes fiquem espremidos/esticados
-                iconImage.preserveAspect = true;
-                iconImage.SetNativeSize();
-            }
+            if (iconImage == null || iconSet == null)
+                return;
+
+            InputDeviceType deviceType = _inputReader != null ? _inputReader.CurrentDeviceType : InputDeviceType.Keyboard;
+            iconImage.sprite = iconSet.GetIcon(_isTargeted, deviceType);
+
+            // Evita que ícones de proporções diferentes fiquem espremidos/esticados
+            iconImage.preserveAspect = true;
+            iconImage.SetNativeSize();
         }
 
         void LateUpdate()
@@ -84,12 +72,12 @@ namespace nakatimat.InteractionSystem.UI
             if (_playerTransform == null || _mainCamera == null || iconImage == null)
                 return;
                 
-            // Monitora a troca de controle vs teclado em tempo real se estiver mirando
+            // Monitora a troca de dispositivo (teclado/Xbox/PlayStation/Nintendo) em tempo real se estiver mirando
             if (_isTargeted && _inputReader != null)
             {
-                if (_inputReader.IsGamepad != _lastIsGamepad)
+                if (_inputReader.CurrentDeviceType != _lastDeviceType)
                 {
-                    _lastIsGamepad = _inputReader.IsGamepad;
+                    _lastDeviceType = _inputReader.CurrentDeviceType;
                     UpdateIconSprite();
                 }
             }
