@@ -6733,7 +6733,7 @@ MonoBehaviour:
   WalkSpeed: 1
   SprintSpeed: 2
   AimSpeed: 2
-  GravityMultiplier: 2
+  GravityMultiplier: 3.5
   TerminalVelocity: -53
   _groundCheckPoint: {fileID: 6241707896910226559}
   GroundCheckRadius: 0.28
@@ -6741,6 +6741,10 @@ MonoBehaviour:
   GroundLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  StairAssistEnabled: 1
+  StairAssistMaxStepHeight: 0.35
+  StairAssistCheckDistance: 0.35
+  StairAssistUpSpeed: 5
 --- !u!114 &6633950024114418190
 MonoBehaviour:
   m_ObjectHideFlags: 0

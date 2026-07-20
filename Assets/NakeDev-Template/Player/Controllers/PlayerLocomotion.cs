@@ -31,6 +31,16 @@ namespace nakatimat.Player
         public float GroundedOffset = -0.14f;
         public LayerMask GroundLayerMask = -1;
 
+        [InspectorLine("Stair Assist", 200, 150, 100)]
+        [Tooltip("Empurra o personagem pra cima ao esbarrar de frente num degrau baixo (evita ter que andar na diagonal pra subir escada).")]
+        public bool StairAssistEnabled = true;
+        [Tooltip("Altura máxima de degrau que o auxílio ajuda a subir. Deve ficar perto do Step Offset do CharacterController.")]
+        public float StairAssistMaxStepHeight = 0.35f;
+        [Tooltip("Distância à frente checada em busca de degrau.")]
+        public float StairAssistCheckDistance = 0.35f;
+        [Tooltip("Velocidade do empurrão vertical aplicado ao detectar um degrau.")]
+        public float StairAssistUpSpeed = 5f;
+
 
 
         // Optional dependencies
@@ -217,6 +227,11 @@ namespace nakatimat.Player
                 );
             }
 
+            if (IsGrounded)
+            {
+                ApplyStairAssist();
+            }
+
             // Apply horizontal movement
             _characterController.Move(_currentMoveVelocity * Time.deltaTime);
 
@@ -225,6 +240,85 @@ namespace nakatimat.Player
         }
 
 
+
+        // Corrige o "enroscar" clássico do CharacterController em escadas/degraus quando o jogador
+        // colide de frente (perpendicular) com o degrau: o Step Offset nativo às vezes só resolve
+        // com um ângulo (por isso o hábito de andar na diagonal). Aqui checamos se o obstáculo à
+        // frente é baixo (tem espaço livre logo acima) e, se sim, damos um empurrão vertical manual.
+        // Cache só pra desenhar o Gizmo com o estado real do último check (ver OnDrawGizmosSelected)
+        private bool _debugStairAssistActive;
+        private Vector3 _debugLowOrigin, _debugHighOrigin, _debugDirection;
+        private float _debugCastDistance;
+        private bool _debugLowBlocked, _debugHighBlocked;
+
+        private void ApplyStairAssist()
+        {
+            _debugStairAssistActive = false;
+
+            if (!StairAssistEnabled)
+                return;
+
+            Vector3 horizontalVelocity = new Vector3(_currentMoveVelocity.x, 0f, _currentMoveVelocity.z);
+            if (horizontalVelocity.sqrMagnitude < 0.01f)
+                return;
+
+            Vector3 direction = horizontalVelocity.normalized;
+            float castDistance = _characterController.radius + StairAssistCheckDistance;
+
+            // Raio baixo: na altura do "pé"/base da cápsula, onde a quina do degrau costuma bater.
+            Vector3 lowOrigin = transform.position + Vector3.up * (_characterController.radius + 0.05f);
+            bool lowBlocked = Physics.Raycast(lowOrigin, direction, castDistance, GroundLayerMask, QueryTriggerInteraction.Ignore);
+
+            // Raio alto: na altura máxima de degrau permitida. Se também bater, é uma parede de verdade.
+            Vector3 highOrigin = transform.position + Vector3.up * StairAssistMaxStepHeight;
+            bool highBlocked = lowBlocked && Physics.Raycast(highOrigin, direction, castDistance, GroundLayerMask, QueryTriggerInteraction.Ignore);
+
+            _debugStairAssistActive = true;
+            _debugLowOrigin = lowOrigin;
+            _debugHighOrigin = highOrigin;
+            _debugDirection = direction;
+            _debugCastDistance = castDistance;
+            _debugLowBlocked = lowBlocked;
+            _debugHighBlocked = highBlocked;
+
+            if (!lowBlocked || highBlocked)
+                return;
+
+            _characterController.Move(Vector3.up * StairAssistUpSpeed * Time.deltaTime);
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            CharacterController controller = _characterController != null ? _characterController : GetComponent<CharacterController>();
+            if (controller == null)
+                return;
+
+            if (_debugStairAssistActive)
+            {
+                // Estado real do último check em Play Mode
+                Gizmos.color = _debugLowBlocked ? Color.yellow : Color.green;
+                Gizmos.DrawLine(_debugLowOrigin, _debugLowOrigin + _debugDirection * _debugCastDistance);
+                Gizmos.DrawWireSphere(_debugLowOrigin, 0.03f);
+
+                Gizmos.color = _debugHighBlocked ? Color.red : Color.cyan;
+                Gizmos.DrawLine(_debugHighOrigin, _debugHighOrigin + _debugDirection * _debugCastDistance);
+                Gizmos.DrawWireSphere(_debugHighOrigin, 0.03f);
+            }
+            else
+            {
+                // Fora do Play Mode: mostra a área de checagem apontando pra frente do personagem
+                Vector3 direction = transform.forward;
+                float castDistance = controller.radius + StairAssistCheckDistance;
+                Vector3 lowOrigin = transform.position + Vector3.up * (controller.radius + 0.05f);
+                Vector3 highOrigin = transform.position + Vector3.up * StairAssistMaxStepHeight;
+
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawLine(lowOrigin, lowOrigin + direction * castDistance);
+
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawLine(highOrigin, highOrigin + direction * castDistance);
+            }
+        }
 
         public void ApplyRootMotion(Animator animator)
         {
