@@ -1,5 +1,5 @@
 {
-    "name": "NakeDev.Template",
+    "name": "NakeDev.Player",
     "rootNamespace": "",
     "references": [
         "Unity.InputSystem",

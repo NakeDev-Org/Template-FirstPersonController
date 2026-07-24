@@ -1,0 +1,19 @@
+{
+  "name": "com.nakatimat.player",
+  "version": "0.1.0",
+  "displayName": "NakeDev Player - First Person Controller",
+  "description": "Controller de primeira pessoa modular para solo dev: locomoção, câmera FPS, gravidade e stair assist. Requer o pacote NakeDev Core (Interação, Inventário, Inspeção de Itens) instalado separadamente.",
+  "unity": "6000.0",
+  "dependencies": {
+    "com.unity.inputsystem": "1.19.0"
+  },
+  "keywords": [
+    "fps",
+    "first-person",
+    "player-controller",
+    "nakedev"
+  ],
+  "author": {
+    "name": "Nakemo"
+  }
+}

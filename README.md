@@ -1,6 +1,6 @@
-# 🩸 NakeDev Template: FPS & Survival Horror Framework
+# 🩸 NakeDev Player: First Person Controller
 
-Bem-vindo ao **NakeDev Template**! 
+Bem-vindo ao **NakeDev Player**! 
 Este é o motor central focado na construção de experiências **Survival Horror** e **Action FPS** com peso, realismo e impacto.
 
 Construído sob a rigorosa filosofia de ser ágil, pragmático e modular **(Foco total no Solo Dev)**, o NakeDev fornece a base sólida de Locomoção e Câmera FPS para que você possa focar 100% na Arte, Narrativa e no *Game Feel* do seu projeto, sem enlouquecer com código espaguete!
@@ -20,16 +20,16 @@ Construído sob a rigorosa filosofia de ser ágil, pragmático e modular **(Foco
 
 ## 🚀 Como Usar
 
-Existem duas formas de usar o NakeDev Template, dependendo do seu fluxo de trabalho:
+Existem duas formas de usar o NakeDev Player, dependendo do seu fluxo de trabalho:
 
 ### Opção A — Como Pacote UPM (recomendado)
 
-O framework vive dentro de `Assets/NakeDev-Template`, que é um pacote UPM completo (`package.json` + Assembly Definitions). Isso permite instalá-lo em qualquer projeto Unity via Git URL, sem copiar/colar código manualmente.
+O framework vive dentro de `Assets/NakeDev-Player`, que é um pacote UPM completo (`package.json` + Assembly Definitions). Isso permite instalá-lo em qualquer projeto Unity via Git URL, sem copiar/colar código manualmente.
 
 1. Abra `Packages/manifest.json` do seu projeto.
 2. Adicione as duas dependências (o Unity Package Manager **não** resolve dependências git de forma transitiva — o `com.nakatimat.core` precisa ser listado manualmente, mesmo já estando declarado dentro do `package.json` deste pacote):
    ```json
-   "com.nakatimat.template": "https://github.com/NakeDev-Org/template-fps-survivalhorror.git?path=/Assets/NakeDev-Template#master",
+   "com.nakatimat.player": "https://github.com/NakeDev-Org/Template-FirstPersonController.git?path=/Assets/NakeDev-Player#master",
    "com.nakatimat.core": "https://github.com/NakeDev-Org/Template-CoreSystem.git"
    ```
 3. Volte pro Unity Editor e deixe o Package Manager resolver a instalação.
@@ -44,7 +44,7 @@ Se quiser abrir esse repositório como um projeto Unity standalone (pra estudar,
 1. **Requisito Mínimo:** Unity 6.x (6000.x+).
 2. **Clone ou Baixe** este repositório (branch `master`).
 3. Adicione a pasta no seu **Unity Hub** e abra o projeto.
-4. Todo o coração da framework estará dentro da pasta: `Assets/NakeDev-Template`.
+4. Todo o coração da framework estará dentro da pasta: `Assets/NakeDev-Player`.
 5. Modifique, estude e altere qualquer código! A arquitetura é sua.
 
 ---

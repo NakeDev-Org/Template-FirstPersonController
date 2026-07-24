@@ -1,6 +1,6 @@
 # 🧩 NakeDev Core: Interaction, Inventory & Inspection Systems
 
-Sistemas genéricos e reaproveitáveis entre projetos e perspectivas (1ª ou 3ª pessoa), extraídos do [NakeDev Template — FPS & Survival Horror](https://github.com/NakeDev-Org/template-fps-survivalhorror). Não depende de nenhum controller de câmera ou locomoção específico.
+Sistemas genéricos e reaproveitáveis entre projetos e perspectivas (1ª ou 3ª pessoa), extraídos do [NakeDev Player — First Person Controller](https://github.com/NakeDev-Org/Template-FirstPersonController). Não depende de nenhum controller de câmera ou locomoção específico.
 
 ---
 
@@ -28,7 +28,7 @@ public interface IInteractionInput
 }
 ```
 
-No [NakeDev Template FPS](https://github.com/NakeDev-Org/template-fps-survivalhorror), o `InputReader` já implementa essa interface.
+No [NakeDev Player](https://github.com/NakeDev-Org/Template-FirstPersonController), o `InputReader` já implementa essa interface.
 
 ## 🚀 Instalação
 
