@@ -1,9 +1,8 @@
 {
-    "name": "NakeDev.Template",
+    "name": "NakeDev.Core",
     "rootNamespace": "",
     "references": [
-        "Unity.InputSystem",
-        "NakeDev.Core"
+        "UnityEngine.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

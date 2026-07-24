@@ -1,0 +1,19 @@
+{
+  "name": "com.nakatimat.core",
+  "version": "0.1.0",
+  "displayName": "NakeDev Core - Interaction, Inventory & Inspection Systems",
+  "description": "Sistemas genéricos e reaproveitáveis entre projetos/perspectivas: interação orientada a ScriptableObjects, inventário, inspeção de itens, GameState e ferramentas de Editor. Não depende de nenhum controller de câmera/locomoção específico.",
+  "unity": "6000.0",
+  "dependencies": {
+    "com.unity.ugui": "2.0.0"
+  },
+  "keywords": [
+    "interaction",
+    "inventory",
+    "core",
+    "nakedev"
+  ],
+  "author": {
+    "name": "Nakemo"
+  }
+}

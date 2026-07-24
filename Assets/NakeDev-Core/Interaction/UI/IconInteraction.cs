@@ -1,5 +1,4 @@
 using nakatimat.Core;
-using nakatimat.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +23,7 @@ namespace nakatimat.InteractionSystem.UI
         public float maxDistance = 5f;
 
         private Transform _playerTransform;
-        private InputReader _inputReader;
+        private IInteractionInput _inputReader;
         private Camera _mainCamera;
         private Canvas _canvas;
 
@@ -40,7 +39,7 @@ namespace nakatimat.InteractionSystem.UI
             if (player != null)
             {
                 _playerTransform = player.transform;
-                _inputReader = player.GetComponentInChildren<InputReader>();
+                _inputReader = player.GetComponentInChildren<IInteractionInput>();
             }
 
             _canvas = GetComponentInChildren<Canvas>();

@@ -12,7 +12,8 @@ namespace nakatimat.Player
     /// </summary>
     public class InputReader
         : MonoBehaviour,
-            global::nakatimat.GeneratedInput.Controls.IMainActions
+            global::nakatimat.GeneratedInput.Controls.IMainActions,
+            IInteractionInput
     {
         private global::nakatimat.GeneratedInput.Controls _inputActions;
 

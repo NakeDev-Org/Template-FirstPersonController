@@ -1,5 +1,4 @@
 using nakatimat.Core.Inspector;
-using nakatimat.Player;
 using UnityEngine;
 
 namespace nakatimat.Core.DebugTools

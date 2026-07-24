@@ -1,8 +1,8 @@
 {
-    "name": "NakeDev.Template.Editor",
+    "name": "NakeDev.Core.Editor",
     "rootNamespace": "",
     "references": [
-        "NakeDev.Template"
+        "NakeDev.Core"
     ],
     "includePlatforms": [
         "Editor"
