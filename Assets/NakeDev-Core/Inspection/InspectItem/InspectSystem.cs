@@ -13,8 +13,8 @@ namespace nakatimat.InspectSystem
     /// </summary>
     public class InspectSystem : MonoBehaviour
     {
-        [Tooltip("Arraste o InputReader do Player (ou da Cena) aqui")]
-        [SerializeField] private nakatimat.Player.InputReader _inputReader;
+        // Auto-wire via GetComponentInParent (interfaces não são arrastáveis no Inspector).
+        private IInteractionInput _inputReader;
 
         [Tooltip("SO opcional: se referenciado, alterna o GameState para 'Inspecting' ao inspecionar um item.")]
         [SerializeField] private GameStateSO _gameState;
@@ -69,7 +69,7 @@ namespace nakatimat.InspectSystem
         private void OnEnable()
         {
             if (_inputReader == null)
-                _inputReader = GetComponentInParent<nakatimat.Player.InputReader>();
+                _inputReader = GetComponentInParent<IInteractionInput>();
 
             if (_inputReader != null)
             {

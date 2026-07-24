@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
+using nakatimat.Core;
 using nakatimat.Core.Inspector;
-using nakatimat.Player;
 
 namespace nakatimat.InteractionSystem
 {
@@ -23,9 +23,8 @@ namespace nakatimat.InteractionSystem
         [SerializeField]
         private float _scanInterval = 0.1f; // Não roda todo frame para poupar CPU
 
-        [InspectorLine("Dependencies", 255, 150, 50)]
-        [SerializeField]
-        private InputReader _inputReader;
+        // Auto-wire via GetComponent (interfaces não são arrastáveis no Inspector).
+        private IInteractionInput _inputReader;
 
         [InspectorLine("Outputs (Regra 4)", 255, 150, 50)]
         [Tooltip("Disparado quando encontra um alvo válido. Retorna o IInteractable alvo.")]
@@ -48,7 +47,7 @@ namespace nakatimat.InteractionSystem
         protected virtual void OnEnable()
         {
             if (_inputReader == null)
-                _inputReader = GetComponent<InputReader>();
+                _inputReader = GetComponent<IInteractionInput>();
             if (_inputReader != null)
             {
                 _inputReader.OnInteractionPressed += TryInteract;
